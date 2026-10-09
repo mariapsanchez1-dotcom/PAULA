@@ -23,7 +23,7 @@
 | Validación | **Zod** | Esquemas compartidos (formularios, API, salidas del LLM) |
 | Agente de email | **Worker Node.js (TypeScript)** | Comparte paquetes con la web |
 | Cola de trabajos | **pg-boss** (cola sobre Postgres) | Sin infraestructura extra (no Redis) |
-| Correo | **Gmail API** (o Microsoft Graph si usan Outlook) — fallback IMAP/SMTP | Lectura por push/polling, creación de borradores nativos |
+| Correo | **Gmail API** sobre una cuenta nueva dedicada, con reenvío desde la cuenta actual | Lectura por push/polling, creación de borradores nativos |
 | IA | **Claude API** — modelo rápido para clasificar/extraer, modelo principal para redactar; *tool use* para consultar stock/precios | Salidas estructuradas validadas con Zod |
 | PDF | **@react-pdf/renderer** | Presupuestos con la misma estética que la web |
 | Sincronización de precios | Importador desde el sistema de cobro (Excel/CSV o API) con vista previa de cambios | Ver sección 1.6 |
@@ -88,6 +88,12 @@ El resultado se redondea a **unidades de venta** (placas enteras, perfiles de 2,
 **Flujo del presupuesto web**: el cliente usa el calculador y ve en pantalla una **estimación** de materiales y precios. Al pedir el presupuesto formal, se crea una solicitud `pendiente_revision`; un vendedor la revisa y ajusta, y recién al aprobarla se genera el PDF numerado que recibe el cliente.
 
 **Steel Frame**: estimador paramétrico por m² cubierto según tipología (vivienda 1 planta, 2 plantas, ampliación, galpón), con kg de acero/m², placas OSB, barreras, aislación y un rango de precio (mín–máx). Se presenta siempre como **estimación orientativa** que requiere visita técnica.
+
+### 1.5 bis Correo: cuenta nueva y espacio
+- Se crea una cuenta dedicada (ej. `consultas.<empresa>@gmail.com`). La cuenta actual **reenvía** automáticamente los correos de clientes a la nueva (filtro de Gmail), así los clientes no tienen que cambiar la dirección.
+- Las respuestas salen desde la cuenta nueva con la función "Enviar como" la dirección de siempre, para que el cliente vea la misma dirección.
+- El sistema guarda el texto de cada correo y sus adjuntos en su propia base de datos (Supabase), así que la cuenta de Gmail puede archivar o vaciar correos viejos sin perder el historial.
+- El agente se conecta con permiso OAuth limitado a leer correos y crear borradores; la persona que aprueba es quien envía.
 
 ### 1.6 Actualización de precios desde el sistema de cobro
 
@@ -298,6 +304,7 @@ Sprints de 2 semanas (estimación para 1–2 desarrolladores).
 
 ### Fase 2 — App de clientes (Sprints 3–6)
 - Sprint 3: catálogo público (filtros, búsqueda, ficha de producto, PDF técnico).
+- Sprint 3 (cont.): aviso de descuentos para profesionales en catálogo y fichas.
 - Sprint 4: `packages/calc` con tests + calculadora de construcción en seco (tabiques, cielorrasos, revestimientos), redondeo a unidades de venta.
 - Sprint 5: cotizador Steel Frame estimativo + solicitud de presupuesto formal + bandeja de revisión para vendedores + PDF al aprobar.
 - Sprint 6: "Mi cuenta" (estado de consultas/presupuestos), PWA, SEO, analítica; Mercado Pago opcional.
@@ -318,12 +325,14 @@ WhatsApp Business, app nativa (Expo), integración con sistema contable/facturac
 ## 5. Decisiones
 
 **Definidas**
+- La web muestra **precios de lista** (público). Los profesionales siempre tienen descuento, que se aplica **en el local**: la web lo avisa con un mensaje visible en catálogo, calculadoras y PDF ("Profesionales: consultá por descuentos especiales en el local"). Los descuentos no se publican.
+- Correo: **Gmail**, con una **cuenta nueva dedicada** al sistema (la actual está casi sin espacio).
 - Todas las respuestas de email y todos los presupuestos formales pasan por revisión humana.
 - El sistema de cobro es la fuente de verdad de los precios; los presupuestos emitidos conservan su precio.
 
 **Pendientes (a confirmar con la empresa)**
-1. Nombre del sistema de cobro y formato de exportación disponible (Excel, CSV, API).
-2. Proveedor de correo actual (Gmail/Google Workspace, Outlook/Microsoft 365, otro).
-3. ¿Precios con o sin IVA en el catálogo público? ¿Listas diferenciadas para profesionales?
+1. Nombre del sistema de cobro y si puede exportar a Excel/CSV (si no se puede conectar, se usa el importador de Excel: funciona con cualquier sistema).
+2. ¿Cuenta Gmail gratuita o Google Workspace con dominio propio?
+3. ¿Precios con IVA incluido en el catálogo público?
 4. Rendimientos por m² y desperdicios que usa hoy la empresa.
 5. ¿Compra directa con pago online desde el inicio o solo "solicitud de contacto"?
