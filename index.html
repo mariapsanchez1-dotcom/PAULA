@@ -199,6 +199,92 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 .curso-cta li{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15)}
 .curso-cta .boton{background:#F7F2E8;color:var(--bordo);margin-top:18px}
 @media (max-width:700px){.curso-cta{grid-template-columns:1fr;padding:26px 20px}}
+
+/* ===== DISEÑO 2: más color ===== */
+:root{--rosa:#F8D9D2;--rosa-f:#C0563F;--salvia:#D9EAD3;--salvia-f:#4E8445;--lavanda:#E1DAF4;--lavanda-f:#6B55B0;
+--celeste:#D4E6F3;--celeste-f:#3B7299;--miel:#F7E4B8;--miel-f:#A9771C;--durazno:#FADBC4;--durazno-f:#C0612C}
+body{background:#FFFDF8}
+.barra{background:rgba(255,253,248,.92)}
+.barra a.link{border-radius:18px;padding:6px 12px;border-bottom:none;transition:background .25s,color .25s}
+.barra a.link:hover,.barra a.link.on{background:var(--bordo);color:#fff}
+.marca{background:linear-gradient(90deg,var(--bordo),var(--rosa-f));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+#lacarta{background:radial-gradient(circle at 12% 18%,#F8D9D2 0,transparent 32%),radial-gradient(circle at 88% 22%,#E1DAF4 0,transparent 30%),radial-gradient(circle at 80% 85%,#D9EAD3 0,transparent 32%),radial-gradient(circle at 15% 85%,#F7E4B8 0,transparent 30%),#F1E8D8}
+
+.portada{background:linear-gradient(135deg,#6B2C2C 0%,#8E3B3B 45%,#B5563F 100%);border-bottom:none;color:#fff}
+.portada .wrap{padding-top:80px;padding-bottom:70px}
+.portada .kicker{color:#F7E4B8}
+.portada h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.18)}
+.portada h1 span{color:#F8D9D2}
+.portada .datos{color:#F3DCD2}
+.portada .pregunta{color:#fff}
+.portada .pregunta small{color:#F3DCD2}
+.portada .escalera path{stroke:#F7E4B8}.portada .escalera circle{fill:#fff}
+.burbujas span{filter:blur(0);opacity:.22}
+.cifras{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:38px}
+.cifras div{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:12px 20px;min-width:130px;backdrop-filter:blur(4px)}
+.cifras b{display:block;font-family:"Cormorant Garamond",serif;font-size:40px;line-height:1;color:#fff}
+.cifras span{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:#F3DCD2}
+.ola{display:block;width:100%;height:46px;margin-top:-1px}
+
+section.bloque{position:relative}
+#recorrido{background:linear-gradient(180deg,#FFFDF8 0,#FDF1EC 100%)}
+#autores{background:linear-gradient(180deg,#F4F0FB 0,#EEF5EC 100%)!important;border:none!important}
+#trabajos{background:#FFFDF8}
+#planificar{background:linear-gradient(180deg,#EAF3F9 0,#FFFDF8 100%)!important;border:none!important}
+#seguir{background:linear-gradient(180deg,#FFF8E9 0,#FDF1EC 100%)}
+.titulo-sec{align-items:center;gap:16px;margin-bottom:14px}
+.titulo-sec .num{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--bordo);color:#fff;font-size:26px;font-style:italic;flex:none;box-shadow:0 8px 20px -8px rgba(107,44,44,.6)}
+#autores .titulo-sec .num{background:var(--lavanda-f)}#trabajos .titulo-sec .num{background:var(--salvia-f)}
+#planificar .titulo-sec .num{background:var(--celeste-f)}#seguir .titulo-sec .num{background:var(--miel-f)}
+.titulo-sec h2{position:relative}
+.titulo-sec h2::after{content:"";display:block;width:70px;height:4px;border-radius:3px;margin-top:8px;background:linear-gradient(90deg,var(--rosa-f),var(--miel-f),var(--salvia-f),var(--celeste-f),var(--lavanda-f))}
+
+/* línea de tiempo */
+.tramos{padding-left:38px;gap:22px}
+.tramos::before{content:"";position:absolute;left:14px;top:10px;bottom:10px;width:4px;border-radius:3px;background:linear-gradient(180deg,var(--rosa-f),var(--durazno-f),var(--miel-f),var(--salvia-f),var(--celeste-f),var(--lavanda-f))}
+.tramo{background:#fff;border:1px solid rgba(58,46,42,.07);border-left:6px solid var(--f);box-shadow:0 14px 30px -22px rgba(58,46,42,.45);transition:transform .25s,box-shadow .25s}
+.tramo:hover{transform:translateY(-3px);box-shadow:0 20px 36px -22px rgba(58,46,42,.5)}
+.tramo::before{content:"";position:absolute;left:-36px;top:26px;width:20px;height:20px;border-radius:50%;background:var(--f);border:4px solid #fff;box-shadow:0 0 0 2px var(--f)}
+.tramo .et{background:var(--c);padding:3px 10px;border-radius:12px}
+.tramo .deja{background:var(--c);border-left:none;border-radius:10px;padding:10px 14px}
+.chip{background:var(--c);border-color:transparent;font-weight:700;color:var(--bordo)}
+.chip:hover{background:var(--f);color:#fff}
+
+/* autores */
+.filtros button{font-weight:700}
+.filtros button.on{background:linear-gradient(90deg,var(--bordo),var(--rosa-f));border-color:transparent}
+.autor{border-top:none;padding:0;overflow:hidden;box-shadow:0 14px 30px -24px rgba(58,46,42,.5);transition:transform .25s}
+.autor:hover{transform:translateY(-3px)}
+.autor .eje{display:block;background:var(--f);color:#fff;padding:9px 20px;letter-spacing:.14em}
+.autor h3,.autor .idea,.autor details,.autor .ref{margin-left:20px;margin-right:20px}
+.autor h3{margin-top:14px;display:flex;align-items:center;gap:10px}
+.autor h3::before{content:attr(data-ini);flex:none;width:40px;height:40px;border-radius:50%;background:var(--c);color:var(--f);display:grid;place-items:center;font-size:17px;font-style:italic}
+.autor .ref{padding-bottom:16px}
+.autor .pregunta-a{background:var(--c)}
+
+/* trabajos */
+.vacio{background:repeating-linear-gradient(45deg,#FDF6EE 0 14px,#F8EFE4 14px 28px);border-color:var(--salvia-f);color:var(--salvia-f)}
+
+/* planificar */
+.fase{border:none;border-top:6px solid var(--f);box-shadow:0 14px 30px -22px rgba(58,46,42,.45)}
+.fase .et{background:var(--c);padding:3px 10px;border-radius:12px}
+.fase ol{counter-reset:p;list-style:none;margin-left:0}
+.fase li{counter-increment:p;position:relative;padding-left:38px}
+.fase li::before{content:counter(p);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--c);color:var(--f);font-weight:700;display:grid;place-items:center;font-size:13px}
+.chequeo{background:#fff;border:2px solid var(--celeste);box-shadow:0 14px 30px -22px rgba(58,46,42,.4)}
+.clave{box-shadow:0 10px 22px -18px rgba(58,46,42,.5);transition:transform .2s}
+.clave:hover{transform:rotate(-1deg) scale(1.02)}
+
+/* seguir */
+.tema{background:#fff;border-top:6px solid var(--f);box-shadow:0 14px 30px -22px rgba(58,46,42,.45)}
+.tema .preg{background:var(--c);border-radius:10px;padding:8px 12px}
+.curso-cta{background:linear-gradient(120deg,#6B2C2C 0%,#8E3B3B 50%,#6B55B0 100%);box-shadow:0 24px 50px -28px rgba(107,44,44,.7)}
+.curso-cta::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(247,228,184,.18)}
+
+footer{background:var(--bordo);color:#EBDCCB;border-top:none}
+footer .firma{color:#fff}
+@media (max-width:600px){.tramos{padding-left:30px}.tramos::before{left:9px}.tramo::before{left:-30px}.cifras div{min-width:120px;padding:10px 14px}}
 </style>
 </head>
 <body>
@@ -287,9 +373,11 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
     <h1>Evaluación<span>de los Aprendizajes</span></h1>
     <p class="datos">Lo que recorrimos este año, con sus textos, nuestros trabajos y lo que nos llevamos para el aula.</p>
     <svg class="escalera" width="120" height="60" viewBox="0 0 120 60" aria-hidden="true" style="margin-top:28px"><path d="M6 54 H32 V40 H58 V26 H84 V12 H114" fill="none" stroke="#B07A2A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="99" cy="7" r="3.2" fill="#6B2C2C"/></svg>
+    <div class="cifras"><div><b>6</b><span>tramos</span></div><div><b>23</b><span>fichas de autores</span></div><div><b>10</b><span>claves</span></div><div><b>1</b><span>pregunta</span></div></div>
     <p class="pregunta">¿Es posible una evaluación justa?<br>¿Qué necesitaría tener para serlo?<small>La pregunta de marzo, que nos acompañó todo el año</small></p>
   </div>
 </header>
+<svg class="ola" viewBox="0 0 1440 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h1440v14c-160 26-320 30-480 14S640 0 480 10 160 46 0 22z" fill="#B5563F" opacity=".25"/><path d="M0 0h1440v6c-180 24-360 26-540 10S540 0 360 10 120 34 0 16z" fill="#8E3B3B"/></svg>
 
 <main>
 
@@ -368,7 +456,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t1" id="a-camilloni87" data-t="t1">
       <span class="eje">Tramo 1 · Biografía</span>
-      <h3>Alicia Camilloni</h3>
+      <h3 data-ini="AC">Alicia Camilloni</h3>
       <p class="idea">El juicio de quien evalúa nunca es puro. La subjetividad no se elimina: se controla haciéndola visible.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Apreciación personal:</b> la imagen que el docente se forma de un alumno y que tiñe la evaluación aunque no figure en ningún criterio.</li>
@@ -381,7 +469,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t1" id="a-barbier" data-t="t1">
       <span class="eje">Tramo 1 · Biografía</span>
-      <h3>Jean-Marie Barbier</h3>
+      <h3 data-ini="JB">Jean-Marie Barbier</h3>
       <p class="idea">Muchas evaluaciones no están en ningún examen, y aun así nos marcan.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Evaluación implícita:</b> se le da valor a algo sin decirlo.</li>
@@ -394,7 +482,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t1" id="a-anicap" data-t="t1">
       <span class="eje">Tramo 1 · Biografía</span>
-      <h3>Rebeca Anijovich y Graciela Cappelletti</h3>
+      <h3 data-ini="RC">Rebeca Anijovich y Graciela Cappelletti</h3>
       <p class="idea">La evaluación puede ser control u oportunidad. Lo que las distingue no es el instrumento, sino para qué y para quién se evalúa.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Oportunidad doble:</b> para que el estudiante conozca y mejore su proceso, y para que el docente revise su enseñanza.</li>
@@ -407,7 +495,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t2" id="a-camilloni98" data-t="t2">
       <span class="eje">Tramo 2 · Calificación y justicia</span>
-      <h3>Alicia Camilloni</h3>
+      <h3 data-ini="AC">Alicia Camilloni</h3>
       <p class="idea">Calificar es traducir un juicio a una convención, y toda traducción pierde información. Un instrumento vale por su calidad, no por su forma.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>La escala es una convención:</b> un 6 no dice qué se logró ni qué falta.</li>
@@ -420,7 +508,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t2" id="a-house" data-t="t2">
       <span class="eje">Tramo 2 · Calificación y justicia</span>
-      <h3>Ernest House</h3>
+      <h3 data-ini="EH">Ernest House</h3>
       <p class="idea">Una evaluación tiene que ser veraz, creíble y justa. Toda evaluación descansa en una idea de justicia, aunque no la diga.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Utilitarismo:</b> es justo lo que da el mejor resultado promedio.</li>
@@ -433,7 +521,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t2" id="a-perrenoud" data-t="t2">
       <span class="eje">Tramo 2 · Calificación y justicia</span>
-      <h3>Philippe Perrenoud</h3>
+      <h3 data-ini="PP">Philippe Perrenoud</h3>
       <p class="idea">En la escuela conviven dos lógicas: evaluar para clasificar y evaluar para regular los aprendizajes. La pregunta es cuál domina.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Lógica de la excelencia:</b> ordena y certifica; necesita comparar.</li>
@@ -446,7 +534,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t2" id="a-ravela" data-t="t2">
       <span class="eje">Tramo 2 · Calificación y justicia</span>
-      <h3>Pedro Ravela</h3>
+      <h3 data-ini="PR">Pedro Ravela</h3>
       <p class="idea">Toda evaluación compara. Lo que importa es contra qué: contra los demás o contra lo que se esperaba lograr.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Referencia a la norma:</b> dice dónde está el alumno respecto del grupo; siempre hay ganadores y perdedores.</li>
@@ -459,7 +547,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t2" id="a-lion" data-t="t2">
       <span class="eje">Tramo 2 · Evaluación e IA</span>
-      <h3>Carina Lion</h3>
+      <h3 data-ini="CL">Carina Lion</h3>
       <p class="idea">Los discursos sobre tecnología en educación esconden mitos que le sacan la decisión al docente.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Determinismo:</b> la tecnología define sola lo que pasa.</li>
@@ -472,7 +560,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t2" id="a-ferrarelli" data-t="t2">
       <span class="eje">Tramo 2 · Evaluación e IA</span>
-      <h3>Mariana Ferrarelli</h3>
+      <h3 data-ini="MF">Mariana Ferrarelli</h3>
       <p class="idea">Si una tarea se puede resolver sin aprender, la escuela corre el riesgo de acreditar saberes que no existen.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>La respuesta no es perseguir el uso:</b> es rediseñar la evidencia.</li>
@@ -484,7 +572,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t2" id="a-maggio" data-t="t2">
       <span class="eje">Tramo 2 · Evaluación e IA</span>
-      <h3>Mariana Maggio</h3>
+      <h3 data-ini="MM">Mariana Maggio</h3>
       <p class="idea">La tecnología se incluye de verdad cuando cambia lo que el alumno puede hacer con el saber, no cuando decora.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Inclusión genuina</b> frente a inclusión decorativa de la tecnología.</li>
@@ -496,7 +584,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t3" id="a-wiggins" data-t="t3">
       <span class="eje">Tramo 3 · Tarea auténtica</span>
-      <h3>Grant Wiggins y Jay McTighe</h3>
+      <h3 data-ini="GM">Grant Wiggins y Jay McTighe</h3>
       <p class="idea">Una evaluación es auténtica cuando pide hacer la disciplina, no repetir lo que se dijo de ella.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Rasgos de la tarea auténtica:</b> realista, exige juicio, tiene destinatario, permite ensayar y mejorar.</li>
@@ -508,7 +596,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t3" id="a-monereo" data-t="t3">
       <span class="eje">Tramo 3 · Tarea auténtica</span>
-      <h3>Carles Monereo</h3>
+      <h3 data-ini="CM">Carles Monereo</h3>
       <p class="idea">La autenticidad no está en el formato de la tarea sino en lo que le pide pensar al alumno.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Realismo, relevancia y socialización:</b> tres dimensiones de lo auténtico.</li>
@@ -521,7 +609,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t3" id="a-anigon3" data-t="t3">
       <span class="eje">Tramo 3 · Tarea auténtica</span>
-      <h3>Rebeca Anijovich y Carlos González</h3>
+      <h3 data-ini="RG">Rebeca Anijovich y Carlos González</h3>
       <p class="idea">Una tarea auténtica tiene un propósito y un destinatario que van más allá de la nota, y admite más de una resolución.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Usos reales</b> de la lectura y la escritura.</li>
@@ -534,7 +622,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t3" id="a-cassany" data-t="t3">
       <span class="eje">Tramo 3 · Tarea auténtica</span>
-      <h3>Daniel Cassany</h3>
+      <h3 data-ini="DC">Daniel Cassany</h3>
       <p class="idea">Escribir es un proceso, no un producto. Evaluar solo la versión final deja afuera casi todo lo que pasa al escribir.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Planificar, textualizar y revisar:</b> pasos que van y vuelven, no en línea recta.</li>
@@ -546,7 +634,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t3" id="a-kaufman" data-t="t3">
       <span class="eje">Tramo 3 · Tarea auténtica</span>
-      <h3>Ana María Kaufman</h3>
+      <h3 data-ini="AK">Ana María Kaufman</h3>
       <p class="idea">Evaluar escritura es mirar revisiones y reescrituras; evaluar lectura depende de para qué se lee.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Revisión y reescritura</b> como objetos de evaluación.</li>
@@ -558,7 +646,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t4" id="a-anigon" data-t="t4">
       <span class="eje">Tramo 4 · Instrumentos</span>
-      <h3>Rebeca Anijovich y Carlos González</h3>
+      <h3 data-ini="RG">Rebeca Anijovich y Carlos González</h3>
       <p class="idea">Elegir un instrumento ya es decidir qué vale la pena mirar.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Técnica:</b> el procedimiento para recoger evidencia. <b>Instrumento:</b> el soporte que la registra y permite valorarla.</li>
@@ -571,7 +659,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t4" id="a-klenowski" data-t="t4">
       <span class="eje">Tramo 4 · Instrumentos</span>
-      <h3>Val Klenowski</h3>
+      <h3 data-ini="VK">Val Klenowski</h3>
       <p class="idea">Un portafolio no es una carpeta: lo que lo hace portafolio es la selección y la reflexión de quien lo arma.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Selección con justificación:</b> elegir ya muestra lo aprendido.</li>
@@ -584,7 +672,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t5" id="a-wiliam" data-t="t5">
       <span class="eje">Tramo 5 · Retroalimentación</span>
-      <h3>Paul Black y Dylan Wiliam</h3>
+      <h3 data-ini="PW">Paul Black y Dylan Wiliam</h3>
       <p class="idea">Lo formativo no es el instrumento ni la falta de nota: es usar la evidencia para decidir qué hacer después.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Cinco estrategias:</b> compartir intenciones y criterios; generar evidencia; dar retroalimentación que haga avanzar; que los alumnos se ayuden entre sí; que cada uno se haga cargo de su aprendizaje.</li>
@@ -596,7 +684,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t5" id="a-anijovich" data-t="t5">
       <span class="eje">Tramo 5 · Retroalimentación</span>
-      <h3>Rebeca Anijovich</h3>
+      <h3 data-ini="RA">Rebeca Anijovich</h3>
       <p class="idea">La retroalimentación ayuda a ver la distancia entre dónde está el estudiante y adónde tiene que llegar, y da pistas para acortarla. Por eso es un derecho.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>La brecha:</b> lo que falta, dicho de modo que se pueda recorrer.</li>
@@ -609,7 +697,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t5" id="a-hattie" data-t="t5">
       <span class="eje">Tramo 5 · Retroalimentación</span>
-      <h3>John Hattie y Helen Timperley</h3>
+      <h3 data-ini="JT">John Hattie y Helen Timperley</h3>
       <p class="idea">La retroalimentación es de lo que más influye en el aprendizaje, pero depende de a qué apunta.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Tres preguntas:</b> ¿adónde voy?, ¿cómo voy?, ¿qué sigue?</li>
@@ -621,7 +709,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t5" id="a-astolfi" data-t="t5">
       <span class="eje">Tramo 5 · Retroalimentación</span>
-      <h3>Jean-Pierre Astolfi</h3>
+      <h3 data-ini="JA">Jean-Pierre Astolfi</h3>
       <p class="idea">El error no es una falta que se castiga: muestra dónde se traba el pensamiento del alumno, y por eso le sirve a quien enseña.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>El error como síntoma</b> de un obstáculo, no como culpa.</li>
@@ -633,7 +721,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t5" id="a-wilson" data-t="t5">
       <span class="eje">Tramo 5 · Retroalimentación</span>
-      <h3>Protocolo SER y escalera de Wilson</h3>
+      <h3 data-ini="SER">Protocolo SER y escalera de Wilson</h3>
       <p class="idea">Dos herramientas para devolver: SER ordena una devolución escrita; la escalera ordena una conversación.</p>
       <details><summary>Cómo se usan</summary>
         <ul><li><b>SER:</b> Seguir haciendo (lo que ya está bien), Empezar a hacer (algo nuevo y concreto), Reformular (algo que ya hace, pero conviene hacer de otro modo).</li>
@@ -646,7 +734,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
 
     <article class="autor t6" id="a-terigi" data-t="t6">
       <span class="eje">Cierre</span>
-      <h3>Flavia Terigi</h3>
+      <h3 data-ini="FT">Flavia Terigi</h3>
       <p class="idea">La escuela supone que todos aprenden lo mismo, al mismo tiempo. Las trayectorias reales no son así, y la evaluación suele leer como fracaso lo que es otro tiempo.</p>
       <details><summary>Conceptos y pregunta</summary>
         <ul><li><b>Cronologías de aprendizaje:</b> los tiempos de aprender son diversos y legítimos.</li>

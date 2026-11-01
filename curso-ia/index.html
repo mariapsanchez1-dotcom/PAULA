@@ -108,6 +108,33 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:var(--bordo)}
   .comparar{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+
+/* ===== DISEÑO 2 ===== */
+:root{--rosa:#F8D9D2;--rosa-f:#C0563F;--salvia:#D9EAD3;--salvia-f:#4E8445;--lavanda:#E1DAF4;--lavanda-f:#6B55B0;
+--celeste:#D4E6F3;--celeste-f:#3B7299;--miel:#F7E4B8;--miel-f:#A9771C;--durazno:#FADBC4;--durazno-f:#C0612C}
+body{background:linear-gradient(180deg,#FFFDF8 0,#F6F1FB 60%,#EEF5EC 100%)}
+.portada{background:linear-gradient(125deg,#6B2C2C 0%,#8E3B3B 40%,#6B55B0 100%);border-bottom:none;color:#fff}
+.portada .kicker{color:#F7E4B8}.portada h1{color:#fff}.portada h1 em{color:#F8D9D2}
+.portada p.bajada{color:#F1E2DA}.portada .principio{color:#fff}
+.datos span{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
+.burbujas span{opacity:.22}
+.indice{box-shadow:0 14px 30px -24px rgba(58,46,42,.5)}
+.indice a.on{background:var(--bordo);color:#fff}.indice a.on .n{color:#F7E4B8}
+.modulo{border:none;border-top:none;padding:0;overflow:hidden;box-shadow:0 18px 40px -28px rgba(58,46,42,.55)}
+.modulo .cab{background:linear-gradient(120deg,var(--f),color-mix(in srgb,var(--f) 70%,#6B2C2C));padding:22px 34px 18px;color:#fff}
+.modulo .cab .et,.modulo .cab .dur{color:#fff;opacity:.92}
+.modulo .cab h2{color:#fff}
+.modulo>*:not(.cab){margin-left:34px;margin-right:34px}
+.modulo>.marcar{margin-bottom:24px}
+.modulo .meta{margin-top:22px}
+.prompt{background:linear-gradient(135deg,#2F2724,#3D2C33)}
+.hacelo{border:2px dashed var(--f)}
+.cura{background:#fff;border-left:5px solid var(--f)}
+.final{background:linear-gradient(120deg,#FDF1EC,#F1EDFA);border:none}
+footer{background:var(--bordo);color:#EBDCCB;border-top:none}footer .firma{color:#fff}
+
+.modulo>.tabla,.modulo>.comparar{width:calc(100% - 68px)}
+@media (max-width:900px){.modulo>.tabla,.modulo>.comparar{width:calc(100% - 36px)}.modulo .cab{padding:18px 18px 14px}.modulo>*:not(.cab){margin-left:18px;margin-right:18px}}
 </style>
 </head>
 <body>
