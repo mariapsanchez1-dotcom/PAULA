@@ -293,6 +293,23 @@ footer .firma{color:#fff}
 .cierre-frase .autor-f b{color:var(--bordo)}
 .cierre-frase .intro-f{margin-top:14px;font-size:17px;color:var(--tinta)}
 .cierre-frase .bajada-f{max-width:640px;margin:18px auto 0;font-family:"Cormorant Garamond",serif;font-size:23px;line-height:1.35;color:var(--tinta)}
+.tema .acceso{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tema .libre{display:inline-block;background:var(--f);color:#fff;text-decoration:none;font-size:13.5px;font-weight:700;border-radius:18px;padding:6px 14px}
+.tema .libre:hover{filter:brightness(.9)}
+.tema .aula{display:inline-block;background:var(--c);color:var(--bordo);font-size:13.5px;font-weight:700;border-radius:18px;padding:6px 14px}
+.tema .ref{margin-top:auto}
+.compartir{display:grid;grid-template-columns:1fr 220px;gap:24px;align-items:center;background:linear-gradient(120deg,#E3F0DE,#FFFDF8 70%);border:1px solid #C9DEC3;border-radius:20px;padding:30px 32px;margin-bottom:22px;box-shadow:0 18px 40px -30px rgba(58,46,42,.5)}
+.compartir h3{font-size:clamp(26px,4vw,34px);color:var(--bordo);line-height:1.1;margin:6px 0 14px}
+.pasos-c{counter-reset:c;list-style:none;margin:0 0 18px}
+.pasos-c li{counter-increment:c;position:relative;padding-left:40px;margin-bottom:10px}
+.pasos-c li::before{content:counter(c);position:absolute;left:0;top:-1px;width:28px;height:28px;border-radius:50%;background:var(--salvia-f);color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+.pasos-c b{color:var(--bordo)}
+.boton-c{display:inline-block;background:var(--salvia-f);color:#fff;text-decoration:none;font-weight:700;border-radius:30px;padding:12px 26px;font-size:15.5px}
+.boton-c[aria-disabled="true"]{opacity:.55;pointer-events:none}
+.nota-c{font-size:13.5px;color:var(--suave);margin-top:8px}
+.comp-deco{display:grid;place-items:center}
+.comp-deco span{width:170px;height:170px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#D9EAD3 60%,#B9D6AF);display:grid;place-items:center;font-size:70px;color:var(--salvia-f);box-shadow:0 20px 40px -20px rgba(78,132,69,.6)}
+@media (max-width:700px){.compartir{grid-template-columns:1fr;padding:24px 20px}.comp-deco{display:none}}
 </style>
 </head>
 <body>
@@ -670,8 +687,22 @@ footer .firma{color:#fff}
 <!-- TRABAJOS -->
 <section class="bloque" id="trabajos"><div class="wrap">
   <div class="titulo-sec"><span class="num">III</span><h2>Nuestros trabajos</h2></div>
-  <p class="intro">Acá van a estar los portfolios de cada estudiante, con sus actividades del año.</p>
-  <div class="vacio">Próximamente</div>
+  <p class="intro">Acá van a estar los portfolios y los trabajos que cada estudiante quiera compartir.</p>
+  <div class="compartir">
+    <div class="comp-txt">
+      <p class="kicker" style="color:var(--salvia-f)">¿Querés compartir tu trabajo?</p>
+      <h3>Subilo y formá parte de esta página</h3>
+      <ol class="pasos-c">
+        <li><b>Elegí</b> qué querés mostrar: tu portfolio completo o una pieza.</li>
+        <li><b>Subilo</b> con el formulario. Ahí indicás si querés que aparezca tu nombre o que sea anónimo.</li>
+        <li><b>La profe lo revisa</b> y lo suma a la página.</li>
+      </ol>
+      <a class="boton-c" id="btnSubir" href="#" aria-disabled="true">Subir mi trabajo</a>
+      <p class="nota-c" id="notaSubir">El formulario se habilita muy pronto.</p>
+    </div>
+    <div class="comp-deco" aria-hidden="true"><span>✎</span></div>
+  </div>
+  <div class="vacio">Los trabajos compartidos van a aparecer acá</div>
 </div></section>
 
 <!-- PLANIFICAR -->
@@ -738,11 +769,16 @@ footer .firma{color:#fff}
   <div class="titulo-sec"><span class="num">V</span><h2>Para seguir aprendiendo</h2></div>
   <p class="intro">Temas de evaluación que no llegamos a ver en la cursada y que te van a servir cuando estés en el aula. Cada uno trae una pregunta para empezar y por dónde seguir leyendo.</p>
   <div class="temas">
-    <article class="tema t1"><h3>Autoevaluación y evaluación entre pares</h3><p>Que los estudiantes aprendan a evaluar su propio trabajo y el de otros es parte de aprender. Para eso necesitan conocer los criterios, practicar con ejemplos y recibir devolución sobre sus propias devoluciones.</p><p class="preg">¿Cómo enseñás a tus alumnos a darse una devolución entre ellos?</p><p class="ref">Sadler, D. R. (1989). Formative assessment and the design of instructional systems. <i>Instructional Science</i>, 18. · Wiliam, D. (2011). <i>Embedded Formative Assessment</i>. Solution Tree.</p></article>
-    <article class="tema t2"><h3>Evaluar la oralidad</h3><p>Hablar en público, argumentar o exponer también se enseña y se evalúa, con criterios propios: adecuación, organización, uso de la voz y el cuerpo, escucha del otro. Sin criterios, la evaluación oral queda librada a la impresión del momento.</p><p class="preg">¿Qué criterios usarías para evaluar una exposición oral?</p><p class="ref">Vilà i Santasusana, M. (coord.) (2005). <i>El discurso oral formal. Contenidos de aprendizaje y secuencias didácticas</i>. Graó.</p></article>
-    <article class="tema t3"><h3>Evaluar la lectura literaria</h3><p>Evaluar literatura no es controlar si leyeron. Es mirar cómo construyen sentido, cómo vinculan textos, qué decisiones de interpretación toman y cómo las sostienen.</p><p class="preg">¿Cómo evaluarías una lectura sin cuestionario de control?</p><p class="ref">Colomer, T. (2005). <i>Andar entre libros. La lectura literaria en la escuela</i>. Fondo de Cultura Económica. · Bombini, G. (2006). <i>Reinventar la enseñanza de la lengua y la literatura</i>. Libros del Zorzal.</p></article>
-    <article class="tema t4"><h3>Diseño Universal para el Aprendizaje</h3><p>Planificar desde el principio pensando en la variedad del grupo: múltiples formas de implicación, de representación y de acción y expresión. La versión 3.0 de las pautas, de 2024, suma la atención a las identidades y a los sesgos que crean barreras.</p><p class="preg">Tu evaluación, ¿deja que cada alumno muestre lo que sabe de más de una forma?</p><p class="ref">CAST (2024). <i>Pautas del Diseño Universal para el Aprendizaje, versión 3.0</i>. udlguidelines.cast.org</p></article>
-    <article class="tema t5"><h3>Escribir buenas consignas de evaluación</h3><p>Muchas dificultades de los alumnos en una evaluación vienen de la consigna: qué pide, con qué palabras, con qué información. Escribir consignas claras y con propósito es parte de evaluar con justicia.</p><p class="preg">Si le das tu consigna a un compañero, ¿entiende exactamente qué se espera?</p><p class="ref">Ravela, P., Picaroni, B. y Loureiro, G. (2017). <i>¿Cómo mejorar la evaluación en el aula? Reflexiones y propuestas de trabajo para docentes</i>. Grupo Magro.</p></article>
+    <article class="tema t1"><h3>Autoevaluación y evaluación entre pares</h3><p>Que los estudiantes aprendan a evaluar su propio trabajo y el de otros es parte de aprender. Para eso necesitan conocer los criterios, practicar con ejemplos y recibir devolución sobre sus propias devoluciones.</p><p class="preg">¿Cómo enseñás a tus alumnos a darse una devolución entre ellos?</p><p class="ref">Ravela, P., Picaroni, B. y Loureiro, G. (2019). <i>¿Cómo mejorar la evaluación en el aula? Reflexiones y propuestas de trabajo para docentes</i> (2.ª ed.). Grupo Magro. Capítulo sobre autoevaluación y coevaluación.</p>
+<p class="acceso"><span class="aula">📚 Disponible en el aula virtual de la cátedra</span></p></article>
+    <article class="tema t2"><h3>Evaluar la oralidad</h3><p>Hablar en público, argumentar o exponer también se enseña y se evalúa, con criterios propios: adecuación, organización, uso de la voz y el cuerpo, escucha del otro. Sin criterios, la evaluación oral queda librada a la impresión del momento.</p><p class="preg">¿Qué criterios usarías para evaluar una exposición oral?</p><p class="ref">Vilà i Santasusana, M. (coord.) (2005). <i>El discurso oral formal. Contenidos de aprendizaje y secuencias didácticas</i>. Graó.</p>
+<p class="acceso"><span class="aula">📚 Disponible en el aula virtual de la cátedra</span></p></article>
+    <article class="tema t3"><h3>Evaluar la lectura literaria</h3><p>Evaluar literatura no es controlar si leyeron. Es mirar cómo construyen sentido, cómo vinculan textos, qué decisiones de interpretación toman y cómo las sostienen.</p><p class="preg">¿Cómo evaluarías una lectura sin cuestionario de control?</p><p class="ref">Colomer, T. (2005). <i>Andar entre libros. La lectura literaria en la escuela</i>. Fondo de Cultura Económica. · Bombini, G. (2006). <i>Reinventar la enseñanza de la lengua y la literatura</i>. Libros del Zorzal.</p>
+<p class="acceso"><span class="aula">📚 Colomer, disponible en el aula virtual de la cátedra</span></p></article>
+    <article class="tema t4"><h3>Diseño Universal para el Aprendizaje</h3><p>Planificar desde el principio pensando en la variedad del grupo: múltiples formas de implicación, de representación y de acción y expresión. La versión 3.0 de las pautas, de 2024, suma la atención a las identidades y a los sesgos que crean barreras.</p><p class="preg">Tu evaluación, ¿deja que cada alumno muestre lo que sabe de más de una forma?</p><p class="ref">CAST (2024). <i>Pautas del Diseño Universal para el Aprendizaje, versión 3.0</i>.</p>
+<p class="acceso"><a class="libre" href="https://udlguidelines.cast.org/more/downloads" target="_blank" rel="noopener">Descargar las pautas en español (sitio oficial de CAST) ↗</a></p></article>
+    <article class="tema t5"><h3>Escribir buenas consignas de evaluación</h3><p>Muchas dificultades de los alumnos en una evaluación vienen de la consigna: qué pide, con qué palabras, con qué información. Escribir consignas claras y con propósito es parte de evaluar con justicia.</p><p class="preg">Si le das tu consigna a un compañero, ¿entiende exactamente qué se espera?</p><p class="ref">Ravela, P., Picaroni, B. y Loureiro, G. (2019). <i>¿Cómo mejorar la evaluación en el aula?</i> (2.ª ed.). Grupo Magro. · Ravela, P. Consignas, devoluciones y calificaciones: los problemas de la evaluación en las aulas de educación primaria en América Latina. <i>Páginas de Educación</i> (Universidad Católica del Uruguay).</p>
+<p class="acceso"><a class="libre" href="https://revistas.ucu.edu.uy/index.php/paginasdeeducacion/article/download/703/694/2714" target="_blank" rel="noopener">Leer el artículo de Ravela (acceso libre) ↗</a> <span class="aula">📚 El libro, en el aula virtual</span></p></article>
   </div>
 
   <div class="curso-cta" id="curso">
@@ -768,6 +804,8 @@ footer .firma{color:#fff}
 </footer>
 
 <script>
+var FORM_TRABAJOS='';
+(function(){var b=document.getElementById('btnSubir'),n=document.getElementById('notaSubir');if(b&&FORM_TRABAJOS){b.href=FORM_TRABAJOS;b.target='_blank';b.rel='noopener';b.removeAttribute('aria-disabled');n.textContent='Para subir archivos, el formulario te pide entrar con una cuenta de Google.';}})();
 
 (function(){
   var hojas=[].slice.call(document.querySelectorAll('.hoja')),n=hojas.length,act=0,
