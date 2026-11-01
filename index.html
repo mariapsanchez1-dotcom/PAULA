@@ -285,6 +285,13 @@ section.bloque{position:relative}
 footer{background:var(--bordo);color:#EBDCCB;border-top:none}
 footer .firma{color:#fff}
 @media (max-width:600px){.tramos{padding-left:30px}.tramos::before{left:9px}.tramo::before{left:-30px}.cifras div{min-width:120px;padding:10px 14px}}
+.cierre-frase{background:linear-gradient(120deg,#E1DAF4 0%,#F8D9D2 50%,#F7E4B8 100%);padding:80px 22px;text-align:center;position:relative;overflow:hidden}
+.cierre-frase .kicker{color:var(--lavanda-f)}
+.cierre-frase blockquote{max-width:820px;margin:18px auto 0;font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:600;font-size:clamp(28px,4.8vw,44px);line-height:1.22;color:var(--bordo)}
+.cierre-frase blockquote::before{content:"“";display:block;font-size:2.4em;line-height:.6;color:var(--lavanda-f);opacity:.6}
+.cierre-frase .autor-f{margin-top:22px;font-size:15px;color:var(--tinta)}
+.cierre-frase .autor-f b{color:var(--bordo)}
+.cierre-frase .nota{margin-top:6px;font-size:12.5px;color:var(--suave)}
 </style>
 </head>
 <body>
@@ -744,6 +751,13 @@ footer .firma{color:#fff}
 </div></section>
 
 </main>
+
+<section class="cierre-frase" aria-label="Para cerrar">
+  <p class="kicker">Para cerrar</p>
+  <blockquote>Los tiempos de aprender son diversos y legítimos. La escuela no debería leer como fracaso lo que es otra cronología.</blockquote>
+  <p class="autor-f">A partir de <b>Flavia Terigi</b>, «Las cronologías de aprendizaje: un concepto para pensar las trayectorias escolares» (2010)</p>
+  <p class="nota">La idea está dicha con nuestras palabras: no es una cita textual.</p>
+</section>
 
 <footer>
   <p class="firma">Paula</p>
