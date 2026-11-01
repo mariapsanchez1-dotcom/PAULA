@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Una carta para vos · Evaluación de los Aprendizajes 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--papel:#F7F2E8;--dorso:#EFE7D8;--fondo:#E6DBC7;--bordo:#6B2C2C;--ocre:#B07A2A;--suave:#8A7B6C;--tinta:#3A2E2A;--linea:#DCCDB8}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--fondo);color:var(--tinta);font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;-webkit-font-smoothing:antialiased;overflow:hidden}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 14px 14px;height:100dvh}
+.libro{position:relative;width:min(92vw,460px);height:min(calc(100dvh - 92px),720px);perspective:2200px}
+.hoja{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.55,.06,.25,1)}
+.hoja.vuelta{transform:rotateY(-180deg)}
+.cara,.dorso{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:2px 6px 6px 2px}
+.cara{background:var(--papel);box-shadow:0 1px 2px rgba(58,46,42,.1),0 22px 40px -22px rgba(58,46,42,.45);padding:38px 30px 34px;display:flex;flex-direction:column;overflow:hidden}
+.cara::after{content:"";position:absolute;top:0;bottom:0;left:0;width:22px;background:linear-gradient(90deg,rgba(58,46,42,.10),rgba(58,46,42,0));pointer-events:none}
+.dorso{background:var(--dorso);transform:rotateY(180deg);box-shadow:0 22px 40px -22px rgba(58,46,42,.45)}
+.dorso::after{content:"";position:absolute;inset:0;background:linear-gradient(270deg,rgba(58,46,42,.12),rgba(58,46,42,0) 40%)}
+.hoja .sombra{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(58,46,42,.18));opacity:0;transition:opacity .5s;pointer-events:none;backface-visibility:hidden}
+.hoja.girando .sombra{opacity:1}
+
+/* tapa */
+.tapa{align-items:center;justify-content:center;text-align:center}
+.tapa .marco{position:absolute;inset:14px;border:1px solid var(--linea);pointer-events:none}
+.tapa .marco2{position:absolute;inset:19px;border:1px solid #E8DCC8;pointer-events:none}
+.kicker{font-size:12px;letter-spacing:.38em;text-transform:uppercase;color:var(--ocre);margin-bottom:30px}
+.tapa h1{font-weight:600;font-size:clamp(38px,11vw,54px);line-height:1.05;color:var(--bordo)}
+.tapa h1 em{font-weight:500;display:block}
+.raya{width:64px;height:1.5px;background:var(--ocre);margin:28px auto}
+.sub{font-style:italic;font-size:19px;color:var(--suave)}
+.escalera{margin-top:36px}
+.escalera path{stroke-dasharray:160;stroke-dashoffset:160;animation:trazo 2.2s ease .5s forwards}
+.escalera circle{opacity:0;animation:punto .6s ease 2.5s forwards}
+@keyframes trazo{to{stroke-dashoffset:0}}
+@keyframes punto{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* carta */
+.para{font-style:italic;font-size:clamp(22px,6.2vw,27px);line-height:1.2;color:var(--bordo);margin-bottom:20px}
+.t{font-size:clamp(17.5px,4.9vw,20.5px);line-height:1.55;margin-bottom:14px}
+.capitular::first-letter{float:left;font-size:4em;line-height:.8;padding:5px 8px 0 0;color:var(--bordo);font-weight:600}
+.destacada{font-style:italic;color:var(--bordo);border-left:2px solid var(--ocre);padding-left:16px;margin-top:8px;font-size:clamp(19px,5.3vw,22px)}
+.medio{margin:auto 0}
+.firma{text-align:right;margin-top:auto}
+.firma .c{font-style:italic;font-size:21px}
+.firma .n{font-family:"Caveat",cursive;font-size:56px;color:var(--bordo);line-height:1;margin-top:2px}
+.firma .p{font-size:14px;letter-spacing:.06em;color:var(--suave);margin-top:4px}
+.folio{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-style:italic;font-size:13px;color:var(--suave)}
+
+/* contratapa */
+.contra{align-items:center;justify-content:center;text-align:center}
+.contra .q{font-style:italic;font-size:clamp(24px,7vw,30px);line-height:1.3;color:var(--bordo);margin-top:26px}
+.contra .pie{margin-top:30px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--suave);line-height:2}
+.contra .volver{margin-top:36px;background:none;border:1px solid var(--linea);color:var(--bordo);font:italic 16px "Cormorant Garamond",Georgia,serif;padding:8px 18px;border-radius:20px;cursor:pointer}
+
+/* navegación */
+.nav{display:flex;align-items:center;gap:16px;margin-top:14px;height:40px}
+.nav button{background:none;border:none;color:var(--bordo);font:italic 17px "Cormorant Garamond",Georgia,serif;cursor:pointer;padding:8px 6px;opacity:1;transition:opacity .3s}
+.nav button[disabled]{opacity:0;pointer-events:none}
+.puntos{display:flex;gap:7px}
+.puntos i{width:6px;height:6px;border-radius:50%;background:#CDBFAE;transition:background .3s,transform .3s}
+.puntos i.on{background:var(--bordo);transform:scale(1.25)}
+.pista{position:absolute;bottom:22px;left:0;right:0;text-align:center;font-style:italic;font-size:16px;color:var(--bordo);animation:latido 2.4s ease-in-out 3s infinite;pointer-events:none}
+@keyframes latido{0%,100%{opacity:1}50%{opacity:.4}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01s!important}.escalera path{stroke-dashoffset:0}.escalera circle{opacity:1}}
+</style>
+</head>
+<body>
+<div class="libro" id="libro" aria-live="polite">
+
+  <section class="hoja"><div class="cara tapa">
+    <div class="marco"></div><div class="marco2"></div>
+    <p class="kicker">Para quien va a evaluar</p>
+    <h1>Evaluar es <em>abrir puertas.</em></h1>
+    <div class="raya"></div>
+    <p class="sub">Lo que nos llevamos de este año</p>
+    <svg class="escalera" width="132" height="66" viewBox="0 0 120 60" aria-hidden="true"><path d="M6 54 H32 V40 H58 V26 H84 V12 H114" fill="none" stroke="#B07A2A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="99" cy="7" r="3.2" fill="#6B2C2C"/></svg>
+    <p class="pista">Tocá para abrir →</p>
+  </div><div class="dorso"></div><div class="sombra"></div></section>
+
+  <section class="hoja"><div class="cara">
+    <p class="para">Antes de despedirnos, quiero dejarte algo.</p>
+    <p class="t capitular">En marzo empezamos con una pregunta que no tenía respuesta: ¿es posible una evaluación justa? No la escribimos para contestarla rápido, sino para que nos acompañara todo el año. Hoy no tengo una respuesta cerrada para darte, pero sí lo que fuimos aprendiendo mientras la sosteníamos.</p>
+    <p class="folio">1</p>
+  </div><div class="dorso"></div><div class="sombra"></div></section>
+
+  <section class="hoja"><div class="cara"><div class="medio">
+    <p class="t">Aprendimos que nadie llega en blanco a evaluar: traemos en el cuerpo cómo nos evaluaron, las notas que dolieron y las palabras que alentaron.</p>
+    <p class="t">Que un criterio que no se dice antes obliga al otro a adivinar, y que adivinar no es aprender. Que una tarea vale por lo que hace pensar, no por cómo se ve. Que ningún instrumento es neutral. Y que una devolución enseña cuando deja un camino, no cuando dicta un veredicto.</p>
+    </div><p class="folio">2</p>
+  </div><div class="dorso"></div><div class="sombra"></div></section>
+
+  <section class="hoja"><div class="cara"><div class="medio">
+    <p class="t">Aprendimos, sobre todo, a mirar el error de otra manera. Y no solo en los textos: también lo vivimos. Hubo juegos que se trabaron, discusiones que subieron de tono, consignas que no estaban escritas. Cada una de esas cosas nos enseñó algo que ningún libro nos habría dado.</p>
+    <p class="t destacada">El error no es una falta: es la señal de por dónde seguir. Ojalá nunca lo olvides cuando tengas delante el trabajo de un alumno.</p>
+    </div><p class="folio">3</p>
+  </div><div class="dorso"></div><div class="sombra"></div></section>
+
+  <section class="hoja"><div class="cara"><div class="medio">
+    <p class="t">Muy pronto vas a estar del otro lado. Vas a tener en tus manos el poder de evaluar, y ese poder puede cerrar puertas o abrirlas.</p>
+    <p class="t">Te pido que lo uses para abrirlas: que tus alumnos sepan qué esperás de ellos, que se animen a equivocarse sin miedo, que cada devolución les diga qué pueden hacer para mejorar y que nunca tengan que medirse contra el de al lado.</p>
+    </div><p class="folio">4</p>
+  </div><div class="dorso"></div><div class="sombra"></div></section>
+
+  <section class="hoja"><div class="cara">
+    <div class="medio"><p class="t">Gracias por este recorrido. Por animarte a jugar, a discutir, a reescribir y a volver a empezar. Fue un año hermoso, y una parte de lo que vas a hacer en tu aula ya empezó acá.</p></div>
+    <div class="firma"><p class="c">Con cariño,</p><p class="n">Paula</p><p class="p">Prof. María Paula Sánchez</p></div>
+    <p class="folio">5</p>
+  </div><div class="dorso"></div><div class="sombra"></div></section>
+
+  <section class="hoja"><div class="cara contra">
+    <svg width="96" height="48" viewBox="0 0 120 60" aria-hidden="true"><path d="M6 54 H32 V40 H58 V26 H84 V12 H114" fill="none" stroke="#B07A2A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="99" cy="7" r="3.2" fill="#6B2C2C"/></svg>
+    <p class="q">¿Es posible una evaluación justa?<br>¿Qué necesitaría tener para serlo?</p>
+    <p class="pie">La pregunta de marzo<br>Evaluación de los Aprendizajes · 2026<br>Profesorado de Lengua y Literatura<br>ISFD N.º 129</p>
+    <button class="volver" id="volver">Volver a leer desde el principio</button>
+  </div><div class="dorso"></div><div class="sombra"></div></section>
+
+</div>
+<nav class="nav">
+  <button id="ant" disabled aria-label="Hoja anterior">← anterior</button>
+  <div class="puntos" id="puntos"></div>
+  <button id="sig" aria-label="Hoja siguiente">siguiente →</button>
+</nav>
+<script>
+(function(){
+  var hojas=[].slice.call(document.querySelectorAll('.hoja')),n=hojas.length,act=0,
+      ant=document.getElementById('ant'),sig=document.getElementById('sig'),pts=document.getElementById('puntos');
+  for(var i=0;i<n;i++){pts.appendChild(document.createElement('i'));}
+  function pintar(){
+    hojas.forEach(function(h,i){
+      h.classList.toggle('vuelta',i<act);
+      h.style.zIndex = i<act ? (i+1) : (n-i+n);
+    });
+    [].forEach.call(pts.children,function(p,i){p.classList.toggle('on',i===act);});
+    ant.disabled=act===0; sig.disabled=act===n-1;
+  }
+  function girar(h){h.classList.add('girando');setTimeout(function(){h.classList.remove('girando');},1000);}
+  function ir(d){
+    var nuevo=act+d; if(nuevo<0||nuevo>n-1)return;
+    var h=d>0?hojas[act]:hojas[nuevo];
+    h.style.zIndex=3*n; girar(h);
+    act=nuevo;
+    setTimeout(pintar,d>0?500:0);
+    h.classList.toggle('vuelta',d>0);
+    [].forEach.call(pts.children,function(p,i){p.classList.toggle('on',i===act);});
+    ant.disabled=act===0; sig.disabled=act===n-1;
+  }
+  sig.onclick=function(){ir(1)}; ant.onclick=function(){ir(-1)};
+  document.getElementById('volver').onclick=function(e){e.stopPropagation();act=0;pintar();};
+  hojas.forEach(function(h,i){h.querySelector('.cara').addEventListener('click',function(e){
+    if(i!==act)return; var r=this.getBoundingClientRect();
+    if(e.clientX-r.left < r.width*0.3) ir(-1); else ir(1);
+  });});
+  var x0=null;
+  document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>45){ir(dx<0?1:-1);}x0=null;});
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')ir(1);if(e.key==='ArrowLeft')ir(-1);});
+  pintar();
+})();
+</script>
+</body>
+</html>
