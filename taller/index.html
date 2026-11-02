@@ -255,6 +255,17 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
       </div>
     </div>
 
+    <div class="paso">
+      <div class="cab"><span class="n">6</span><h3>¿Qué lugar tiene la IA en la tarea?</h3></div>
+      <p class="ayuda">Basado en la propuesta de evaluación auténtica resiliente a la IA (Henríquez, 2025): no se trata de perseguir el uso, sino de diseñar dónde entra y cómo se declara.</p>
+      <div class="opciones" id="optIA">
+        <label class="op"><input type="radio" name="ia" value="sin" checked><span>Sin IA<small>La producción es enteramente de los alumnos</small></span></label>
+        <label class="op"><input type="radio" name="ia" value="fases"><span>Por fases<small>Primero sin IA; después revisión con IA y decisión propia</small></span></label>
+        <label class="op"><input type="radio" name="ia" value="borrador"><span>La IA hace un borrador<small>Los alumnos lo revisan críticamente y lo mejoran</small></span></label>
+        <label class="op"><input type="radio" name="ia" value="analisis"><span>La IA como objeto de análisis<small>Detectar errores, sesgos o datos inventados en un texto de la IA</small></span></label>
+      </div>
+    </div>
+
     <div class="recordatorio" role="note"><span class="ic">!</span><p><b>El generador no conoce a tus alumnos.</b> Vos sí. Usá el resultado como punto de partida y ajustalo a tu grupo.</p></div>
     <div class="generar">
       <button class="btn pri" id="btnGenerar">Generar mi evaluación</button>
@@ -328,6 +339,7 @@ var PROD={
   ]
 };
 var CRIT={
+  ia:{n:"Uso crítico de la IA",v:["Toma lo que propone la IA sin revisarlo.","Revisa lo que propone la IA, pero sin justificar qué toma y qué no.","Decide qué toma y qué descarta de la IA, y lo justifica con el texto y los criterios.","Además detecta errores, inventos o sesgos de la IA y explica por qué lo son."]},
   interp:{n:"Construcción de una lectura propia",v:["Cuenta lo que pasa, sin construir una lectura propia.","Esboza una lectura propia, pero no la sostiene con el texto.","Construye una lectura propia y la sostiene con el texto.","Construye una lectura propia, la sostiene y la pone en diálogo con otras lecturas posibles."]},
   evid:{n:"Uso de pistas del texto",v:["No vuelve al texto para sostener lo que dice.","Cita o menciona el texto, pero sin relacionarlo con su idea.","Elige fragmentos pertinentes y explica qué muestran.","Elige fragmentos precisos, los analiza y los relaciona entre sí."]},
   adec:{n:"Adecuación al destinatario",v:["El texto no tiene en cuenta a quién va dirigido.","Tiene en cuenta al destinatario en algunas partes.","El registro, el tono y la información se ajustan al destinatario.","Además anticipa lo que el destinatario necesita saber o podría preguntar."]},
@@ -353,6 +365,8 @@ var BANCO=[
   {a:"ciu",t:"Campaña en la escuela",p:"Afiches y textos breves para convencer a la comunidad sobre un tema.",d:"La comunidad escolar.",e:"Persuadir cuidando al destinatario.",prod:"campana"},
   {a:"ciu",t:"Gran debate",p:"Dos posturas se enfrentan ante un público que decide con criterios conocidos.",d:"Otro curso como público y jurado.",e:"Argumentar, escuchar y refutar.",prod:"debate"},
   {a:"ora",t:"Lectores que contagian",p:"Visitar un curso más chico para recomendar oralmente un libro.",d:"Estudiantes más chicos.",e:"Interpretar y entusiasmar oralmente.",prod:"recomienda"},
+  {a:"lit",t:"La IA se equivocó",p:"La docente trae una reseña escrita por una IA sobre una obra leída. Los alumnos detectan errores, datos inventados e interpretaciones forzadas, y la corrigen con pistas del texto.",d:"La biblioteca, como reseña corregida.",e:"Volver al texto para validar o refutar.",prod:"resena"},
+  {a:"est",t:"Revisión por fases",p:"Escriben una entrada de enciclopedia sin IA, después piden a una IA que la revise y deciden qué sugerencias aceptar, justificando cada decisión.",d:"Los próximos estudiantes.",e:"Revisar con criterio propio y declarar el uso.",prod:"enciclo"},
   {a:"ora",t:"La voz del barrio",p:"Entrevistas a personas de la comunidad sobre su relación con la lectura.",d:"La radio o el blog escolar.",e:"Preguntar, escuchar y editar.",prod:"entrevista"}
 ];
 var SEM=[
@@ -365,7 +379,9 @@ var SEM=[
   {q:"¿La devolución le dice al alumno qué puede hacer para mejorar?",r:"Usá SER: qué seguir haciendo, qué empezar a hacer y qué reformular."},
   {q:"¿El resultado depende del saber, y no del azar, la velocidad o recursos de la casa?",r:"Revisá qué factores ajenos al saber podrían decidir el resultado y sacalos."},
   {q:"Si se la das a una IA, ¿no puede resolverla bien sin haber aprendido?",sub:"Probala: pedile que la resuelva como si no hubiera leído el texto.",r:"Anclá la tarea en lo trabajado en clase, pedí el proceso y alguna explicación oral."},
-  {q:"¿Los alumnos tienen un espacio para autoevaluarse con los criterios?",r:"Sumá una autoevaluación breve con los mismos criterios y una evidencia."}
+  {q:"¿Los alumnos tienen un espacio para autoevaluarse con los criterios?",r:"Sumá una autoevaluación breve con los mismos criterios y una evidencia."},
+  {q:"¿Está claro qué uso de la IA se permite y cómo se declara?",sub:"Uso declarado: qué herramienta, qué se pidió, qué se tomó y qué no.",r:"Definí si la IA entra y en qué fase, y pedí una declaración breve de uso."},
+  {q:"¿Hay una instancia breve para que expliquen sus decisiones?",sub:"Una defensa de pocos minutos, no un interrogatorio.",r:"Sumá una defensa breve: que cada alumno explique una decisión de su trabajo."}
 ];
 
 /* ---------- utilidades ---------- */
@@ -397,6 +413,12 @@ var SUGLIT={"4":["Mitos y leyendas","Una epopeya o un cantar de gesta","Una trag
 var PLDC={"1": {"lit": ["Leer toda clase de textos literarios sugeridos por el docente, el bibliotecario, los compañeros o elegidos por el mismo alumno", "Escribir como lector", "Escribir reseñas"], "est": ["Buscar información a partir de criterios establecidos por el docente", "Leer textos de estudio con el acompañamiento de docente y pares", "Resumir textos informativos", "Organizar esa información de textos expositivos en cuadros", "Exponer oralmente", "Exponer por escrito a partir de consignas dadas por el docente"], "ciu": ["Comentar noticias y crónicas acerca de temas polémicos", "Leer críticamente las noticias y crónicas, analizar las campañas educativas, de prevención en salud y de formación ciudadana", "Producir cartas formales de circulación dentro del ámbito escolar y con otras instituciones vinculadas con la escuela", "Leer críticamente los textos instructivos de la escuela"]}, "2": {"lit": ["Seguir un género", "Leer ensayos y análisis de obras realizados por especialistas"], "est": ["Buscar y seleccionar información con criterios acordados con los pares y/o el docente", "Resumir por escrito y con distintos propósitos textos explicativos", "Organizar información procedente de más de un texto en distintos tipos de cuadros", "Organizar la información en fichas", "Exponer oralmente", "Exponer por escrito a partir de consignas dadas por el docente"], "ciu": ["Comentar, analizar y discutir temas polémicos", "Leer críticamente las informaciones con opinión que aparecen en los diferentes medios", "Analizar los discursos publicitarios", "Leer y producir cartas formales"]}, "3": {"lit": ["Seguir un autor", "Escribir breves ensayos sobre las obras leídas"], "est": ["Buscar y seleccionar información con criterios propios", "Resumir textos argumentativos", "Ampliar textos con información proveniente de otras producciones escritas", "Exponer oralmente lo estudiado ante distintos auditorios usando diferentes recursos gráficos"], "ciu": ["Organizar y participar en debates, argumentar posiciones por escrito, leer y analizar opiniones y debates que tienen lugar en los medios de comunicación", "Analizar la información explícita e implícita en textos polémicos", "Producir textos escritos y orales para comunicarse con las instituciones con diversos propósitos", "Leer críticamente distintos discursos jurídicos"]}};
 var PLRET={"lit": ["Leer un corpus obligatorio en cada año", "Formar parte de situaciones sociales de lectura", "Establecer relaciones con otros lenguajes artísticos"], "est": ["Buscar información", "Organizar información", "Comunicar conocimientos"], "ciu": ["Leer y analizar los textos que circulan en los medios masivos de comunicación", "Interactuar discursivamente con las instituciones"]};
 var LITDC={"lit": ["participar de situaciones sociales de lectura y escritura literaria", "establecer relaciones entre el lenguaje literario y otros lenguajes artísticos", "construir un proyecto personal de lectura literaria"], "est": ["leer y producir textos académicos (de estudio) y críticos (de análisis) de literatura"]};
+var IAMODO={
+ sin:{n:"Sin IA",c:"En esta tarea no se usa IA: queremos ver tu propio proceso, con tus borradores y tus decisiones.",fases:["Fase 1, sin IA: primer borrador propio."]},
+ fases:{n:"Por fases",c:"Primero vas a escribir tu borrador sin IA. Después podés pedirle a una IA que lo revise, y vas a decidir qué sugerencias tomar y cuáles no, explicando por qué.",fases:["Fase 1, sin IA: primer borrador propio.","Fase 2, con IA: pedirle una revisión (no que reescriba).","Fase 3, validación propia: decidir qué sugerencias tomar y justificar."]},
+ borrador:{n:"La IA hace un borrador",c:"Vas a pedirle a una IA un primer borrador. Tu trabajo es revisarlo con lo que sabés del texto: marcar errores, datos inventados y lugares comunes, corregirlo y mejorarlo. Se evalúan tus correcciones y tus justificaciones, no el borrador de la IA.",fases:["Fase 1: obtener el borrador de la IA y guardarlo.","Fase 2: marcar errores, inventos y debilidades, con pistas del texto.","Fase 3: reescribir y justificar cada cambio."]},
+ analisis:{n:"La IA como objeto de análisis",c:"Vas a analizar un texto producido por una IA sobre el tema: detectar errores, citas o datos inventados, sesgos e interpretaciones forzadas, y explicar por qué son problemas a partir del texto y de lo trabajado en clase.",fases:["Fase 1: leer el texto de la IA (lo trae la docente).","Fase 2: señalar errores, inventos y sesgos con evidencia del texto.","Fase 3: escribir una devolución a la IA, como si fuera un compañero."]}
+};
 var EJE={lit:'Eje de la literatura',est:'Eje del estudio',ciu:'Eje de la formación ciudadana',ora:'Oralidad (agregado de la cátedra)'};
 var MODO={ind:"individual",par:"en parejas",gru:"en grupo"};
 
@@ -405,8 +427,8 @@ function generar(){
   var falta=[];if(!anio)falta.push('el año');if(!amb)falta.push('la práctica');if(!cont)falta.push('el contenido');if(!pid)falta.push('la producción');
   if(falta.length){$('#falta').textContent='Te falta elegir '+falta.join(', ')+'.';return}
   $('#falta').textContent='';
-  var p=buscar(pid);dest=dest||p.d;var agr=esAgregado(anio,amb);
-  var crits=p.crit.map(function(c){return CRIT[c]});
+  var p=buscar(pid);dest=dest||p.d;var agr=esAgregado(anio,amb);var ia=val('ia')||'sin',IA=IAMODO[ia];
+  var crits=p.crit.map(function(c){return CRIT[c]});if(ia!=='sin')crits.push(CRIT.ia);
   var evid=p.crit.map(function(c){return EVID[c]});
   var vos=modo==='ind'?'Vas a':'Van a';
   var tu=modo==='ind'?'tu':'su';
@@ -423,6 +445,7 @@ function generar(){
   var consigna='<div class="consigna"><p><b>'+vos+' '+esc(p.acc)+' sobre '+esc(cont)+'</b>, para '+esc(dest)+'.</p>'+
     '<p>Para eso, '+(modo==='ind'?'vas':'van')+' a '+esc(p.hacer)+'.</p>'+
     '<p><b>Cómo vamos a trabajar:</b> primero un borrador, después una devolución con sugerencias y, por último, la versión final que va a llegar a '+esc(dest)+'.</p>'+
+    '<p><b>Sobre la IA:</b> '+esc(IA.c)+(ia!=='sin'?' Al final, vas a declarar cómo la usaste.':'')+'</p>'+
     '<p><b>Qué vamos a mirar:</b> '+crits.map(function(c){return c.n.toLowerCase()}).join(', ')+'. Los criterios completos están en la rúbrica.</p>'+
     '<p><b>'+(modo==='ind'?'Si te equivocás':'Si se equivocan')+' en el camino,</b> no resta: el borrador está para eso.</p></div>';
 
@@ -439,10 +462,17 @@ function generar(){
    '<div class="bloq" style="--c:#F7E4B8"><h4><i>2</i>La consigna para tus alumnos</h4>'+consigna+'</div>'+
    '<div class="bloq" style="--c:#D9EAD3"><h4><i>3</i>Rúbrica</h4><p>Compartila antes de empezar. Los niveles describen lo que se hace, no cantidades.</p>'+rub+'</div>'+
    '<div class="bloq" style="--c:#D4E6F3"><h4><i>4</i>El proceso, clase por clase</h4><ol>'+plan.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol>'+
-     '<p style="margin-top:10px"><b>Lista de cotejo del proceso:</b></p><ul><li>☐ Entregó el borrador.</li><li>☐ Recibió y leyó la devolución.</li><li>☐ Hizo cambios a partir de la devolución.</li><li>☐ Entregó la versión final al destinatario.</li><li>☐ Completó la autoevaluación.</li></ul></div>'+
+     '<p style="margin-top:10px"><b>Lista de cotejo del proceso:</b></p><ul><li>☐ Entregó el borrador.</li><li>☐ Recibió y leyó la devolución.</li><li>☐ Hizo cambios a partir de la devolución.</li><li>☐ Entregó la versión final al destinatario.</li><li>☐ Completó la autoevaluación.</li>'+(ia!=='sin'?'<li>☐ Entregó la declaración de uso de la IA.</li>':'')+'<li>☐ Explicó una decisión en la defensa breve.</li></ul></div>'+
    '<div class="bloq" style="--c:#E1DAF4"><h4><i>5</i>Devolución y error</h4><ul><li><b>Sobre el borrador, con SER:</b> qué seguir haciendo, qué empezar a hacer y qué reformular.</li><li><b>Si la devolución es oral, con la escalera de Wilson:</b> clarificar, valorar, expresar inquietudes, sugerir.</li><li><b>El error:</b> se lee como información sobre lo que falta enseñar, no como resta.</li><li><b>Sin comparar:</b> cada devolución habla de ese trabajo, nunca del de otro.</li></ul></div>'+
    '<div class="bloq" style="--c:#FADBC4"><h4><i>6</i>Autoevaluación</h4><ol><li>¿En qué nivel de la rúbrica te ubicás en cada criterio? Mostrá dónde se ve.</li><li>¿Qué cambiaste después de la devolución y por qué?</li><li>¿Qué tendrías que hacer para subir un nivel?</li></ol></div>'+
    '<div class="bloq" style="--c:#D9EAD3"><h4><i>7</i>Para que todos puedan (DUA)</h4><ul><li>Ofrecé el texto o las fuentes en más de un formato (papel, audio, digital).</li><li>Permití mostrar lo mismo de otra forma cuando haga falta (oral, escrito, visual), con los mismos criterios.</li><li>Sumá apoyos: un ejemplo, un glosario, una guía por partes.</li></ul></div>'+
+   '<div class="bloq" style="--c:#D4E6F3"><h4><i>IA</i>Lugar de la IA y transparencia</h4>'+
+   '<p><b>Modalidad: '+esc(IA.n)+'.</b></p><ol>'+IA.fases.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol>'+
+   '<p style="margin-top:8px"><b>Juicio no delegable:</b> lo que nunca puede hacer la IA por el alumno en esta tarea es '+(amb==='lit'?'construir su propia lectura del texto y sostenerla con fragmentos.':amb==='ciu'?'tomar posición y sostenerla con sus argumentos.':amb==='est'?'decidir qué información es confiable y cómo explicarla a su destinatario.':'decidir qué decir, a quién y cómo.')+'</p>'+
+   (ia!=='sin'?'<p style="margin-top:8px"><b>Declaración de uso:</b> al entregar, cada alumno completa: qué herramienta usó, qué le pidió, qué tomó, qué descartó y por qué.</p>':'')+
+   '<p style="margin-top:8px"><b>Trazabilidad:</b> guardar borradores y versiones (y, si se usó IA, la conversación) para que se vea el recorrido, no solo el producto.</p>'+
+   '<p style="margin-top:8px"><b>Defensa breve:</b> 3 a 5 minutos para que cada alumno explique una decisión de su trabajo. No es un interrogatorio: es otra evidencia de lo aprendido.</p>'+
+   '<p style="margin-top:8px;font-size:14px;color:#7E6F61">Basado en Henríquez Orrego, A. (2025). <i>Evaluación auténtica resiliente a la IA. Un desafío para la educación superior</i>. Observatorio de IA en Educación, UDLA Chile. Adaptado por la cátedra a la secundaria.</p></div>'+
    '<div class="bloq" style="--c:#F7E4B8"><h4><i>8</i>Prueba de estrés</h4><p>Antes de llevarla al aula, pedile a una IA que la resuelva como si no hubiera leído ni trabajado el tema. Si lo hace bien, anclá la tarea en lo trabajado en clase, pedí el proceso y sumá una breve explicación oral.</p></div>'+
    '<div class="bloq" style="--c:#E1DAF4"><h4><i>9</i>Pedido para la IA</h4><p>Para seguir mejorándola con ayuda de una IA, sin delegar las decisiones:</p><div class="prompt" id="promptIA">'+esc(prompt)+'</div>'+'<div class="recordatorio" role="note"><span class="ic">!</span><p><b>Cuando la IA te responda, revisá con sentido crítico:</b> ¿lo que propone es correcto?, ¿se ajusta a tu grupo y a lo que enseñaste?, ¿inventó datos, citas o textos?, ¿respeta tus criterios? Lo que no puedas justificar como docente, no lo uses.</p></div></div>'+
    '</div></div>'+
