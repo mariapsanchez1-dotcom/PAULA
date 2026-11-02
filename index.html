@@ -315,6 +315,21 @@ footer .firma{color:#fff}
 .taller-cta p{color:#EAF2F7;max-width:620px;font-size:15.5px}
 .boton-t{background:#fff;color:#3B7299;text-decoration:none;font-weight:700;border-radius:30px;padding:12px 24px;white-space:nowrap}
 .barra a.link.destacado{background:linear-gradient(90deg,#4E8445,#3B7299);color:#fff}
+
+/* guía en video */
+#guia{background:linear-gradient(180deg,var(--rosa) 0%,var(--fondo) 85%)}
+.guia-grid{display:grid;grid-template-columns:minmax(220px,330px) 1fr;gap:44px;align-items:center}
+.guia-video{position:relative;border-radius:30px;padding:10px;background:#2E2422;box-shadow:0 30px 60px -28px rgba(58,46,42,.55)}
+.guia-video video{display:block;width:100%;aspect-ratio:9/16;border-radius:22px;background:#F7F2E8}
+.guia-txt .kick{font-family:'Caveat',cursive;font-size:1.7rem;color:var(--ocre);margin:0 0 4px}
+.guia-txt h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:2.4rem;line-height:1.05;color:var(--bordo);margin:0 0 12px}
+.guia-txt p{color:var(--suave);line-height:1.6;margin:0 0 18px}
+.guia-lista{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+.guia-lista a{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--tinta);padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.7);border:1px solid var(--linea);font-size:.95rem}
+.guia-lista a:hover{border-color:var(--bordo)}
+.guia-lista b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--bordo);color:#fff;font-size:.8rem;display:flex;align-items:center;justify-content:center}
+.guia-lista .t b{background:var(--lavanda-f)}
+@media (max-width:760px){.guia-grid{grid-template-columns:1fr;gap:28px}.guia-video{max-width:300px;margin:0 auto}.guia-lista{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -322,6 +337,7 @@ footer .firma{color:#fff}
 <nav class="barra" aria-label="Secciones">
   <div class="wrap">
     <a class="marca" href="#lacarta">Evaluación de los Aprendizajes</a>
+    <a class="link" href="#guia">Guía en video</a>
     <a class="link" href="#recorrido">El recorrido</a>
     <a class="link" href="#autores">Los autores</a>
     <a class="link" href="#planificar">Para planificar</a>
@@ -409,6 +425,28 @@ footer .firma{color:#fff}
 <svg class="ola" viewBox="0 0 1440 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h1440v14c-160 26-320 30-480 14S640 0 480 10 160 46 0 22z" fill="#B5563F" opacity=".25"/><path d="M0 0h1440v6c-180 24-360 26-540 10S540 0 360 10 120 34 0 16z" fill="#8E3B3B"/></svg>
 
 <main>
+
+<!-- GUÍA EN VIDEO -->
+<section class="bloque" id="guia"><div class="wrap guia-grid">
+  <div class="guia-video"><video controls playsinline preload="none" poster="guia/portada-video.jpg" aria-label="Video: la web en un minuto">
+    <source src="guia/la-web-en-un-minuto.mp4" type="video/mp4">Tu navegador no puede reproducir el video.</video></div>
+  <div class="guia-txt">
+    <p class="kick">Antes de empezar…</p>
+    <h2>La web, paso a paso</h2>
+    <p>Mirá este video cortito y vas a saber dónde está cada cosa. Después, tocá el espacio al que quieras ir.</p>
+    <ul class="guia-lista">
+      <li><a href="#lacarta"><b>1</b>La carta</a></li>
+      <li><a href="#recorrido"><b>2</b>El recorrido</a></li>
+      <li><a href="#autores"><b>3</b>Los autores</a></li>
+      <li><a href="#planificar"><b>4</b>Para planificar</a></li>
+      <li><a href="#seguir"><b>5</b>Seguir aprendiendo</a></li>
+      <li class="t"><a href="taller/#generador"><b>6</b>Generador</a></li>
+      <li class="t"><a href="taller/#banco"><b>7</b>Banco de tareas</a></li>
+      <li class="t"><a href="taller/#semaforo"><b>8</b>Semáforo</a></li>
+      <li class="t"><a href="taller/#curso"><b>9</b>Planificar con IA</a></li>
+    </ul>
+  </div>
+</div></section>
 
 <!-- RECORRIDO -->
 <section class="bloque" id="recorrido"><div class="wrap">
