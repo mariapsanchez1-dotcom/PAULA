@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taller de evaluaciones · Lengua y Literatura · Evaluación de los Aprendizajes</title>
+<meta name="description" content="Herramientas para diseñar evaluaciones auténticas en Prácticas del Lenguaje y Literatura: generador paso a paso, banco de tareas y semáforo de revisión.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--papel:#F7F2E8;--fondo:#FFFDF8;--bordo:#6B2C2C;--ocre:#B07A2A;--suave:#7E6F61;--tinta:#3A2E2A;--linea:#E3D6C2;
+--rosa:#F8D9D2;--rosa-f:#C0563F;--salvia:#D9EAD3;--salvia-f:#4E8445;--lavanda:#E1DAF4;--lavanda-f:#6B55B0;
+--celeste:#D4E6F3;--celeste-f:#3B7299;--miel:#F7E4B8;--miel-f:#A9771C;--durazno:#FADBC4;--durazno-f:#C0612C}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
+body{background:var(--fondo);color:var(--tinta);font-family:"Lato",system-ui,sans-serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Cormorant Garamond",Georgia,serif}
+a{color:var(--bordo)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.barra{position:sticky;top:0;z-index:30;background:rgba(255,253,248,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--linea)}
+.barra .wrap{height:56px;display:flex;align-items:center;gap:10px;overflow-x:auto;scrollbar-width:none}
+.barra .wrap::-webkit-scrollbar{display:none}
+.barra .volver{font-size:14px;text-decoration:none;color:var(--suave);white-space:nowrap;margin-right:auto}
+.barra a.link{font-size:14px;color:var(--tinta);text-decoration:none;white-space:nowrap;padding:6px 12px;border-radius:18px}
+.barra a.link:hover{background:var(--bordo);color:#fff}
+
+.portada{background:linear-gradient(125deg,#4E8445 0%,#3B7299 55%,#6B55B0 100%);color:#fff;position:relative;overflow:hidden}
+.portada .wrap{padding:66px 22px 58px;text-align:center;position:relative}
+.kicker{font-size:12px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:var(--ocre)}
+.portada .kicker{color:#F7E4B8}
+.portada h1{font-size:clamp(40px,7.5vw,72px);line-height:1;margin:14px 0 12px;color:#fff}
+.portada h1 em{display:block;font-weight:500;font-size:.56em;color:#E3F0DE;margin-top:6px}
+.portada p{max-width:660px;margin:0 auto;color:#EAF2F7;font-size:17px}
+.burb span{position:absolute;border-radius:50%;background:#fff;opacity:.1}
+.accesos{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:30px}
+.accesos a{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;text-decoration:none;border-radius:16px;padding:12px 18px;min-width:200px;text-align:left}
+.accesos a b{display:block;font-family:"Cormorant Garamond",serif;font-size:22px}
+.accesos a span{font-size:13px;color:#E3EEF5}
+.accesos a:hover{background:rgba(255,255,255,.24)}
+
+section.bloque{padding:64px 0 48px}
+.titulo-sec{display:flex;align-items:center;gap:16px;margin-bottom:10px}
+.titulo-sec .num{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:26px;flex:none;background:var(--f)}
+.titulo-sec h2{font-size:clamp(32px,5vw,44px);color:var(--bordo);line-height:1.08}
+.intro{max-width:740px;color:var(--suave);font-size:17px;margin-bottom:28px}
+
+/* generador */
+#generador{--f:var(--salvia-f);background:linear-gradient(180deg,#EEF5EC,#FFFDF8)}
+.pasos{display:grid;gap:18px}
+.paso{background:#fff;border:1px solid var(--linea);border-radius:18px;padding:24px 26px;box-shadow:0 14px 30px -26px rgba(58,46,42,.5)}
+.paso .cab{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.paso .n{width:34px;height:34px;border-radius:50%;background:var(--salvia-f);color:#fff;font-weight:700;display:grid;place-items:center;flex:none}
+.paso h3{font-size:26px;color:var(--bordo);line-height:1.1}
+.paso .ayuda{font-size:14.5px;color:var(--suave);margin:-4px 0 12px}
+.opciones{display:flex;flex-wrap:wrap;gap:10px}
+.op{position:relative}
+.op input{position:absolute;opacity:0;pointer-events:none}
+.op span{display:block;border:1.5px solid var(--linea);background:var(--fondo);border-radius:14px;padding:10px 14px;cursor:pointer;font-size:15px;transition:.2s;max-width:310px}
+.op span small{display:block;color:var(--suave);font-size:12.5px;margin-top:2px}
+.op input:checked+span{border-color:var(--salvia-f);background:#E3F0DE;box-shadow:0 0 0 3px rgba(78,132,69,.15)}
+.op input:focus-visible+span{outline:2px solid var(--salvia-f);outline-offset:2px}
+.campo{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.campo label{font-weight:700;font-size:14.5px;color:var(--bordo)}
+.campo input[type=text],.campo textarea{font:inherit;border:1.5px solid var(--linea);border-radius:12px;padding:10px 12px;background:var(--fondo);width:100%}
+.campo input[type=text]:focus,.campo textarea:focus{outline:none;border-color:var(--salvia-f)}
+.sug{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.sug button{font:inherit;font-size:13px;border:1px dashed var(--salvia-f);background:transparent;color:var(--salvia-f);border-radius:14px;padding:3px 10px;cursor:pointer}
+.sug button:hover{background:#E3F0DE}
+.fila{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.generar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
+.btn{font:700 15px "Lato",sans-serif;border:none;border-radius:30px;padding:12px 24px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.pri{background:var(--salvia-f);color:#fff}
+.btn.sec{background:#fff;color:var(--bordo);border:1.5px solid var(--linea)}
+.btn.pri:hover{filter:brightness(.92)}
+.falta{color:var(--rosa-f);font-size:14px;font-weight:700}
+
+/* resultado */
+#resultado{display:none;margin-top:28px}
+#resultado.ver{display:block}
+.doc{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 24px 50px -30px rgba(58,46,42,.6);border:1px solid var(--linea)}
+.doc .encab{background:linear-gradient(120deg,#6B2C2C,#8E3B3B 60%,#B5563F);color:#fff;padding:26px 30px}
+.doc .encab .kicker{color:#F7E4B8}
+.doc .encab h3{font-size:clamp(28px,4.5vw,38px);line-height:1.1;margin-top:6px}
+.doc .encab p{color:#F3DCD2;margin-top:6px;font-size:15px}
+.doc .cuerpo{padding:10px 30px 26px}
+.bloq{padding:20px 0;border-bottom:1px dashed var(--linea)}
+.bloq:last-child{border-bottom:none}
+.bloq h4{font-size:24px;color:var(--bordo);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.bloq h4 i{font-style:normal;width:30px;height:30px;border-radius:50%;background:var(--c,#E3F0DE);display:grid;place-items:center;font-size:15px;color:var(--bordo);font-family:"Lato",sans-serif;font-weight:700}
+.bloq ul,.bloq ol{margin-left:22px}
+.bloq li{margin-bottom:6px}
+.consigna{background:var(--papel);border-left:4px solid var(--ocre);border-radius:10px;padding:16px 18px;font-size:16.5px}
+.consigna p{margin-bottom:8px}
+.rubrica{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+.rubrica th,.rubrica td{border:1px solid var(--linea);padding:9px 10px;vertical-align:top;text-align:left}
+.rubrica thead th{background:var(--bordo);color:#fff;font-family:"Lato",sans-serif;font-size:13px;letter-spacing:.04em}
+.rubrica tbody th{background:var(--papel);color:var(--bordo);font-family:"Cormorant Garamond",serif;font-size:18px;width:17%}
+.rubrica td:nth-child(2){background:#FDF3F0}.rubrica td:nth-child(3){background:#FEF8EC}.rubrica td:nth-child(4){background:#F1F7EF}.rubrica td:nth-child(5){background:#F1EEFA}
+.tabla-scroll{overflow-x:auto}
+.prompt{background:linear-gradient(135deg,#2F2724,#3D2C33);color:#F7F2E8;border-radius:12px;padding:16px 18px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;white-space:pre-wrap;line-height:1.55}
+.acciones{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+/* banco */
+#banco{--f:var(--celeste-f);background:linear-gradient(180deg,#EAF3F9,#FFFDF8)}
+.filtros{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.filtros button{font:700 14px "Lato",sans-serif;border:1px solid var(--linea);background:#fff;color:var(--tinta);border-radius:20px;padding:6px 14px;cursor:pointer}
+.filtros button.on{background:var(--celeste-f);border-color:var(--celeste-f);color:#fff}
+.tareas{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.tarea{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 14px 30px -24px rgba(58,46,42,.5);display:flex;flex-direction:column;border:1px solid rgba(58,46,42,.06)}
+.tarea .tag{background:var(--f2);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 18px}
+.tarea .in{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
+.tarea h3{font-size:24px;color:var(--bordo);line-height:1.12;margin-bottom:8px}
+.tarea p{font-size:15px;margin-bottom:8px}
+.tarea .dest{font-size:14px;background:var(--c2);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+.tarea .evid{font-size:14px;color:var(--suave)}
+.tarea .usar{margin-top:auto;padding-top:12px}
+.tarea .usar button{font:700 13.5px "Lato",sans-serif;background:none;border:1.5px solid var(--f2);color:var(--f2);border-radius:18px;padding:6px 14px;cursor:pointer}
+.tarea .usar button:hover{background:var(--f2);color:#fff}
+.tarea.oculta{display:none}
+.lit{--f2:var(--rosa-f);--c2:var(--rosa)}.est{--f2:var(--celeste-f);--c2:var(--celeste)}.ciu{--f2:var(--lavanda-f);--c2:var(--lavanda)}.ora{--f2:var(--miel-f);--c2:var(--miel)}
+
+/* semáforo */
+#semaforo{--f:var(--lavanda-f);background:linear-gradient(180deg,#F3F0FB,#FFFDF8)}
+.preguntas{background:#fff;border-radius:18px;border:1px solid var(--linea);overflow:hidden;box-shadow:0 14px 30px -26px rgba(58,46,42,.5)}
+.preg{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 20px;border-bottom:1px solid var(--linea)}
+.preg:last-child{border-bottom:none}
+.preg p{font-size:15.5px}
+.preg p small{display:block;color:var(--suave);font-size:13px}
+.tri{display:flex;gap:6px}
+.tri label{position:relative}
+.tri input{position:absolute;opacity:0}
+.tri span{display:block;font-size:13px;font-weight:700;border:1.5px solid var(--linea);border-radius:16px;padding:5px 11px;cursor:pointer;white-space:nowrap}
+.tri input:checked+span.si{background:var(--salvia-f);border-color:var(--salvia-f);color:#fff}
+.tri input:checked+span.am{background:var(--miel-f);border-color:var(--miel-f);color:#fff}
+.tri input:checked+span.no{background:var(--rosa-f);border-color:var(--rosa-f);color:#fff}
+.veredicto{margin-top:20px;border-radius:18px;padding:22px 24px;display:none;align-items:flex-start;gap:20px}
+.veredicto.ver{display:flex}
+.luz{width:74px;height:74px;border-radius:50%;flex:none;box-shadow:0 0 0 8px rgba(255,255,255,.6),0 10px 30px -10px rgba(0,0,0,.4)}
+.veredicto h3{font-size:28px;color:var(--bordo);line-height:1.1}
+.veredicto ul{margin:10px 0 0 20px;font-size:15px}
+.veredicto li{margin-bottom:6px}
+
+footer{background:var(--bordo);color:#EBDCCB;padding:28px 20px 40px;text-align:center;font-size:14px}
+footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);background:var(--bordo);color:#fff;padding:9px 18px;border-radius:20px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:50}
+.toast.ver{opacity:1;transform:translateX(-50%)}
+@media (max-width:700px){.fila{grid-template-columns:1fr}.paso{padding:20px 18px}.doc .cuerpo{padding:6px 18px 20px}.doc .encab{padding:22px 18px}.preg{grid-template-columns:1fr}.veredicto{flex-direction:column}}
+@media print{
+  body{background:#fff}
+  .barra,.portada,#banco,#semaforo,footer,.pasos,.generar,.acciones,.toast,.titulo-sec,.intro{display:none!important}
+  section.bloque{padding:0}#generador{background:#fff}
+  #resultado{display:block!important;margin:0}
+  .doc{box-shadow:none;border:none}
+  .doc .encab{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rubrica td,.rubrica th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .bloq{break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="barra"><div class="wrap">
+  <a class="volver" href="../">← Volver a la web</a>
+  <a class="link" href="#generador">Generador</a>
+  <a class="link" href="#banco">Banco de tareas</a>
+  <a class="link" href="#semaforo">Semáforo</a>
+  <a class="link" href="../curso-ia/">Curso de IA</a>
+</div></header>
+
+<section class="portada">
+  <div class="burb" aria-hidden="true"><span style="width:220px;height:220px;left:-70px;top:30px"></span><span style="width:160px;height:160px;right:-40px;top:90px"></span><span style="width:120px;height:120px;right:22%;bottom:-50px"></span></div>
+  <div class="wrap">
+    <p class="kicker">Evaluación de los Aprendizajes · Herramientas</p>
+    <h1>Taller de evaluaciones<em>para Lengua y Literatura</em></h1>
+    <p>Para diseñar evaluaciones auténticas en Prácticas del Lenguaje y Literatura: con un destinatario real, criterios claros, un lugar para el error y una devolución que enseña.</p>
+    <div class="accesos">
+      <a href="#generador"><b>Generador</b><span>Armá tu evaluación paso a paso</span></a>
+      <a href="#banco"><b>Banco de tareas</b><span>Ideas listas para adaptar</span></a>
+      <a href="#semaforo"><b>Semáforo</b><span>Revisá una evaluación que ya tenés</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- GENERADOR -->
+<section class="bloque" id="generador"><div class="wrap">
+  <div class="titulo-sec"><span class="num">1</span><h2>Generador de evaluaciones auténticas</h2></div>
+  <p class="intro">Respondé cinco preguntas y el generador te arma un borrador completo: consigna, criterios, rúbrica, proceso, devolución y autoevaluación. Es un punto de partida: después lo ajustás a tu grupo.</p>
+
+  <div class="pasos">
+    <div class="paso">
+      <div class="cab"><span class="n">1</span><h3>¿Para qué año?</h3></div>
+      <div class="opciones" id="optAnio">
+        <label class="op"><input type="radio" name="anio" value="1"><span>1.º y 2.º año<small>Prácticas del Lenguaje</small></span></label>
+        <label class="op"><input type="radio" name="anio" value="3"><span>3.º año<small>Prácticas del Lenguaje</small></span></label>
+        <label class="op"><input type="radio" name="anio" value="4"><span>4.º a 6.º año<small>Literatura</small></span></label>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="cab"><span class="n">2</span><h3>¿Qué práctica querés evaluar?</h3></div>
+      <div class="opciones" id="optAmbito">
+        <label class="op"><input type="radio" name="ambito" value="lit"><span>Lectura y escritura literaria<small>Leer, interpretar y escribir ficción o poesía</small></span></label>
+        <label class="op"><input type="radio" name="ambito" value="est"><span>Lectura y escritura para estudiar<small>Buscar, organizar y comunicar información</small></span></label>
+        <label class="op"><input type="radio" name="ambito" value="ciu"><span>Opinar y argumentar<small>Tomar posición sobre temas públicos</small></span></label>
+        <label class="op"><input type="radio" name="ambito" value="ora"><span>Oralidad<small>Exponer, recomendar, debatir</small></span></label>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="cab"><span class="n">3</span><h3>¿Sobre qué contenido u obra?</h3></div>
+      <p class="ayuda">Escribí el contenido, la obra o el tema. Podés tocar una sugerencia.</p>
+      <div class="campo"><input type="text" id="contenido" placeholder="Por ejemplo: cuentos fantásticos de Cortázar"></div>
+      <div class="sug" id="sugContenido"></div>
+    </div>
+
+    <div class="paso">
+      <div class="cab"><span class="n">4</span><h3>¿Qué van a producir y para quién?</h3></div>
+      <p class="ayuda">Una producción con un destinatario real, más allá de la nota.</p>
+      <div class="opciones" id="optProducto"><p class="ayuda" style="margin:0">Primero elegí la práctica en el paso 2.</p></div>
+      <div class="campo"><label for="destino">Destinatario real</label><input type="text" id="destino" placeholder="Se completa al elegir la producción; podés cambiarlo"></div>
+    </div>
+
+    <div class="paso">
+      <div class="cab"><span class="n">5</span><h3>¿Cómo lo organizás?</h3></div>
+      <div class="fila">
+        <div class="campo"><label>Modalidad</label>
+          <div class="opciones"><label class="op"><input type="radio" name="modo" value="ind" checked><span>Individual</span></label><label class="op"><input type="radio" name="modo" value="par"><span>En parejas</span></label><label class="op"><input type="radio" name="modo" value="gru"><span>En grupo</span></label></div>
+        </div>
+        <div class="campo"><label for="clases">Cantidad de clases</label><input type="text" id="clases" value="3" inputmode="numeric"></div>
+      </div>
+    </div>
+
+    <div class="generar">
+      <button class="btn pri" id="btnGenerar">Generar mi evaluación</button>
+      <span class="falta" id="falta"></span>
+    </div>
+  </div>
+
+  <div id="resultado" aria-live="polite"></div>
+</div></section>
+
+<!-- BANCO -->
+<section class="bloque" id="banco"><div class="wrap">
+  <div class="titulo-sec"><span class="num">2</span><h2>Banco de tareas auténticas</h2></div>
+  <p class="intro">Ideas para reemplazar la prueba de control por una tarea con sentido. Tocá «Usar en el generador» para partir de una de ellas.</p>
+  <div class="filtros" id="filtrosBanco">
+    <button class="on" data-f="todos">Todas</button>
+    <button data-f="lit">Literatura</button>
+    <button data-f="est">Para estudiar</button>
+    <button data-f="ciu">Argumentar</button>
+    <button data-f="ora">Oralidad</button>
+  </div>
+  <div class="tareas" id="listaTareas"></div>
+</div></section>
+
+<!-- SEMÁFORO -->
+<section class="bloque" id="semaforo"><div class="wrap">
+  <div class="titulo-sec"><span class="num">3</span><h2>Semáforo: revisá tu evaluación</h2></div>
+  <p class="intro">¿Tenés una evaluación armada, propia o de la escuela de prácticas? Respondé estas preguntas con honestidad y mirá qué conviene mejorar.</p>
+  <div class="preguntas" id="preguntas"></div>
+  <div class="veredicto" id="veredicto"><span class="luz" id="luz"></span><div><h3 id="vTit"></h3><p id="vTxt"></p><ul id="vLista"></ul></div></div>
+</div></section>
+
+<footer>
+  <p class="firma">Paula</p>
+  <p>Prof. María Paula Sánchez · Evaluación de los Aprendizajes · Profesorado de Lengua y Literatura · ISFD N.º 129, Junín · 2026</p>
+  <p style="margin-top:6px;font-size:12.5px">Las herramientas proponen borradores. La última palabra es tuya.</p>
+</footer>
+<div class="toast" id="toast">Copiado</div>
+
+<script>
+(function(){
+/* ---------- datos ---------- */
+var SUG={
+  lit:["Cuentos fantásticos","Cuentos policiales","Poesía latinoamericana","Una novela breve","Mitos y leyendas","Teatro: una obra breve"],
+  est:["Un tema de otra materia","La historia de un género literario","Biografía de un autor","Variedades del español"],
+  ciu:["Un tema de la escuela","Uso del celular en el aula","Una noticia de la comunidad","Lenguaje y redes sociales"],
+  ora:["Una obra leída en clase","Un tema investigado","Un problema de la escuela"]
+};
+var PROD={
+  lit:[
+    {id:"resena",acc:"escribir una reseña",n:"Reseña para recomendar",d:"lectores de la biblioteca escolar o de las redes de la escuela",hacer:"escribir una reseña que recomiende (o no) la obra y fundamente esa opinión con fragmentos del texto",crit:["interp","evid","adec","gen","proc"]},
+    {id:"antologia",acc:"armar una antología comentada",n:"Antología comentada",d:"un curso más chico de la escuela",hacer:"seleccionar textos, escribir un prólogo y una breve presentación de cada uno que explique por qué fue elegido",crit:["interp","evid","adec","org","proc"]},
+    {id:"reescritura",acc:"reescribir un fragmento y escribir una nota de autor",n:"Reescritura con nota de autor",d:"compañeros de otro curso, en una lectura pública",hacer:"reescribir un fragmento cambiando el narrador, el final o el punto de vista, y escribir una nota de autor que explique las decisiones tomadas",crit:["interp","gen","decis","proc"]},
+    {id:"podcast",acc:"grabar un podcast de lectura",n:"Podcast o audio de lectura",d:"oyentes de la radio o las redes de la escuela",hacer:"grabar un episodio breve que presente la obra, lea un fragmento elegido y proponga una interpretación",crit:["interp","evid","adec","oral"]}
+  ],
+  est:[
+    {id:"divulga",acc:"hacer un folleto o una infografía de divulgación",n:"Folleto o infografía de divulgación",d:"estudiantes de otro curso o familias",hacer:"investigar el tema y comunicarlo en un texto breve, claro y con fuentes",crit:["fuentes","org","adec","proc"]},
+    {id:"enciclo",acc:"escribir una entrada para la enciclopedia del curso",n:"Entrada para la enciclopedia del curso",d:"los próximos estudiantes que cursen la materia",hacer:"escribir una entrada que explique el tema con precisión, ejemplos y referencias",crit:["fuentes","org","adec","proc"]},
+    {id:"guia",acc:"elaborar una guía de estudio",n:"Guía de estudio para otros",d:"un curso que va a estudiar el mismo tema",hacer:"elaborar una guía que ayude a otros a estudiar: conceptos clave, ejemplos y preguntas",crit:["fuentes","org","adec","decis"]}
+  ],
+  ciu:[
+    {id:"carta",acc:"escribir una carta",n:"Carta de lectores o carta formal",d:"un medio local o una autoridad de la escuela o del municipio",hacer:"escribir una carta que tome posición sobre el tema y la sostenga con argumentos y datos",crit:["arg","fuentes","adec","proc"]},
+    {id:"campana",acc:"diseñar una campaña de concientización",n:"Campaña de concientización",d:"la comunidad escolar",hacer:"diseñar afiches y un texto breve que convenzan sobre una postura, cuidando a quién se dirigen",crit:["arg","adec","gen","proc"]},
+    {id:"debate",acc:"participar en un debate público",n:"Debate público",d:"otro curso que actúa como público y jurado",hacer:"preparar y sostener una postura en un debate, escuchar y responder a los argumentos contrarios",crit:["arg","fuentes","oral","escucha"]}
+  ],
+  ora:[
+    {id:"recomienda",acc:"hacer una recomendación oral",n:"Recomendación oral",d:"un curso más chico, en una visita a su aula",hacer:"presentar oralmente una obra para entusiasmar a otros a leerla, con la lectura de un fragmento",crit:["interp","adec","oral","escucha"]},
+    {id:"exposicion",acc:"hacer una exposición con soporte",n:"Exposición con soporte",d:"otro curso o una muestra de la escuela",hacer:"exponer un tema investigado con un soporte visual y responder preguntas del público",crit:["fuentes","org","oral","escucha"]},
+    {id:"entrevista",acc:"hacer una entrevista",n:"Entrevista",d:"la comunidad, en la radio o el blog de la escuela",hacer:"preparar, hacer y editar una entrevista a alguien de la comunidad sobre el tema",crit:["adec","org","oral","proc"]}
+  ]
+};
+var CRIT={
+  interp:{n:"Interpretación del texto",v:["Cuenta lo que pasa, sin proponer una lectura propia.","Propone una lectura, pero general o poco clara.","Propone una interpretación propia y la explica.","Propone una interpretación propia, la explica y considera otras lecturas posibles."]},
+  evid:{n:"Uso de pistas del texto",v:["No vuelve al texto para sostener lo que dice.","Cita o menciona el texto, pero sin relacionarlo con su idea.","Elige fragmentos pertinentes y explica qué muestran.","Elige fragmentos precisos, los analiza y los relaciona entre sí."]},
+  adec:{n:"Adecuación al destinatario",v:["El texto no tiene en cuenta a quién va dirigido.","Tiene en cuenta al destinatario en algunas partes.","El registro, el tono y la información se ajustan al destinatario.","Además anticipa lo que el destinatario necesita saber o podría preguntar."]},
+  gen:{n:"Recursos del género",v:["No usa los rasgos del género pedido.","Usa algunos rasgos del género, de manera irregular.","Usa los rasgos del género con propósito.","Usa los rasgos del género con propósito y de manera creativa."]},
+  org:{n:"Organización",v:["Las ideas aparecen sueltas, sin un orden reconocible.","Hay un orden, pero con saltos o repeticiones.","Las ideas siguen un orden claro y se conectan.","El orden ayuda a comprender y destaca lo más importante."]},
+  proc:{n:"Proceso de revisión",v:["Entrega una sola versión, sin revisar.","Revisa aspectos superficiales (ortografía, prolijidad).","Revisa el sentido a partir de la devolución recibida.","Revisa el sentido y explica qué cambió y por qué."]},
+  decis:{n:"Decisiones fundamentadas",v:["No explica sus decisiones.","Nombra sus decisiones sin justificarlas.","Explica sus decisiones y las relaciona con lo trabajado.","Explica sus decisiones, las relaciona con lo trabajado y evalúa alternativas."]},
+  fuentes:{n:"Búsqueda y uso de fuentes",v:["No usa fuentes o no las identifica.","Usa fuentes, pero sin evaluar su confiabilidad.","Usa fuentes confiables y las cita.","Contrasta fuentes, las cita y explica por qué confía en ellas."]},
+  arg:{n:"Argumentación",v:["Da una opinión sin argumentos.","Da argumentos, pero débiles o poco relacionados con su postura.","Sostiene su postura con argumentos pertinentes y ejemplos.","Además anticipa y responde argumentos contrarios."]},
+  oral:{n:"Comunicación oral",v:["Lee de corrido o se pierde; cuesta seguirlo.","Se lo entiende, pero depende mucho del papel.","Habla con claridad, en un registro adecuado y mirando al público.","Además usa la voz, las pausas y el soporte para sostener el interés."]},
+  escucha:{n:"Escucha y respuesta",v:["No responde a lo que dicen los demás.","Responde, pero sin retomar lo que dijo el otro.","Retoma lo que dice el otro y responde con pertinencia.","Retoma, responde y reformula su posición si hace falta."]}
+};
+var EVID={interp:"proponer una interpretación propia del texto",evid:"sostenerla con fragmentos del texto",adec:"adecuar su producción a un destinatario real",gen:"usar los recursos del género con propósito",org:"organizar sus ideas con claridad",proc:"revisar su producción a partir de una devolución",decis:"explicar y fundamentar sus decisiones",fuentes:"buscar, seleccionar y citar fuentes confiables",arg:"sostener una postura con argumentos",oral:"comunicar oralmente con claridad",escucha:"escuchar y responder a otros"};
+var BANCO=[
+  {a:"lit",t:"La biblioteca recomienda",p:"Reseñas de las obras leídas para un fichero o una cartelera de la biblioteca escolar.",d:"Lectores de toda la escuela.",e:"Interpretar y fundamentar una opinión con el texto.",prod:"resena"},
+  {a:"lit",t:"Antología para primer año",p:"El curso arma una antología de cuentos para los que recién entran, con prólogo y comentarios.",d:"Un curso de 1.º año.",e:"Seleccionar, interpretar y justificar la elección.",prod:"antologia"},
+  {a:"lit",t:"El cuento contado por otro",p:"Reescribir un cuento desde la mirada de otro personaje, con una nota de autor.",d:"Lectura pública en la escuela.",e:"Comprender cómo el punto de vista construye el sentido.",prod:"reescritura"},
+  {a:"lit",t:"Podcast de lecturas",p:"Episodios breves que presentan una obra y leen un fragmento elegido.",d:"La radio o las redes de la escuela.",e:"Interpretar y comunicar una lectura.",prod:"podcast"},
+  {a:"est",t:"¿Sabías que…?",p:"Infografías de divulgación sobre un tema estudiado, para exponer en los pasillos.",d:"Estudiantes y familias.",e:"Seleccionar, organizar y comunicar información confiable.",prod:"divulga"},
+  {a:"est",t:"La enciclopedia del curso",p:"Cada estudiante escribe una entrada sobre un concepto o autor, y el curso arma su enciclopedia.",d:"Los próximos estudiantes.",e:"Explicar con precisión y citar fuentes.",prod:"enciclo"},
+  {a:"est",t:"Guía para los que vienen",p:"Una guía de estudio hecha por el curso para el año siguiente.",d:"El curso del próximo año.",e:"Jerarquizar lo importante y anticipar dificultades.",prod:"guia"},
+  {a:"ciu",t:"Carta a quien decide",p:"Una carta formal sobre un problema real de la escuela o del barrio.",d:"Una autoridad escolar o municipal.",e:"Argumentar con datos y adecuarse a un destinatario formal.",prod:"carta"},
+  {a:"ciu",t:"Campaña en la escuela",p:"Afiches y textos breves para convencer a la comunidad sobre un tema.",d:"La comunidad escolar.",e:"Persuadir cuidando al destinatario.",prod:"campana"},
+  {a:"ciu",t:"Gran debate",p:"Dos posturas se enfrentan ante un público que decide con criterios conocidos.",d:"Otro curso como público y jurado.",e:"Argumentar, escuchar y refutar.",prod:"debate"},
+  {a:"ora",t:"Lectores que contagian",p:"Visitar un curso más chico para recomendar oralmente un libro.",d:"Estudiantes más chicos.",e:"Interpretar y entusiasmar oralmente.",prod:"recomienda"},
+  {a:"ora",t:"La voz del barrio",p:"Entrevistas a personas de la comunidad sobre su relación con la lectura.",d:"La radio o el blog escolar.",e:"Preguntar, escuchar y editar.",prod:"entrevista"}
+];
+var SEM=[
+  {q:"¿Los criterios están escritos y los alumnos los conocen antes de empezar?",r:"Escribí los criterios en un lenguaje que entiendan y compartilos desde el primer día."},
+  {q:"¿La tarea pide pensar, y no solo recordar o copiar?",r:"Cambiá preguntas de respuesta única por decisiones que el alumno tenga que tomar y fundamentar."},
+  {q:"¿Tiene un destinatario real, además de vos?",r:"Pensá para quién podría ser útil esa producción: otro curso, la biblioteca, la comunidad."},
+  {q:"¿Admite más de una resolución válida?",r:"Abrí la consigna para que haya distintos caminos posibles, con los mismos criterios para todos."},
+  {q:"¿Hay borradores o momentos de revisión antes de la versión final?",r:"Sumá al menos un borrador con devolución antes de la entrega."},
+  {q:"¿Está previsto qué pasa cuando alguien se equivoca?",r:"Decidí cómo vas a usar los errores: como información para devolver, no como resta."},
+  {q:"¿La devolución le dice al alumno qué puede hacer para mejorar?",r:"Usá SER: qué seguir haciendo, qué empezar a hacer y qué reformular."},
+  {q:"¿El resultado depende del saber, y no del azar, la velocidad o recursos de la casa?",r:"Revisá qué factores ajenos al saber podrían decidir el resultado y sacalos."},
+  {q:"Si se la das a una IA, ¿no puede resolverla bien sin haber aprendido?",sub:"Probala: pedile que la resuelva como si no hubiera leído el texto.",r:"Anclá la tarea en lo trabajado en clase, pedí el proceso y alguna explicación oral."},
+  {q:"¿Los alumnos tienen un espacio para autoevaluarse con los criterios?",r:"Sumá una autoevaluación breve con los mismos criterios y una evidencia."}
+];
+
+/* ---------- utilidades ---------- */
+function $(s,c){return (c||document).querySelector(s)}
+function $$(s,c){return [].slice.call((c||document).querySelectorAll(s))}
+function val(n){var e=$('input[name="'+n+'"]:checked');return e?e.value:null}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+var toast=$('#toast');function aviso(t){toast.textContent=t;toast.classList.add('ver');setTimeout(function(){toast.classList.remove('ver')},1700)}
+function copiar(t,msg){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){aviso(msg||'Copiado')},function(){aviso('No se pudo copiar: seleccioná el texto')})}else aviso('Seleccioná el texto y copialo')}
+
+/* ---------- generador ---------- */
+function pintarAmbito(){
+  var a=val('ambito'),box=$('#optProducto'),sug=$('#sugContenido');
+  sug.innerHTML='';box.innerHTML='';
+  if(!a){box.innerHTML='<p class="ayuda" style="margin:0">Primero elegí la práctica en el paso 2.</p>';return}
+  SUG[a].forEach(function(s){var b=document.createElement('button');b.type='button';b.textContent=s;b.onclick=function(){$('#contenido').value=s};sug.appendChild(b)});
+  PROD[a].forEach(function(p){var l=document.createElement('label');l.className='op';l.innerHTML='<input type="radio" name="prod" value="'+p.id+'"><span>'+esc(p.n)+'<small>Para '+esc(p.d)+'</small></span>';box.appendChild(l)});
+  $$('input[name="prod"]').forEach(function(i){i.addEventListener('change',function(){var p=buscar(i.value);$('#destino').value=p.d})});
+}
+function buscar(id){for(var a in PROD)for(var i=0;i<PROD[a].length;i++)if(PROD[a][i].id===id)return PROD[a][i]}
+$$('input[name="ambito"]').forEach(function(i){i.addEventListener('change',pintarAmbito)});
+
+var ANIO={"1":"1.º y 2.º año · Prácticas del Lenguaje","3":"3.º año · Prácticas del Lenguaje","4":"4.º a 6.º año · Literatura"};
+var MODO={ind:"individual",par:"en parejas",gru:"en grupo"};
+
+function generar(){
+  var anio=val('anio'),amb=val('ambito'),pid=val('prod'),cont=$('#contenido').value.trim(),dest=$('#destino').value.trim(),modo=val('modo')||'ind',clases=parseInt($('#clases').value,10)||3;
+  var falta=[];if(!anio)falta.push('el año');if(!amb)falta.push('la práctica');if(!cont)falta.push('el contenido');if(!pid)falta.push('la producción');
+  if(falta.length){$('#falta').textContent='Te falta elegir '+falta.join(', ')+'.';return}
+  $('#falta').textContent='';
+  var p=buscar(pid);dest=dest||p.d;
+  var crits=p.crit.map(function(c){return CRIT[c]});
+  var evid=p.crit.map(function(c){return EVID[c]});
+  var vos=modo==='ind'?'Vas a':'Van a';
+  var tu=modo==='ind'?'tu':'su';
+  var plan=[];
+  plan.push('Clase 1 · Presentación de la tarea, del destinatario y de los criterios. Lectura o búsqueda inicial sobre '+cont+'.');
+  if(clases>=3){plan.push('Clase 2 · Primer borrador y devolución (de la docente o entre pares, con SER).');}
+  if(clases>=4){for(var k=3;k<clases;k++)plan.push('Clase '+k+' · Revisión del borrador a partir de la devolución.');}
+  plan.push('Clase '+clases+' · Versión final, presentación al destinatario y autoevaluación.');
+  if(clases<3)plan.splice(1,0,'Borrador con devolución entre clases (tarea).');
+
+  var rub='<div class="tabla-scroll"><table class="rubrica"><thead><tr><th>Criterio</th><th>Inicial</th><th>En proceso</th><th>Logrado</th><th>Logrado con profundización</th></tr></thead><tbody>'+
+    crits.map(function(c){return '<tr><th>'+esc(c.n)+'</th>'+c.v.map(function(x){return '<td>'+esc(x)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>';
+
+  var consigna='<div class="consigna"><p><b>'+vos+' '+esc(p.acc)+' sobre '+esc(cont)+'</b>, para '+esc(dest)+'.</p>'+
+    '<p>Para eso, '+(modo==='ind'?'vas':'van')+' a '+esc(p.hacer)+'.</p>'+
+    '<p><b>Cómo vamos a trabajar:</b> primero un borrador, después una devolución con sugerencias y, por último, la versión final que va a llegar a '+esc(dest)+'.</p>'+
+    '<p><b>Qué vamos a mirar:</b> '+crits.map(function(c){return c.n.toLowerCase()}).join(', ')+'. Los criterios completos están en la rúbrica.</p>'+
+    '<p><b>'+(modo==='ind'?'Si te equivocás':'Si se equivocan')+' en el camino,</b> no resta: el borrador está para eso.</p></div>';
+
+  var prompt='Sos docente de '+(anio==='4'?'Literatura':'Prácticas del Lenguaje')+' en una escuela secundaria de la provincia de Buenos Aires ('+ANIO[anio]+').\n'+
+    'Diseñé esta evaluación auténtica: '+p.n.toLowerCase()+' sobre '+cont+', para '+dest+'. Los alumnos tienen que '+p.hacer+'.\n'+
+    'Criterios: '+crits.map(function(c){return c.n}).join('; ')+'.\n'+
+    'Ayudame a: 1) proponer dos ejemplos de producciones de distinto nivel para mostrar a los alumnos, 2) sugerir una actividad breve para presentar la tarea, 3) señalar qué partes de la consigna podrían no entenderse. No cambies los criterios.';
+
+  var html='<div class="doc" id="docEval">'+
+   '<div class="encab"><p class="kicker">Evaluación auténtica · '+esc(ANIO[anio])+'</p><h3>'+esc(p.n)+': '+esc(cont)+'</h3><p>Destinatario real: '+esc(dest)+' · Trabajo '+MODO[modo]+' · '+clases+' clases</p></div>'+
+   '<div class="cuerpo">'+
+   '<div class="bloq" style="--c:#F8D9D2"><h4><i>1</i>Propósito y evidencia</h4><p>Empezamos por lo que queremos ver. Al terminar, cada estudiante tendría que poder:</p><ul>'+evid.map(function(e){return '<li>'+esc(e)+'.</li>'}).join('')+'</ul></div>'+
+   '<div class="bloq" style="--c:#F7E4B8"><h4><i>2</i>La consigna para tus alumnos</h4>'+consigna+'</div>'+
+   '<div class="bloq" style="--c:#D9EAD3"><h4><i>3</i>Rúbrica</h4><p>Compartila antes de empezar. Los niveles describen lo que se hace, no cantidades.</p>'+rub+'</div>'+
+   '<div class="bloq" style="--c:#D4E6F3"><h4><i>4</i>El proceso, clase por clase</h4><ol>'+plan.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol>'+
+     '<p style="margin-top:10px"><b>Lista de cotejo del proceso:</b></p><ul><li>☐ Entregó el borrador.</li><li>☐ Recibió y leyó la devolución.</li><li>☐ Hizo cambios a partir de la devolución.</li><li>☐ Entregó la versión final al destinatario.</li><li>☐ Completó la autoevaluación.</li></ul></div>'+
+   '<div class="bloq" style="--c:#E1DAF4"><h4><i>5</i>Devolución y error</h4><ul><li><b>Sobre el borrador, con SER:</b> qué seguir haciendo, qué empezar a hacer y qué reformular.</li><li><b>Si la devolución es oral, con la escalera de Wilson:</b> clarificar, valorar, expresar inquietudes, sugerir.</li><li><b>El error:</b> se lee como información sobre lo que falta enseñar, no como resta.</li><li><b>Sin comparar:</b> cada devolución habla de ese trabajo, nunca del de otro.</li></ul></div>'+
+   '<div class="bloq" style="--c:#FADBC4"><h4><i>6</i>Autoevaluación</h4><ol><li>¿En qué nivel de la rúbrica te ubicás en cada criterio? Mostrá dónde se ve.</li><li>¿Qué cambiaste después de la devolución y por qué?</li><li>¿Qué tendrías que hacer para subir un nivel?</li></ol></div>'+
+   '<div class="bloq" style="--c:#D9EAD3"><h4><i>7</i>Para que todos puedan (DUA)</h4><ul><li>Ofrecé el texto o las fuentes en más de un formato (papel, audio, digital).</li><li>Permití mostrar lo mismo de otra forma cuando haga falta (oral, escrito, visual), con los mismos criterios.</li><li>Sumá apoyos: un ejemplo, un glosario, una guía por partes.</li></ul></div>'+
+   '<div class="bloq" style="--c:#F7E4B8"><h4><i>8</i>Prueba de estrés</h4><p>Antes de llevarla al aula, pedile a una IA que la resuelva como si no hubiera leído ni trabajado el tema. Si lo hace bien, anclá la tarea en lo trabajado en clase, pedí el proceso y sumá una breve explicación oral.</p></div>'+
+   '<div class="bloq" style="--c:#E1DAF4"><h4><i>9</i>Pedido para la IA</h4><p>Para seguir mejorándola con ayuda de una IA, sin delegar las decisiones:</p><div class="prompt" id="promptIA">'+esc(prompt)+'</div></div>'+
+   '</div></div>'+
+   '<div class="acciones"><button class="btn pri" id="btnCopiar">Copiar todo</button><button class="btn sec" id="btnPrompt">Copiar el pedido para la IA</button><button class="btn sec" id="btnImprimir">Imprimir o guardar en PDF</button><button class="btn sec" id="btnOtra">Armar otra</button></div>'+
+   '<p class="ayuda" style="margin-top:10px">Es un borrador: revisalo, cambialo y adaptalo a tu grupo. La última palabra es tuya.</p>';
+  var r=$('#resultado');r.innerHTML=html;r.classList.add('ver');
+  r.scrollIntoView({behavior:'smooth',block:'start'});
+  $('#btnCopiar').onclick=function(){copiar($('#docEval').innerText,'Evaluación copiada')};
+  $('#btnPrompt').onclick=function(){copiar($('#promptIA').innerText,'Pedido copiado')};
+  $('#btnImprimir').onclick=function(){window.print()};
+  $('#btnOtra').onclick=function(){r.classList.remove('ver');r.innerHTML='';$('#generador').scrollIntoView({behavior:'smooth'})};
+}
+$('#btnGenerar').addEventListener('click',generar);
+
+/* ---------- banco ---------- */
+var NOM={lit:"Literatura",est:"Para estudiar",ciu:"Argumentar",ora:"Oralidad"};
+var lista=$('#listaTareas');
+BANCO.forEach(function(b){
+  var el=document.createElement('article');el.className='tarea '+b.a;el.dataset.a=b.a;
+  el.innerHTML='<div class="tag">'+NOM[b.a]+'</div><div class="in"><h3>'+esc(b.t)+'</h3><p>'+esc(b.p)+'</p><p class="dest"><b>Para:</b> '+esc(b.d)+'</p><p class="evid"><b>Qué muestra:</b> '+esc(b.e)+'</p><div class="usar"><button type="button">Usar en el generador →</button></div></div>';
+  el.querySelector('button').onclick=function(){
+    var r=$('input[name="ambito"][value="'+b.a+'"]');r.checked=true;pintarAmbito();
+    var pr=$('input[name="prod"][value="'+b.prod+'"]');if(pr){pr.checked=true;$('#destino').value=buscar(b.prod).d}
+    $('#generador').scrollIntoView({behavior:'smooth'});aviso('Completá el año y el contenido');
+  };
+  lista.appendChild(el);
+});
+$$('#filtrosBanco button').forEach(function(btn){btn.onclick=function(){
+  $$('#filtrosBanco button').forEach(function(x){x.classList.toggle('on',x===btn)});
+  $$('.tarea').forEach(function(t){t.classList.toggle('oculta',btn.dataset.f!=='todos'&&t.dataset.a!==btn.dataset.f)});
+}});
+
+/* ---------- semáforo ---------- */
+var cont=$('#preguntas');
+SEM.forEach(function(s,i){
+  var d=document.createElement('div');d.className='preg';
+  d.innerHTML='<p>'+esc(s.q)+(s.sub?'<small>'+esc(s.sub)+'</small>':'')+'</p><div class="tri" role="radiogroup" aria-label="'+esc(s.q)+'">'+
+   '<label><input type="radio" name="s'+i+'" value="2"><span class="si">Sí</span></label>'+
+   '<label><input type="radio" name="s'+i+'" value="1"><span class="am">A medias</span></label>'+
+   '<label><input type="radio" name="s'+i+'" value="0"><span class="no">No</span></label></div>';
+  cont.appendChild(d);
+});
+function evaluar(){
+  var tot=0,resp=0,mejoras=[];
+  SEM.forEach(function(s,i){var v=val('s'+i);if(v!==null){resp++;tot+=+v;if(v!=='2')mejoras.push(s.r)}});
+  var ver=$('#veredicto');if(!resp){ver.classList.remove('ver');return}
+  ver.classList.add('ver');
+  var pct=tot/(resp*2),luz=$('#luz'),t,tx,bg;
+  if(pct>=.8){t='Verde: lista para el aula';tx='Tu evaluación tiene lo central. Revisá los detalles marcados.';luz.style.background='#4E8445';bg='#E3F0DE'}
+  else if(pct>=.5){t='Amarillo: con algunos ajustes';tx='Va bien encaminada. Estos cambios la harían más justa y más auténtica:';luz.style.background='#D9A12B';bg='#FBF1D9'}
+  else{t='Rojo: conviene rediseñarla';tx='Todavía se parece más a una prueba de control. Empezá por acá:';luz.style.background='#C0563F';bg='#FBE3DD'}
+  ver.style.background=bg;$('#vTit').textContent=t+(resp<SEM.length?' (respondiste '+resp+' de '+SEM.length+')':'');$('#vTxt').textContent=tx;
+  $('#vLista').innerHTML=mejoras.map(function(m){return '<li>'+esc(m)+'</li>'}).join('');
+}
+cont.addEventListener('change',evaluar);
+})();
+</script>
+</body>
+</html>
