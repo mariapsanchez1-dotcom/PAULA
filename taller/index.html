@@ -163,6 +163,16 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
 .franja-ia{background:linear-gradient(90deg,#FFF6E3,#FDEFE9);border-bottom:1px solid #E9CF95}
 .franja-ia .wrap{padding:14px 22px}
 .franja-ia .recordatorio{margin:0;background:transparent;border:none;padding:0}
+.badge{display:inline-block;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:10px;padding:2px 8px;margin-top:6px}
+.badge.dc{background:#E3F0DE;color:var(--salvia-f)}
+.badge.ag{background:#FFF0D6;color:#9A6512;border:1px dashed #D9A12B}
+.aviso-ag{display:none;background:#FFF6E3;border:1.5px dashed #D9A12B;border-radius:14px;padding:14px 18px;font-size:15px}
+.aviso-ag.ver{display:block}
+.aviso-ag b{color:#9A6512}
+.anclaje{background:#F1F7EF;border-radius:12px;padding:14px 16px;font-size:15px}
+.anclaje .ag{display:block;margin-top:10px;background:#FFF6E3;border:1.5px dashed #D9A12B;border-radius:10px;padding:10px 12px}
+.anclaje .ag b{color:#9A6512}
+.tarea .tag em{font-style:normal;background:rgba(255,255,255,.25);border-radius:8px;padding:1px 6px;margin-left:6px}
 </style>
 </head>
 <body>
@@ -208,11 +218,12 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
 
     <div class="paso">
       <div class="cab"><span class="n">2</span><h3>¿Qué práctica querés evaluar?</h3></div>
+      <p class="ayuda">Los ejes son los del Diseño Curricular de Prácticas del Lenguaje (1.º a 3.º año). Lo marcado como <b>Agregado</b> no está contemplado como tal en el diseño: es una opción complementaria que suma la cátedra.</p>
       <div class="opciones" id="optAmbito">
-        <label class="op"><input type="radio" name="ambito" value="lit"><span>Lectura y escritura literaria<small>Leer, interpretar y escribir ficción o poesía</small></span></label>
-        <label class="op"><input type="radio" name="ambito" value="est"><span>Lectura y escritura para estudiar<small>Buscar, organizar y comunicar información</small></span></label>
-        <label class="op"><input type="radio" name="ambito" value="ciu"><span>Opinar y argumentar<small>Tomar posición sobre temas públicos</small></span></label>
-        <label class="op"><input type="radio" name="ambito" value="ora"><span>Oralidad<small>Exponer, recomendar, debatir</small></span></label>
+        <label class="op"><input type="radio" name="ambito" value="lit"><span>Eje de la literatura<small>Leer, interpretar y escribir ficción o poesía</small><em class="badge dc">En el diseño</em></span></label>
+        <label class="op"><input type="radio" name="ambito" value="est"><span>Eje del estudio<small>Buscar, organizar y comunicar información</small><em class="badge dc" data-b="est">En el diseño</em></span></label>
+        <label class="op"><input type="radio" name="ambito" value="ciu"><span>Eje de la formación ciudadana<small>Opinar y argumentar sobre temas públicos</small><em class="badge dc" data-b="ciu">En el diseño</em></span></label>
+        <label class="op"><input type="radio" name="ambito" value="ora"><span>Oralidad<small>Exponer, recomendar, debatir</small><em class="badge ag">Agregado</em></span></label>
       </div>
     </div>
 
@@ -222,6 +233,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
       <div class="campo"><input type="text" id="contenido" placeholder="Por ejemplo: cuentos fantásticos de Cortázar"></div>
       <div class="sug" id="sugContenido"></div>
     </div>
+    <div class="aviso-ag" id="avisoAg" role="note"></div>
 
     <div class="paso">
       <div class="cab"><span class="n">4</span><h3>¿Qué van a producir y para quién?</h3></div>
@@ -253,13 +265,13 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
 <!-- BANCO -->
 <section class="bloque" id="banco"><div class="wrap">
   <div class="titulo-sec"><span class="num">2</span><h2>Banco de tareas auténticas</h2></div>
-  <p class="intro">Ideas para reemplazar la prueba de control por una tarea con sentido. Tocá «Usar en el generador» para partir de una de ellas.</p>
+  <p class="intro">Ideas para reemplazar la prueba de control por una tarea con sentido, organizadas por los ejes del diseño de Prácticas del Lenguaje. Las de oralidad están marcadas como <b>agregado</b>: la oralidad atraviesa los ejes, pero no es un eje propio del diseño. Tocá «Usar en el generador» para partir de una de ellas.</p>
   <div class="filtros" id="filtrosBanco">
     <button class="on" data-f="todos">Todas</button>
     <button data-f="lit">Literatura</button>
-    <button data-f="est">Para estudiar</button>
-    <button data-f="ciu">Argumentar</button>
-    <button data-f="ora">Oralidad</button>
+    <button data-f="est">Estudio</button>
+    <button data-f="ciu">Formación ciudadana</button>
+    <button data-f="ora">Oralidad (agregado)</button>
   </div>
   <div class="tareas" id="listaTareas"></div>
 </div></section>
@@ -374,6 +386,7 @@ function buscar(id){for(var a in PROD)for(var i=0;i<PROD[a].length;i++)if(PROD[a
 $$('input[name="ambito"]').forEach(function(i){i.addEventListener('change',pintarAmbito)});
 
 var ANIO={"1":"1.º y 2.º año · Prácticas del Lenguaje","3":"3.º año · Prácticas del Lenguaje","4":"4.º a 6.º año · Literatura"};
+var EJE={lit:'Eje de la literatura',est:'Eje del estudio',ciu:'Eje de la formación ciudadana',ora:'Oralidad (agregado de la cátedra)'};
 var MODO={ind:"individual",par:"en parejas",gru:"en grupo"};
 
 function generar(){
@@ -381,7 +394,7 @@ function generar(){
   var falta=[];if(!anio)falta.push('el año');if(!amb)falta.push('la práctica');if(!cont)falta.push('el contenido');if(!pid)falta.push('la producción');
   if(falta.length){$('#falta').textContent='Te falta elegir '+falta.join(', ')+'.';return}
   $('#falta').textContent='';
-  var p=buscar(pid);dest=dest||p.d;
+  var p=buscar(pid);dest=dest||p.d;var agr=esAgregado(anio,amb);
   var crits=p.crit.map(function(c){return CRIT[c]});
   var evid=p.crit.map(function(c){return EVID[c]});
   var vos=modo==='ind'?'Vas a':'Van a';
@@ -408,8 +421,9 @@ function generar(){
     'Ayudame a: 1) proponer dos ejemplos de producciones de distinto nivel para mostrar a los alumnos, 2) sugerir una actividad breve para presentar la tarea, 3) señalar qué partes de la consigna podrían no entenderse. No cambies los criterios.';
 
   var html='<div class="doc" id="docEval">'+
-   '<div class="encab"><p class="kicker">Evaluación auténtica · '+esc(ANIO[anio])+'</p><h3>'+esc(p.n)+': '+esc(cont)+'</h3><p>Destinatario real: '+esc(dest)+' · Trabajo '+MODO[modo]+' · '+clases+' clases</p></div>'+
+   '<div class="encab"><p class="kicker">Evaluación auténtica · '+esc(ANIO[anio])+(agr?' · Incluye un agregado':'')+'</p><h3>'+esc(p.n)+': '+esc(cont)+'</h3><p>Destinatario real: '+esc(dest)+' · Trabajo '+MODO[modo]+' · '+clases+' clases</p></div>'+
    '<div class="cuerpo">'+
+   '<div class="bloq" style="--c:#E3F0DE"><h4><i>✓</i>Anclaje en el diseño curricular</h4><div class="anclaje"><p><b>'+esc(EJE[amb])+'</b> · '+esc(ANIO[anio])+'. Diseño Curricular para la Educación Secundaria, DGCyE.</p>'+(agr?'<span class="ag"><b>Agregado:</b> '+esc(agr)+'</span>':'')+'<p style="margin-top:10px;font-size:14px;color:#7E6F61">La producción, los criterios y la rúbrica son una propuesta didáctica de la cátedra: no están prescriptos por el diseño. Cotejá los contenidos con el diseño del año que vas a dar.</p></div></div>'+
    '<div class="bloq" style="--c:#F8D9D2"><h4><i>1</i>Propósito y evidencia</h4><p>Empezamos por lo que queremos ver. Al terminar, cada estudiante tendría que poder:</p><ul>'+evid.map(function(e){return '<li>'+esc(e)+'.</li>'}).join('')+'</ul></div>'+
    '<div class="bloq" style="--c:#F7E4B8"><h4><i>2</i>La consigna para tus alumnos</h4>'+consigna+'</div>'+
    '<div class="bloq" style="--c:#D9EAD3"><h4><i>3</i>Rúbrica</h4><p>Compartila antes de empezar. Los niveles describen lo que se hace, no cantidades.</p>'+rub+'</div>'+
@@ -430,10 +444,24 @@ function generar(){
   $('#btnImprimir').onclick=function(){window.print()};
   $('#btnOtra').onclick=function(){r.classList.remove('ver');r.innerHTML='';$('#generador').scrollIntoView({behavior:'smooth'})};
 }
+
+function esAgregado(anio,amb){
+  if(amb==='ora') return 'La oralidad no aparece en el diseño como un eje propio: atraviesa los tres ejes (literatura, estudio y formación ciudadana). Esta opción es un agregado de la cátedra para trabajarla de manera específica.';
+  if(anio==='4'&&(amb==='est'||amb==='ciu')) return 'De 4.º a 6.º año la materia es Literatura. Este eje corresponde al diseño de Prácticas del Lenguaje (1.º a 3.º año): para estos años es un agregado, una opción complementaria que podría incluirse, no algo que el diseño de Literatura prescriba.';
+  return '';
+}
+function marcarAgregados(){
+  var anio=val('anio'),amb=val('ambito');
+  ['est','ciu'].forEach(function(k){var b=document.querySelector('[data-b="'+k+'"]');if(!b)return;if(anio==='4'){b.className='badge ag';b.textContent='Agregado para 4.º a 6.º'}else{b.className='badge dc';b.textContent='En el diseño'}});
+  var lit=document.querySelector('input[name="ambito"][value="lit"]+span .badge');if(lit){lit.textContent=anio==='4'?'En el diseño de Literatura':'En el diseño'}
+  var av=$('#avisoAg'),msg=esAgregado(anio,amb);
+  if(msg){av.innerHTML='<b>Agregado:</b> '+msg;av.classList.add('ver')}else{av.classList.remove('ver');av.innerHTML=''}
+}
+$$('input[name="anio"],input[name="ambito"]').forEach(function(i){i.addEventListener('change',marcarAgregados)});
 $('#btnGenerar').addEventListener('click',generar);
 
 /* ---------- banco ---------- */
-var NOM={lit:"Literatura",est:"Para estudiar",ciu:"Argumentar",ora:"Oralidad"};
+var NOM={lit:"Eje de la literatura",est:"Eje del estudio",ciu:"Eje de la formación ciudadana",ora:"Oralidad <em>Agregado</em>"};
 var lista=$('#listaTareas');
 BANCO.forEach(function(b){
   var el=document.createElement('article');el.className='tarea '+b.a;el.dataset.a=b.a;
