@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Taller de evaluaciones · Lengua y Literatura · Evaluación de los Aprendizajes</title>
+<title>Taller de evaluaciones y planificación con IA · Lengua y Literatura · Evaluación de los Aprendizajes</title>
 <meta name="description" content="Herramientas para diseñar evaluaciones auténticas en Prácticas del Lenguaje y Literatura: generador paso a paso, banco de tareas y semáforo de revisión.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -173,6 +173,106 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
 .anclaje .ag{display:block;margin-top:10px;background:#FFF6E3;border:1.5px dashed #D9A12B;border-radius:10px;padding:10px 12px}
 .anclaje .ag b{color:#9A6512}
 .tarea .tag em{font-style:normal;background:rgba(255,255,255,.25);border-radius:8px;padding:1px 6px;margin-left:6px}
+#curso /* portada */
+.portada{background:var(--papel);border-bottom:1px solid var(--linea);position:relative;overflow:hidden}
+#curso /* layout */
+.layout{max-width:1180px;margin:0 auto;padding:36px 20px 80px;display:grid;grid-template-columns:270px 1fr;gap:36px;align-items:start}
+#curso /* módulos */
+.modulo{background:#fff;border:1px solid var(--linea);border-radius:18px;padding:34px 34px 28px;margin-bottom:28px;border-top:6px solid var(--f)}
+#curso .modulo .cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px}
+#curso .modulo .et{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--f)}
+#curso .modulo .dur{font-size:13px;color:var(--suave)}
+#curso .modulo h2{font-size:clamp(30px,4.6vw,40px);color:var(--bordo);line-height:1.08;margin:6px 0 8px;width:100%}
+#curso .modulo .meta{background:var(--c);border-radius:12px;padding:14px 18px;margin:14px 0 20px;font-size:15.5px}
+#curso .modulo .meta b{color:var(--bordo)}
+#curso .modulo h3{font-size:25px;color:var(--bordo);margin:26px 0 8px;line-height:1.15}
+#curso .modulo p{margin-bottom:12px;max-width:760px}
+#curso .modulo ul,#curso .modulo ol{margin:4px 0 14px 22px;max-width:760px}
+#curso .modulo li{margin-bottom:7px}
+#curso .modulo li b{color:var(--bordo)}
+#curso .idea{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:23px;line-height:1.35;color:var(--bordo);border-left:3px solid var(--f);padding:2px 0 2px 16px;margin:18px 0}
+#curso .prompt{background:#2F2724;color:#F7F2E8;border-radius:12px;padding:16px 18px 14px;margin:14px 0 18px;position:relative;font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:14px;line-height:1.55;white-space:pre-wrap}
+#curso .prompt .tag{display:block;font-family:"Lato",sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#E3C58F;margin-bottom:8px;font-weight:700}
+#curso .prompt .hueco{background:rgba(227,197,143,.22);color:#F3DDB2;border-radius:4px;padding:0 4px}
+#curso .copiar{position:absolute;top:10px;right:10px;font:700 12px "Lato",sans-serif;background:#F7F2E8;color:var(--bordo);border:none;border-radius:16px;padding:5px 12px;cursor:pointer}
+#curso .comparar{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0 18px}
+#curso .comparar div{border-radius:12px;padding:14px 16px;font-size:15px}
+#curso .comparar .mal{background:var(--rosa)}
+#curso .comparar .bien{background:var(--salvia)}
+#curso .comparar b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+#curso .comparar .mal b{color:var(--rosa-f)}
+#curso .comparar .bien b{color:var(--salvia-f)}
+#curso .cura{background:var(--papel);border:1px solid var(--linea);border-radius:12px;padding:16px 18px;margin:14px 0 18px}
+#curso .cura h4{font-size:21px;color:var(--bordo);margin-bottom:6px}
+#curso .cura ul{margin-bottom:0}
+#curso .hacelo{background:var(--c);border-radius:12px;padding:18px 20px;margin:18px 0 10px}
+#curso .hacelo h4{font-size:22px;color:var(--bordo);margin-bottom:6px}
+#curso .hacelo h4::before{content:"✎ ";color:var(--f)}
+#curso .piensa{font-size:15.5px;color:var(--suave);margin-top:14px}
+#curso .piensa b{color:var(--bordo)}
+#curso .tabla{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:15px}
+#curso .tabla th,#curso .tabla td{border-bottom:1px solid var(--linea);padding:9px 10px;text-align:left;vertical-align:top}
+#curso .tabla th{font-family:"Cormorant Garamond",serif;font-size:19px;color:var(--bordo)}
+#curso .marcar{display:flex;align-items:center;gap:10px;margin-top:22px;padding-top:16px;border-top:1px dashed var(--linea);font-size:15px;cursor:pointer;color:var(--bordo);font-weight:700}
+#curso .marcar input{width:19px;height:19px;accent-color:var(--salvia-f)}
+#curso .m0{--c:var(--papel);--f:var(--ocre)}
+#curso .m1{--c:var(--rosa);--f:var(--rosa-f)}
+#curso .m2{--c:var(--durazno);--f:var(--durazno-f)}
+#curso .m3{--c:var(--miel);--f:var(--miel-f)}
+#curso .m4{--c:var(--salvia);--f:var(--salvia-f)}
+#curso .m5{--c:var(--celeste);--f:var(--celeste-f)}
+#curso .m6{--c:var(--lavanda);--f:var(--lavanda-f)}
+#curso .m7{--c:var(--rosa);--f:var(--rosa-f)}
+#curso .m8{--c:var(--durazno);--f:var(--durazno-f)}
+#curso .m9{--c:var(--salvia);--f:var(--salvia-f)}
+#curso .boton{display:inline-block;background:var(--bordo);color:#fff;text-decoration:none;border-radius:30px;padding:11px 24px;font-weight:700;font-size:15px}
+@media (max-width:900px){#curso .layout{grid-template-columns:1fr;padding-top:20px}
+#curso .modulo{padding:24px 18px 20px}
+#curso .comparar{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){#curso *{transition:none!important}
+}
+#curso /* ===== DISEÑO 2 ===== */
+
+
+.portada{background:linear-gradient(125deg,#6B2C2C 0%,#8E3B3B 40%,#6B55B0 100%);border-bottom:none;color:#fff}
+#curso .modulo{border:none;border-top:none;padding:0;overflow:hidden;box-shadow:0 18px 40px -28px rgba(58,46,42,.55)}
+#curso .modulo .cab{background:linear-gradient(120deg,var(--f),color-mix(in srgb,var(--f) 70%,#6B2C2C));padding:22px 34px 18px;color:#fff}
+#curso .modulo .cab .et,#curso .modulo .cab .dur{color:#fff;opacity:.92}
+#curso .modulo .cab h2{color:#fff}
+#curso .modulo>*:not(.cab){margin-left:34px;margin-right:34px}
+#curso .modulo>.marcar{margin-bottom:24px}
+#curso .modulo .meta{margin-top:22px}
+#curso .prompt{background:linear-gradient(135deg,#2F2724,#3D2C33)}
+#curso .hacelo{border:2px dashed var(--f)}
+#curso .cura{background:#fff;border-left:5px solid var(--f)}
+#curso .modulo>.tabla,#curso .modulo>.comparar{width:calc(100% - 68px)}
+@media (max-width:900px){#curso .modulo>.tabla,#curso .modulo>.comparar{width:calc(100% - 36px)}
+#curso .modulo .cab{padding:18px 18px 14px}
+#curso .modulo>*:not(.cab){margin-left:18px;margin-right:18px}
+}
+#curso .recordatorio{display:flex;gap:12px;align-items:flex-start;background:#FFF6E3;border:1.5px solid #E9CF95;border-left:6px solid var(--miel-f);border-radius:12px;padding:12px 16px;margin:-6px 0 18px;font-size:14.5px;line-height:1.5}
+#curso .recordatorio .ic{flex:none;width:28px;height:28px;border-radius:50%;background:var(--miel-f);color:#fff;display:grid;place-items:center;font-weight:700}
+#curso .recordatorio b{color:var(--bordo)}
+#curso .modulo>.recordatorio{margin-left:34px;margin-right:34px}
+@media (max-width:900px){#curso .modulo>.recordatorio{margin-left:18px;margin-right:18px}
+}
+
+#curso{--f:var(--lavanda-f);background:linear-gradient(180deg,#F1EDFA,#FFFDF8)}
+.cprog{display:flex;align-items:center;gap:12px;margin-bottom:14px;font-size:14px;color:var(--suave)}
+.cprog .b{flex:1;max-width:320px;height:9px;border-radius:6px;background:#fff;border:1px solid var(--linea);overflow:hidden}
+.cprog .b i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rosa-f),var(--lavanda-f));transition:width .4s}
+.cnav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.cnav button{font:inherit;font-size:14px;display:flex;align-items:center;gap:8px;border:1.5px solid var(--linea);background:#fff;border-radius:20px;padding:6px 12px;cursor:pointer;color:var(--tinta)}
+.cnav button .nm{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:700;color:var(--ocre);font-size:17px}
+.cnav button .ok{color:var(--salvia-f);font-weight:700;display:none}
+.cnav button.hecho .ok{display:inline}
+.cnav button.on{background:var(--lavanda-f);border-color:var(--lavanda-f);color:#fff}
+.cnav button.on .nm{color:#F7E4B8}
+#curso .modulo{display:none;margin-bottom:18px}
+#curso .modulo.ver{display:block}
+.cpasos{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media (max-width:700px){.cnav button .tx{display:none}}
 </style>
 </head>
 <body>
@@ -182,19 +282,20 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
   <a class="link" href="#generador">Generador</a>
   <a class="link" href="#banco">Banco de tareas</a>
   <a class="link" href="#semaforo">Semáforo</a>
-  <a class="link" href="../curso-ia/">Curso de IA</a>
+  <a class="link" href="#curso">Planificar con IA</a>
 </div></header>
 
 <section class="portada">
   <div class="burb" aria-hidden="true"><span style="width:220px;height:220px;left:-70px;top:30px"></span><span style="width:160px;height:160px;right:-40px;top:90px"></span><span style="width:120px;height:120px;right:22%;bottom:-50px"></span></div>
   <div class="wrap">
     <p class="kicker">Evaluación de los Aprendizajes · Herramientas</p>
-    <h1>Taller de evaluaciones<em>para Lengua y Literatura</em></h1>
+    <h1>Taller de evaluaciones<em>y planificación con IA · Lengua y Literatura</em></h1>
     <p>Para diseñar evaluaciones auténticas en Prácticas del Lenguaje y Literatura: con un destinatario real, criterios claros, un lugar para el error y una devolución que enseña.</p>
     <div class="accesos">
       <a href="#generador"><b>Generador</b><span>Armá tu evaluación paso a paso</span></a>
       <a href="#banco"><b>Banco de tareas</b><span>Ideas listas para adaptar</span></a>
       <a href="#semaforo"><b>Semáforo</b><span>Revisá una evaluación que ya tenés</span></a>
+      <a href="#curso"><b>Planificar con IA</b><span>Curso en diez módulos</span></a>
     </div>
   </div>
 </section>
@@ -297,6 +398,218 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
   <div class="preguntas" id="preguntas"></div>
   <div class="recordatorio" role="note"><span class="ic">!</span><p><b>El semáforo te orienta, pero no decide.</b> Tu mirada sobre el grupo y lo que enseñaste pesa más que cualquier puntaje.</p></div>
   <div class="veredicto" id="veredicto"><span class="luz" id="luz"></span><div><h3 id="vTit"></h3><p id="vTxt"></p><ul id="vLista"></ul></div></div>
+</div></section>
+
+<!-- CURSO -->
+<section class="bloque" id="curso"><div class="wrap">
+  <div class="titulo-sec"><span class="num">4</span><h2>Planificar con IA en Lengua y Literatura</h2></div>
+  <p class="intro">Un curso breve, en diez módulos, para usar la inteligencia artificial al planificar, escribir consignas y evaluar, sin delegar tus decisiones. Con pedidos listos para copiar y un proyecto final. <b>La IA propone. Vos decidís.</b></p>
+  <div class="cprog"><div class="b"><i id="cProgBar"></i></div><span id="cProgTxt">0 de 10 módulos</span></div>
+  <div class="cnav" id="cNav" role="tablist" aria-label="Módulos del curso"><button type="button" data-i="0"><span class="nm">0</span><span class="tx">Antes de empezar</span><span class="ok">✓</span></button><button type="button" data-i="1"><span class="nm">1</span><span class="tx">Pedir bien</span><span class="ok">✓</span></button><button type="button" data-i="2"><span class="nm">2</span><span class="tx">Planificar una secuencia</span><span class="ok">✓</span></button><button type="button" data-i="3"><span class="nm">3</span><span class="tx">Consignas y tareas auténticas</span><span class="ok">✓</span></button><button type="button" data-i="4"><span class="nm">4</span><span class="tx">Leer literatura con IA</span><span class="ok">✓</span></button><button type="button" data-i="5"><span class="nm">5</span><span class="tx">Escribir con IA</span><span class="ok">✓</span></button><button type="button" data-i="6"><span class="nm">6</span><span class="tx">Evaluar con IA</span><span class="ok">✓</span></button><button type="button" data-i="7"><span class="nm">7</span><span class="tx">Que todos puedan: IA y DUA</span><span class="ok">✓</span></button><button type="button" data-i="8"><span class="nm">8</span><span class="tx">Ética, autoría y datos</span><span class="ok">✓</span></button><button type="button" data-i="9"><span class="nm">9</span><span class="tx">Proyecto final</span><span class="ok">✓</span></button></div>
+  <div id="cMods">
+  <article class="modulo m0" id="m0" data-m="0">
+  <div class="cab"><span class="et">Módulo 0</span><span class="dur">· 30 minutos</span><h2>Antes de empezar</h2></div>
+  <div class="meta"><b>Al terminar vas a poder</b> explicar qué hace una IA generativa, qué no puede hacer por vos y cuáles son las tres reglas que vamos a usar en todo el curso.</div>
+  <h3>Qué hace (y qué no) una IA generativa</h3>
+  <p>Las herramientas como ChatGPT, Gemini, Claude o Copilot producen texto prediciendo qué palabras suelen ir juntas, a partir de muchísimos textos. Por eso escriben con fluidez sobre casi cualquier tema. Pero escribir con fluidez no es saber.</p>
+  <ul>
+    <li><b>No conoce a tu grupo.</b> No sabe qué leyeron, qué les cuesta ni qué pasó en la clase anterior. Eso lo sabés vos.</li>
+    <li><b>Puede inventar.</b> Citas de autores, datos de una obra, referencias bibliográficas: todo puede sonar verdadero y ser falso.</li>
+    <li><b>No tiene posición pedagógica.</b> Responde con lo más frecuente, que suele ser lo más tradicional.</li>
+    <li><b>Sí sirve</b> para tener un primer borrador rápido, ver alternativas, ordenar ideas, adaptar un texto o revisar si algo se entiende.</li>
+  </ul>
+  <p class="idea">Usá la IA como un colega que propone mucho y rápido, pero que no conoce a tus alumnos y a veces se equivoca con total seguridad.</p>
+  <h3>Las tres reglas del curso</h3>
+  <ol>
+    <li><b>La última palabra es tuya.</b> Nada de lo que produce la IA entra al aula sin que lo leas, lo cambies y puedas explicar por qué lo dejaste.</li>
+    <li><b>Nunca datos de tus alumnos.</b> Ni nombres, ni fotos, ni trabajos con datos que los identifiquen. Si querés ayuda con una devolución, primero sacá todo dato personal.</li>
+    <li><b>Todo se verifica.</b> Citas, fechas, autores y datos de obras se chequean en la fuente, siempre.</li>
+  </ol>
+  <div class="hacelo"><h4>Hacelo</h4><p>Pedile a una IA: «¿Qué dice Alicia Camilloni sobre las apreciaciones personales del profesor? Dame una cita textual con página». Después buscá la cita en el texto. ¿Existe? ¿Dice eso? Anotá qué encontraste.</p></div>
+  <p class="piensa"><b>Para pensar:</b> si la IA te dio una cita que no existe, ¿qué le pasaría a un alumno que la usara en un trabajo?</p>
+  <label class="marcar"><input type="checkbox"> Terminé este módulo</label>
+</article><article class="modulo m1" id="m1" data-m="1">
+  <div class="cab"><span class="et">Módulo 1</span><span class="dur">· 45 minutos</span><h2>Pedir bien</h2></div>
+  <div class="meta"><b>Al terminar vas a poder</b> escribir un pedido completo y mejorar una respuesta conversando, en lugar de pedir una sola vez.</div>
+  <h3>Las cinco partes de un buen pedido</h3>
+  <table class="tabla">
+    <tr><th>Parte</th><th>Qué decís</th><th>Ejemplo</th></tr>
+    <tr><td><b>Rol</b></td><td>Desde dónde querés que responda.</td><td>«Sos una docente de Prácticas del Lenguaje con experiencia en secundaria.»</td></tr>
+    <tr><td><b>Contexto</b></td><td>Tu grupo, el año, lo que ya trabajaron.</td><td>«2.º año, 28 alumnos, venimos leyendo cuentos fantásticos.»</td></tr>
+    <tr><td><b>Tarea</b></td><td>Qué necesitás, con un verbo claro.</td><td>«Proponé tres consignas de escritura…»</td></tr>
+    <tr><td><b>Formato</b></td><td>Cómo querés la respuesta.</td><td>«En una tabla con consigna, propósito y tiempo.»</td></tr>
+    <tr><td><b>Criterios</b></td><td>Qué tiene que cumplir y qué no.</td><td>«Que pidan tomar decisiones, no responder preguntas de memoria.»</td></tr>
+  </table>
+  <div class="comparar">
+    <div class="mal"><b>Pedido flojo</b>Haceme una actividad sobre «Casa tomada».</div>
+    <div class="bien"><b>Pedido completo</b>Sos docente de Prácticas del Lenguaje. Mi grupo de 2.º año leyó «Casa tomada» de Cortázar. Proponé dos actividades en las que tengan que interpretar qué es lo que toma la casa, usando pistas del texto. Que no tengan una única respuesta correcta. Presentalas en una tabla con consigna, propósito y tiempo estimado.</div>
+  </div>
+  <h3>Conversar, no pedir una vez</h3>
+  <p>La primera respuesta casi nunca es la buena. Seguí la conversación: pedí que cambie el nivel de dificultad, que lo haga más breve, que justifique una decisión o que te dé otra opción. Cada vuelta te acerca a lo que necesitás.</p>
+  <div class="prompt"><span class="tag">Pedido para seguir conversando</span><button class="copiar">Copiar</button>Revisá tu propuesta con estos criterios: <span class="hueco">[pegá tus criterios]</span>. Decime qué parte no los cumple y proponé un cambio concreto para esa parte. No reescribas todo.</div>
+  <div class="hacelo"><h4>Hacelo</h4><p>Tomá un pedido flojo que hayas hecho alguna vez. Reescribilo con las cinco partes y compará las dos respuestas. ¿Qué cambió?</p></div>
+  <label class="marcar"><input type="checkbox"> Terminé este módulo</label>
+</article><article class="modulo m2" id="m2" data-m="2">
+  <div class="cab"><span class="et">Módulo 2</span><span class="dur">· 60 minutos</span><h2>Planificar una secuencia</h2></div>
+  <div class="meta"><b>Al terminar vas a poder</b> usar la IA para armar el borrador de una secuencia didáctica empezando por la evidencia de aprendizaje, y revisarlo con criterio propio.</div>
+  <p class="idea">Primero qué querés que aprendan y cómo te vas a dar cuenta. Recién después, las actividades.</p>
+  <p>Es el diseño inverso que vimos con Wiggins y McTighe. Si le pedís a la IA «una secuencia sobre el cuento», te va a dar actividades sueltas. Si le pedís primero la evidencia, la secuencia tiene un sentido.</p>
+  <h3>Paso 1 · Los propósitos y la evidencia</h3>
+  <div class="prompt"><span class="tag">Pedido · propósitos y evidencias</span><button class="copiar">Copiar</button>Sos docente de <span class="hueco">[Prácticas del Lenguaje / Literatura]</span> en una escuela secundaria de la provincia de Buenos Aires. Voy a planificar una secuencia de <span class="hueco">[cantidad]</span> clases para <span class="hueco">[año]</span> sobre <span class="hueco">[contenido, por ejemplo: el cuento fantástico]</span>.
+Antes de proponer actividades, ayudame a definir:
+1. Dos o tres propósitos de enseñanza.
+2. Qué tendrían que poder hacer los alumnos al final para mostrar que aprendieron (la evidencia).
+3. Qué producción final podría reunir esa evidencia y para qué destinatario real.
+No propongas actividades todavía.</div>
+  <h3>Paso 2 · Las clases</h3>
+  <div class="prompt"><span class="tag">Pedido · secuencia</span><button class="copiar">Copiar</button>Con estos propósitos y esta evidencia: <span class="hueco">[pegá lo que decidiste en el paso 1, ya corregido por vos]</span>, proponé una secuencia de <span class="hueco">[cantidad]</span> clases de <span class="hueco">[duración]</span>. Para cada clase: propósito, actividades de inicio, desarrollo y cierre, y qué evidencia queda registrada. Incluí al menos un momento de escritura con borrador y revisión, y un momento de devolución.</div>
+  <div class="cura"><h4>La curaduría: qué revisar antes de usarlo</h4><ul>
+    <li>¿Se corresponde con el diseño curricular vigente para ese año? Chequealo vos en el documento oficial: la IA puede citarlo mal.</li>
+    <li>¿Los tiempos son realistas para tu grupo?</li>
+    <li>¿Las actividades piden pensar o solo completar?</li>
+    <li>¿Los textos que propone existen y están a tu alcance?</li>
+    <li>¿Qué cambiarías porque conocés a tu grupo y la IA no?</li>
+  </ul></div>
+  <div class="hacelo"><h4>Hacelo</h4><p>Armá con IA el borrador de una secuencia de tres clases para tu práctica. Después marcá con color todo lo que cambiaste y escribí al costado por qué.</p></div>
+  <label class="marcar"><input type="checkbox"> Terminé este módulo</label>
+</article><article class="modulo m3" id="m3" data-m="3">
+  <div class="cab"><span class="et">Módulo 3</span><span class="dur">· 50 minutos</span><h2>Consignas y tareas auténticas</h2></div>
+  <div class="meta"><b>Al terminar vas a poder</b> transformar una consigna de control en una tarea auténtica y comprobar si la IA puede resolverla sin aprender.</div>
+  <p>Una tarea es auténtica por lo que le pide pensar al alumno, no por su formato (Monereo). La IA ayuda a imaginar alternativas, pero también sirve para ponerlas a prueba.</p>
+  <div class="prompt"><span class="tag">Pedido · transformar una consigna</span><button class="copiar">Copiar</button>Esta es una consigna de evaluación que uso: <span class="hueco">[pegá la consigna]</span>.
+Transformala en una tarea auténtica: que tenga un propósito y un destinatario reales, que exija tomar decisiones sobre el texto y que admita más de una resolución válida. Explicá qué demanda cognitiva tenía la consigna original y cuál tiene la nueva.</div>
+  <h3>La prueba de estrés</h3>
+  <p>Antes de llevar una consigna al aula, dásela a la IA como si fueras un alumno. Si la resuelve bien sin haber leído el texto o sin haber hecho el proceso, la consigna no evalúa lo que dice evaluar: hay que rediseñar la evidencia, no perseguir el uso (Ferrarelli).</p>
+  <div class="prompt"><span class="tag">Pedido · prueba de estrés</span><button class="copiar">Copiar</button>Sos un estudiante de <span class="hueco">[año]</span> que no leyó <span class="hueco">[obra]</span>. Resolvé esta consigna lo mejor que puedas: <span class="hueco">[consigna]</span>.</div>
+  <div class="cura"><h4>Si la IA la resolvió, probá con</h4><ul>
+    <li>Pedir decisiones sobre fragmentos precisos trabajados en clase.</li>
+    <li>Sumar el proceso: borradores, notas de lectura, una explicación oral breve.</li>
+    <li>Anclar la tarea en algo que pasó en el aula o en la vida del grupo.</li>
+    <li>Pedir que justifiquen por qué eligieron una interpretación y no otra.</li>
+  </ul></div>
+  <div class="hacelo"><h4>Hacelo</h4><p>Elegí una consigna de un cuestionario de lectura. Hacé la prueba de estrés, rediseñala y volvé a probar. Guardá las dos versiones.</p></div>
+  <label class="marcar"><input type="checkbox"> Terminé este módulo</label>
+</article><article class="modulo m4" id="m4" data-m="4">
+  <div class="cab"><span class="et">Módulo 4</span><span class="dur">· 50 minutos</span><h2>Leer literatura con IA</h2></div>
+  <div class="meta"><b>Al terminar vas a poder</b> usar la IA para preparar la lectura literaria (preguntas, itinerarios, contexto) sin que reemplace la lectura del texto.</div>
+  <p class="idea">La IA no lee por tus alumnos ni por vos. Te ayuda a preparar buenas preguntas.</p>
+  <h3>Para qué sí</h3>
+  <ul>
+    <li><b>Preguntas de interpretación</b> abiertas, que no se respondan copiando una línea.</li>
+    <li><b>Itinerarios de lectura:</b> otros textos que dialoguen con el que estás trabajando.</li>
+    <li><b>Contexto:</b> época, movimiento, datos del autor, siempre para verificar.</li>
+    <li><b>Puertas de entrada:</b> una situación, una imagen o una pregunta para empezar la clase.</li>
+  </ul>
+  <div class="prompt"><span class="tag">Pedido · preguntas de lectura</span><button class="copiar">Copiar</button>Mis alumnos de <span class="hueco">[año]</span> van a leer <span class="hueco">[obra y autor]</span>. Proponé seis preguntas para conversar después de la lectura: dos sobre lo que pasa, dos que pidan interpretar y dos que inviten a relacionar el texto con su experiencia o con otros textos. Ninguna se tiene que poder responder copiando una frase. No incluyas citas textuales de la obra.</div>
+  <div class="prompt"><span class="tag">Pedido · itinerario</span><button class="copiar">Copiar</button>Armá un itinerario de cuatro lecturas breves que dialoguen con <span class="hueco">[obra]</span> alrededor de <span class="hueco">[tema o recurso]</span>, para <span class="hueco">[año]</span>. Para cada una: autor, título y por qué la sumarías. Incluí al menos dos autores latinoamericanos.</div>
+  <div class="cura"><h4>Cuidado con</h4><ul>
+    <li><b>Resúmenes y citas inventadas:</b> la IA puede «resumir» una obra con datos falsos. Verificá con el libro.</li>
+    <li><b>Títulos que no existen</b> en los itinerarios: buscá cada uno antes de llevarlo.</li>
+    <li><b>Interpretaciones únicas:</b> si la IA propone «el significado» del texto, abrilo a otras lecturas.</li>
+  </ul></div>
+  <div class="hacelo"><h4>Hacelo</h4><p>Pedí un itinerario para un cuento que vayas a dar. Verificá que cada texto exista y quedate con dos que hayas leído y elegirías vos.</p></div>
+  <label class="marcar"><input type="checkbox"> Terminé este módulo</label>
+</article><article class="modulo m5" id="m5" data-m="5">
+  <div class="cab"><span class="et">Módulo 5</span><span class="dur">· 50 minutos</span><h2>Escribir con IA</h2></div>
+  <div class="meta"><b>Al terminar vas a poder</b> diseñar una secuencia de escritura con borradores en la que la IA funcione como lectora que pregunta, no como autora que reescribe.</div>
+  <p>Escribir es planificar, textualizar y revisar, ida y vuelta (Cassany). Si la IA escribe el texto, el alumno se saltea justamente lo que tenía que aprender. Pero puede ser un buen interlocutor en la revisión.</p>
+  <div class="comparar">
+    <div class="mal"><b>La IA como autora</b>«Mejorá mi texto.» Devuelve un texto prolijo que ya no es del alumno.</div>
+    <div class="bien"><b>La IA como lectora</b>«Leé mi texto y haceme tres preguntas sobre lo que no se entiende. No lo reescribas.»</div>
+  </div>
+  <div class="prompt"><span class="tag">Pedido para tus alumnos · revisión</span><button class="copiar">Copiar</button>Este es el borrador de un texto que escribí para <span class="hueco">[consigna]</span>. No lo reescribas ni corrijas la ortografía. Hacé de lector: decime qué parte te resultó más clara, hacéme tres preguntas sobre lo que no se entiende y señalá un lugar donde podría agregar un ejemplo.</div>
+  <div class="prompt"><span class="tag">Pedido para vos · consignas de escritura</span><button class="copiar">Copiar</button>Proponé tres consignas de escritura para <span class="hueco">[año]</span> a partir de <span class="hueco">[texto o tema]</span>. Cada una tiene que tener un destinatario real, un propósito claro y restricciones que ayuden a escribir (extensión, punto de vista, género). Para cada una, sugerí qué mirar en el primer borrador.</div>
+  <div class="cura"><h4>Para evaluar el proceso</h4><ul>
+    <li>Pedí los borradores y miralos: ahí está el aprendizaje.</li>
+    <li>Si los alumnos usan IA, que guarden la conversación y expliquen qué tomaron y qué no.</li>
+    <li>Sumá un momento breve de explicación oral de una decisión del texto.</li>
+  </ul></div>
+  <div class="hacelo"><h4>Hacelo</h4><p>Escribí un párrafo propio y probá los dos pedidos («mejorá» y «hacé de lector»). ¿Cuál te ayuda más a aprender a escribir?</p></div>
+  <label class="marcar"><input type="checkbox"> Terminé este módulo</label>
+</article><article class="modulo m6" id="m6" data-m="6">
+  <div class="cab"><span class="et">Módulo 6</span><span class="dur">· 60 minutos</span><h2>Evaluar con IA</h2></div>
+  <div class="meta"><b>Al terminar vas a poder</b> generar una rúbrica o una lista de cotejo con IA, revisarla con un protocolo y usar la IA para preparar devoluciones sin datos personales.</div>
+  <p class="idea">La rúbrica final es tuya, no de la herramienta.</p>
+  <h3>Rúbricas</h3>
+  <div class="prompt"><span class="tag">Pedido · rúbrica</span><button class="copiar">Copiar</button>Soy docente de <span class="hueco">[Prácticas del Lenguaje / Literatura]</span> en una escuela secundaria. Te paso la consigna de una tarea. Armá una rúbrica analítica con cuatro niveles: Inicial, En proceso, Logrado y Logrado con profundización. Los descriptores tienen que describir lo que el estudiante hace en cada nivel, no cantidades como «pocos» o «muchos». Incluí un criterio sobre el proceso, no solo sobre el producto final.
+Consigna: <span class="hueco">[pegá la consigna]</span></div>
+  <div class="cura"><h4>Protocolo de curaduría</h4><ul>
+    <li>¿Cada criterio evalúa algo que la consigna pide? ¿Sobra o falta alguno?</li>
+    <li>¿Los niveles describen desempeños o solo dicen «pocos», «algunos», «muchos»?</li>
+    <li>¿Un estudiante de secundaria entendería qué se espera de él leyendo esto?</li>
+    <li>¿Qué lugar le da la rúbrica al error?</li>
+    <li>¿Algún criterio premia algo que no se enseñó (prolijidad, velocidad, recursos de la casa)?</li>
+  </ul></div>
+  <h3>Devoluciones</h3>
+  <p>La IA puede ayudarte a ordenar una devolución, pero el diagnóstico es tuyo. Primero escribí vos qué viste; después pedí ayuda para darle forma. Y sacá cualquier dato personal del trabajo.</p>
+  <div class="prompt"><span class="tag">Pedido · devolución con SER</span><button class="copiar">Copiar</button>Te paso un fragmento anónimo de un trabajo y mis observaciones. Ayudame a escribir una devolución breve con el protocolo SER: Seguir haciendo (algo que ya está bien, dicho con precisión), Empezar a hacer (una acción concreta nueva) y Reformular (algo que ya hace pero conviene hacer de otro modo). Que hable del trabajo y no de la persona, que no compare con otros estudiantes y que termine con una pregunta.
+Mis observaciones: <span class="hueco">[lo que viste vos]</span>
+Fragmento: <span class="hueco">[sin nombre ni datos]</span></div>
+  <div class="cura"><h4>Antes de enviar una devolución hecha con IA</h4><ul>
+    <li>¿Dice algo que solo vos podías saber de ese trabajo?</li>
+    <li>¿Suena a vos?</li>
+    <li>¿Le dice al estudiante qué puede hacer para mejorar?</li>
+  </ul></div>
+  <div class="hacelo"><h4>Hacelo</h4><p>Generá una rúbrica para una consigna tuya, pasala por el protocolo y marcá cada cambio con su porqué. Esa rúbrica marcada es una excelente evidencia para tu portafolio.</p></div>
+  <label class="marcar"><input type="checkbox"> Terminé este módulo</label>
+</article><article class="modulo m7" id="m7" data-m="7">
+  <div class="cab"><span class="et">Módulo 7</span><span class="dur">· 45 minutos</span><h2>Que todos puedan: IA y DUA</h2></div>
+  <div class="meta"><b>Al terminar vas a poder</b> usar la IA para ofrecer distintas formas de acceder a un texto y de mostrar lo aprendido, sin bajar la exigencia de lo que se enseña.</div>
+  <p>El Diseño Universal para el Aprendizaje propone planificar desde el principio pensando en la variedad del grupo, con múltiples formas de implicación, de representación y de acción y expresión. La versión 3.0 de las pautas, publicada por CAST en 2024, suma la atención a las identidades y a los sesgos que crean barreras.</p>
+  <p class="idea">Simplificar el acceso, no el contenido.</p>
+  <div class="prompt"><span class="tag">Pedido · otras formas de acceder</span><button class="copiar">Copiar</button>Te paso un texto que voy a trabajar con <span class="hueco">[año]</span>: <span class="hueco">[texto o fragmento]</span>. Proponé tres apoyos para que más estudiantes puedan acceder a él sin cambiar el texto original: un glosario breve, una guía de lectura con preguntas por partes y un organizador gráfico. Indicá para qué sirve cada apoyo.</div>
+  <div class="prompt"><span class="tag">Pedido · formas de mostrar lo aprendido</span><button class="copiar">Copiar</button>Para esta evidencia de aprendizaje: <span class="hueco">[qué tienen que mostrar]</span>, proponé tres formatos distintos de producción final (por ejemplo escrito, oral y visual) que permitan mostrar lo mismo. Para cada uno, decí qué criterio de evaluación es común a los tres.</div>
+  <div class="cura"><h4>Cuidado con</h4><ul>
+    <li>Las «versiones fáciles» de una obra literaria: pierden lo que la hace literatura. Mejor apoyos alrededor del texto.</li>
+    <li>Los criterios: aunque cambie el formato, lo que se evalúa tiene que ser lo mismo para todos.</li>
+  </ul></div>
+  <div class="hacelo"><h4>Hacelo</h4><p>Tomá un texto de tu práctica y prepará con IA dos apoyos de acceso. Probalos con alguien antes de llevarlos.</p></div>
+  <label class="marcar"><input type="checkbox"> Terminé este módulo</label>
+</article><article class="modulo m8" id="m8" data-m="8">
+  <div class="cab"><span class="et">Módulo 8</span><span class="dur">· 45 minutos</span><h2>Ética, autoría y datos</h2></div>
+  <div class="meta"><b>Al terminar vas a poder</b> tomar posición sobre el uso de IA en tu aula, cuidar los datos de tus alumnos y conversar sobre autoría sin acusar.</div>
+  <h3>Tres mitos para evitar (Lion)</h3>
+  <ul>
+    <li><b>Determinismo:</b> «la IA va a cambiar la escuela sola».</li>
+    <li><b>Solucionismo:</b> «la IA resuelve la corrección».</li>
+    <li><b>Negacionismo:</b> «la prohibo y listo».</li>
+  </ul>
+  <p>Los tres le sacan la decisión al docente. La alternativa es usarla con criterio, enseñar a usarla y diseñar tareas en las que el aprendizaje se vea.</p>
+  <h3>Cuidar a tus alumnos</h3>
+  <ul>
+    <li><b>Datos:</b> nada que permita identificar a un alumno entra a una herramienta de IA.</li>
+    <li><b>Sesgos:</b> la IA puede reproducir estereotipos en ejemplos, personajes o «lecturas correctas». Leé con ese ojo.</li>
+    <li><b>Transparencia:</b> si usaste IA para preparar material, podés decirlo. Si tus alumnos la usan, acordá con ellos cómo declararlo.</li>
+  </ul>
+  <h3>Cuando sospechás que un trabajo lo hizo la IA</h3>
+  <p>Los detectores automáticos no son confiables. Antes que acusar, conversá: pedile al estudiante que te cuente cómo lo hizo, que explique una decisión del texto o que continúe un párrafo. Y preguntate si la tarea se podía resolver sin aprender.</p>
+  <div class="prompt"><span class="tag">Para acordar con tu curso</span><button class="copiar">Copiar</button>En esta materia podés usar IA para: <span class="hueco">[buscar ideas, revisar si se entiende, etc.]</span>.
+No podés usarla para: <span class="hueco">[escribir el texto por vos, etc.]</span>.
+Cuando la uses, contalo así: qué herramienta, qué le pediste y qué tomaste de lo que respondió.</div>
+  <div class="hacelo"><h4>Hacelo</h4><p>Escribí el acuerdo de uso de IA que propondrías a tu curso de prácticas. Una carilla, con tus palabras.</p></div>
+  <label class="marcar"><input type="checkbox"> Terminé este módulo</label>
+</article><article class="modulo m9" id="m9" data-m="9">
+  <div class="cab"><span class="et">Módulo 9</span><span class="dur">· 90 minutos</span><h2>Proyecto final</h2></div>
+  <div class="meta"><b>Vas a producir</b> una secuencia breve de Lengua o Literatura planificada con IA, con su instrumento de evaluación y el registro de tus decisiones.</div>
+  <h3>Qué tiene que tener</h3>
+  <ol>
+    <li><b>Propósitos y evidencia</b> definidos antes que las actividades (módulo 2).</li>
+    <li><b>Tres o cuatro clases</b> con al menos una tarea auténtica que pasó la prueba de estrés (módulo 3).</li>
+    <li><b>Un momento de lectura o escritura</b> en el que la IA no reemplaza al alumno (módulos 4 y 5).</li>
+    <li><b>Una rúbrica o lista de cotejo</b> curada, con las marcas de lo que cambiaste (módulo 6).</li>
+    <li><b>Al menos un apoyo DUA</b> (módulo 7).</li>
+    <li><b>Un registro de decisiones:</b> para cada parte, qué le pediste a la IA, qué cambiaste y por qué.</li>
+  </ol>
+  <div class="cura"><h4>Antes de entregar, revisá</h4><ul>
+    <li>¿Podrías defender cada decisión sin decir «lo puso la IA»?</li>
+    <li>¿Verificaste todos los textos, autores y datos?</li>
+    <li>¿Hay algún dato de alumnos en lo que usaste?</li>
+    <li>¿Se ve qué aprendieron tus alumnos, y no solo qué hicieron?</li>
+  </ul></div>
+  <label class="marcar"><input type="checkbox"> Terminé el proyecto</label>
+</article>
+  </div>
+  <div class="cpasos"><button type="button" class="btn sec" id="cAnt">← Módulo anterior</button><button type="button" class="btn pri" id="cSig">Módulo siguiente →</button></div>
 </div></section>
 
 <footer>
@@ -564,6 +877,26 @@ function evaluar(){
   $('#vLista').innerHTML=mejoras.map(function(m){return '<li>'+esc(m)+'</li>'}).join('');
 }
 cont.addEventListener('change',evaluar);
+})();
+
+/* ---------- curso ---------- */
+(function(){
+  var KEY='curso-ia-lengua-progreso',estado={};
+  try{estado=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){estado={}}
+  var mods=[].slice.call(document.querySelectorAll('#curso .modulo')),btns=[].slice.call(document.querySelectorAll('#cNav button')),act=0;
+  function pintar(){var n=0;mods.forEach(function(m,i){var on=!!estado[m.dataset.m];if(on)n++;var c=m.querySelector('.marcar input');if(c)c.checked=on;btns[i].classList.toggle('hecho',on)});
+    document.getElementById('cProgBar').style.width=(n/mods.length*100)+'%';document.getElementById('cProgTxt').textContent=n+' de '+mods.length+' módulos';}
+  function ver(i,scroll){act=Math.max(0,Math.min(mods.length-1,i));mods.forEach(function(m,j){m.classList.toggle('ver',j===act)});btns.forEach(function(b,j){b.classList.toggle('on',j===act);b.setAttribute('aria-selected',j===act)});
+    document.getElementById('cAnt').disabled=act===0;document.getElementById('cSig').disabled=act===mods.length-1;
+    if(scroll)document.getElementById('cNav').scrollIntoView({behavior:'smooth',block:'start'});}
+  btns.forEach(function(b,i){b.onclick=function(){ver(i,false)}});
+  document.getElementById('cAnt').onclick=function(){ver(act-1,true)};document.getElementById('cSig').onclick=function(){ver(act+1,true)};
+  mods.forEach(function(m){var c=m.querySelector('.marcar input');if(c)c.addEventListener('change',function(){estado[m.dataset.m]=this.checked;try{localStorage.setItem(KEY,JSON.stringify(estado))}catch(e){}pintar()})});
+  var frases=['Revisá lo que te devuelva con sentido crítico: ¿es correcto?, ¿sirve para tu grupo?, ¿inventó algo?','Leé la respuesta con el criterio pedagógico que ya tenés: lo que no puedas justificar, no lo uses.','Verificá autores, citas, textos y datos antes de llevarlo al aula.','La IA no conoce a tus alumnos. Ajustá lo que proponga a tu grupo.'];
+  document.querySelectorAll('#curso .prompt').forEach(function(p,i){var d=document.createElement('div');d.className='recordatorio';d.setAttribute('role','note');d.innerHTML='<span class="ic">!</span><p><b>Recordá:</b> '+frases[i%frases.length]+'</p>';p.parentNode.insertBefore(d,p.nextSibling)});
+  document.querySelectorAll('#curso .copiar').forEach(function(b){b.addEventListener('click',function(){var p=b.parentNode.cloneNode(true);p.querySelectorAll('.copiar,.tag').forEach(function(x){x.remove()});var txt=p.textContent.trim();
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){var to=document.getElementById('toast');to.textContent='Pedido copiado · Revisá con sentido crítico lo que te devuelva la IA';to.classList.add('ver');setTimeout(function(){to.classList.remove('ver')},3500)})}})});
+  var h=location.hash.match(/^#modulo-(\d)$/);ver(h?+h[1]:0,false);pintar();
 })();
 </script>
 </body>
