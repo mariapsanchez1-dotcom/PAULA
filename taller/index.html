@@ -210,15 +210,18 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
     <div class="paso">
       <div class="cab"><span class="n">1</span><h3>¿Para qué año?</h3></div>
       <div class="opciones" id="optAnio">
-        <label class="op"><input type="radio" name="anio" value="1"><span>1.º y 2.º año<small>Prácticas del Lenguaje</small></span></label>
+        <label class="op"><input type="radio" name="anio" value="1"><span>1.º año<small>Prácticas del Lenguaje</small></span></label>
+        <label class="op"><input type="radio" name="anio" value="2"><span>2.º año<small>Prácticas del Lenguaje</small></span></label>
         <label class="op"><input type="radio" name="anio" value="3"><span>3.º año<small>Prácticas del Lenguaje</small></span></label>
-        <label class="op"><input type="radio" name="anio" value="4"><span>4.º a 6.º año<small>Literatura</small></span></label>
+        <label class="op"><input type="radio" name="anio" value="4"><span>4.º año<small>Literatura</small></span></label>
+        <label class="op"><input type="radio" name="anio" value="5"><span>5.º año<small>Literatura</small></span></label>
+        <label class="op"><input type="radio" name="anio" value="6"><span>6.º año<small>Literatura</small></span></label>
       </div>
     </div>
 
     <div class="paso">
       <div class="cab"><span class="n">2</span><h3>¿Qué práctica querés evaluar?</h3></div>
-      <p class="ayuda">Los ejes son los del Diseño Curricular de Prácticas del Lenguaje (1.º a 3.º año). Lo marcado como <b>Agregado</b> no está contemplado como tal en el diseño: es una opción complementaria que suma la cátedra.</p>
+      <p class="ayuda">Los ejes son los ámbitos del Diseño Curricular de Prácticas del Lenguaje (1.º a 3.º año); en Literatura (4.º a 6.º) se corresponden con sus prácticas de lectura y escritura literaria y de textos de estudio y críticos. Lo marcado como <b>Agregado</b> no está contemplado como tal en el diseño: es una opción complementaria que suma la cátedra.</p>
       <div class="opciones" id="optAmbito">
         <label class="op"><input type="radio" name="ambito" value="lit"><span>Eje de la literatura<small>Leer, interpretar y escribir ficción o poesía</small><em class="badge dc">En el diseño</em></span></label>
         <label class="op"><input type="radio" name="ambito" value="est"><span>Eje del estudio<small>Buscar, organizar y comunicar información</small><em class="badge dc" data-b="est">En el diseño</em></span></label>
@@ -325,7 +328,7 @@ var PROD={
   ]
 };
 var CRIT={
-  interp:{n:"Interpretación del texto",v:["Cuenta lo que pasa, sin proponer una lectura propia.","Propone una lectura, pero general o poco clara.","Propone una interpretación propia y la explica.","Propone una interpretación propia, la explica y considera otras lecturas posibles."]},
+  interp:{n:"Construcción de una lectura propia",v:["Cuenta lo que pasa, sin construir una lectura propia.","Esboza una lectura propia, pero no la sostiene con el texto.","Construye una lectura propia y la sostiene con el texto.","Construye una lectura propia, la sostiene y la pone en diálogo con otras lecturas posibles."]},
   evid:{n:"Uso de pistas del texto",v:["No vuelve al texto para sostener lo que dice.","Cita o menciona el texto, pero sin relacionarlo con su idea.","Elige fragmentos pertinentes y explica qué muestran.","Elige fragmentos precisos, los analiza y los relaciona entre sí."]},
   adec:{n:"Adecuación al destinatario",v:["El texto no tiene en cuenta a quién va dirigido.","Tiene en cuenta al destinatario en algunas partes.","El registro, el tono y la información se ajustan al destinatario.","Además anticipa lo que el destinatario necesita saber o podría preguntar."]},
   gen:{n:"Recursos del género",v:["No usa los rasgos del género pedido.","Usa algunos rasgos del género, de manera irregular.","Usa los rasgos del género con propósito.","Usa los rasgos del género con propósito y de manera creativa."]},
@@ -337,7 +340,7 @@ var CRIT={
   oral:{n:"Comunicación oral",v:["Lee de corrido o se pierde; cuesta seguirlo.","Se lo entiende, pero depende mucho del papel.","Habla con claridad, en un registro adecuado y mirando al público.","Además usa la voz, las pausas y el soporte para sostener el interés."]},
   escucha:{n:"Escucha y respuesta",v:["No responde a lo que dicen los demás.","Responde, pero sin retomar lo que dijo el otro.","Retoma lo que dice el otro y responde con pertinencia.","Retoma, responde y reformula su posición si hace falta."]}
 };
-var EVID={interp:"proponer una interpretación propia del texto",evid:"sostenerla con fragmentos del texto",adec:"adecuar su producción a un destinatario real",gen:"usar los recursos del género con propósito",org:"organizar sus ideas con claridad",proc:"revisar su producción a partir de una devolución",decis:"explicar y fundamentar sus decisiones",fuentes:"buscar, seleccionar y citar fuentes confiables",arg:"sostener una postura con argumentos",oral:"comunicar oralmente con claridad",escucha:"escuchar y responder a otros"};
+var EVID={interp:"construir una lectura propia del texto",evid:"sostenerla con fragmentos del texto",adec:"adecuar su producción a un destinatario real",gen:"usar los recursos del género con propósito",org:"organizar sus ideas con claridad",proc:"revisar su producción a partir de una devolución",decis:"explicar y fundamentar sus decisiones",fuentes:"buscar, seleccionar y citar fuentes confiables",arg:"sostener una postura con argumentos",oral:"comunicar oralmente con claridad",escucha:"escuchar y responder a otros"};
 var BANCO=[
   {a:"lit",t:"La biblioteca recomienda",p:"Reseñas de las obras leídas para un fichero o una cartelera de la biblioteca escolar.",d:"Lectores de toda la escuela.",e:"Interpretar y fundamentar una opinión con el texto.",prod:"resena"},
   {a:"lit",t:"Antología para primer año",p:"El curso arma una antología de cuentos para los que recién entran, con prólogo y comentarios.",d:"Un curso de 1.º año.",e:"Seleccionar, interpretar y justificar la elección.",prod:"antologia"},
@@ -378,14 +381,22 @@ function pintarAmbito(){
   var a=val('ambito'),box=$('#optProducto'),sug=$('#sugContenido');
   sug.innerHTML='';box.innerHTML='';
   if(!a){box.innerHTML='<p class="ayuda" style="margin:0">Primero elegí la práctica en el paso 2.</p>';return}
-  SUG[a].forEach(function(s){var b=document.createElement('button');b.type='button';b.textContent=s;b.onclick=function(){$('#contenido').value=s};sug.appendChild(b)});
+  pintarSugLista(a,sug);if(false)SUG[a].forEach(function(s){var b=document.createElement('button');b.type='button';b.textContent=s;b.onclick=function(){$('#contenido').value=s};sug.appendChild(b)});
   PROD[a].forEach(function(p){var l=document.createElement('label');l.className='op';l.innerHTML='<input type="radio" name="prod" value="'+p.id+'"><span>'+esc(p.n)+'<small>Para '+esc(p.d)+'</small></span>';box.appendChild(l)});
   $$('input[name="prod"]').forEach(function(i){i.addEventListener('change',function(){var p=buscar(i.value);$('#destino').value=p.d})});
 }
+function pintarSugLista(a,sug){sug.innerHTML='';var an=val('anio');var lista=(a==='lit'&&esLit(an))?SUGLIT[an]:SUG[a];lista.forEach(function(s){var b=document.createElement('button');b.type='button';b.textContent=s;b.onclick=function(){$('#contenido').value=s};sug.appendChild(b)})}
+function pintarSug(){var a=val('ambito');if(a)pintarSugLista(a,$('#sugContenido'))}
 function buscar(id){for(var a in PROD)for(var i=0;i<PROD[a].length;i++)if(PROD[a][i].id===id)return PROD[a][i]}
 $$('input[name="ambito"]').forEach(function(i){i.addEventListener('change',pintarAmbito)});
 
-var ANIO={"1":"1.º y 2.º año · Prácticas del Lenguaje","3":"3.º año · Prácticas del Lenguaje","4":"4.º a 6.º año · Literatura"};
+var ANIO={"1":"1.º año · Prácticas del Lenguaje","2":"2.º año · Prácticas del Lenguaje","3":"3.º año · Prácticas del Lenguaje","4":"4.º año · Literatura","5":"5.º año · Literatura","6":"6.º año · Literatura"};
+function esLit(a){return a==='4'||a==='5'||a==='6'}
+var COSMO={"4":"cosmovisiones míticas y fabulosas, épicas y trágicas","5":"formas realistas, miméticas, fantásticas y maravillosas","6":"formas cómicas, paródicas, alegóricas, de ruptura y experimentación"};
+var SUGLIT={"4":["Mitos y leyendas","Una epopeya o un cantar de gesta","Una tragedia","Martín Fierro","El Eternauta"],"5":["Cuentos realistas","Cuentos fantásticos","Relatos maravillosos","Una novela realista"],"6":["Parodias y textos humorísticos","Literatura de vanguardia","Una alegoría","Teatro del absurdo"]};
+var PLDC={"1": {"lit": ["Leer toda clase de textos literarios sugeridos por el docente, el bibliotecario, los compañeros o elegidos por el mismo alumno", "Escribir como lector", "Escribir reseñas"], "est": ["Buscar información a partir de criterios establecidos por el docente", "Leer textos de estudio con el acompañamiento de docente y pares", "Resumir textos informativos", "Organizar esa información de textos expositivos en cuadros", "Exponer oralmente", "Exponer por escrito a partir de consignas dadas por el docente"], "ciu": ["Comentar noticias y crónicas acerca de temas polémicos", "Leer críticamente las noticias y crónicas, analizar las campañas educativas, de prevención en salud y de formación ciudadana", "Producir cartas formales de circulación dentro del ámbito escolar y con otras instituciones vinculadas con la escuela", "Leer críticamente los textos instructivos de la escuela"]}, "2": {"lit": ["Seguir un género", "Leer ensayos y análisis de obras realizados por especialistas"], "est": ["Buscar y seleccionar información con criterios acordados con los pares y/o el docente", "Resumir por escrito y con distintos propósitos textos explicativos", "Organizar información procedente de más de un texto en distintos tipos de cuadros", "Organizar la información en fichas", "Exponer oralmente", "Exponer por escrito a partir de consignas dadas por el docente"], "ciu": ["Comentar, analizar y discutir temas polémicos", "Leer críticamente las informaciones con opinión que aparecen en los diferentes medios", "Analizar los discursos publicitarios", "Leer y producir cartas formales"]}, "3": {"lit": ["Seguir un autor", "Escribir breves ensayos sobre las obras leídas"], "est": ["Buscar y seleccionar información con criterios propios", "Resumir textos argumentativos", "Ampliar textos con información proveniente de otras producciones escritas", "Exponer oralmente lo estudiado ante distintos auditorios usando diferentes recursos gráficos"], "ciu": ["Organizar y participar en debates, argumentar posiciones por escrito, leer y analizar opiniones y debates que tienen lugar en los medios de comunicación", "Analizar la información explícita e implícita en textos polémicos", "Producir textos escritos y orales para comunicarse con las instituciones con diversos propósitos", "Leer críticamente distintos discursos jurídicos"]}};
+var PLRET={"lit": ["Leer un corpus obligatorio en cada año", "Formar parte de situaciones sociales de lectura", "Establecer relaciones con otros lenguajes artísticos"], "est": ["Buscar información", "Organizar información", "Comunicar conocimientos"], "ciu": ["Leer y analizar los textos que circulan en los medios masivos de comunicación", "Interactuar discursivamente con las instituciones"]};
+var LITDC={"lit": ["participar de situaciones sociales de lectura y escritura literaria", "establecer relaciones entre el lenguaje literario y otros lenguajes artísticos", "construir un proyecto personal de lectura literaria"], "est": ["leer y producir textos académicos (de estudio) y críticos (de análisis) de literatura"]};
 var EJE={lit:'Eje de la literatura',est:'Eje del estudio',ciu:'Eje de la formación ciudadana',ora:'Oralidad (agregado de la cátedra)'};
 var MODO={ind:"individual",par:"en parejas",gru:"en grupo"};
 
@@ -415,7 +426,7 @@ function generar(){
     '<p><b>Qué vamos a mirar:</b> '+crits.map(function(c){return c.n.toLowerCase()}).join(', ')+'. Los criterios completos están en la rúbrica.</p>'+
     '<p><b>'+(modo==='ind'?'Si te equivocás':'Si se equivocan')+' en el camino,</b> no resta: el borrador está para eso.</p></div>';
 
-  var prompt='Sos docente de '+(anio==='4'?'Literatura':'Prácticas del Lenguaje')+' en una escuela secundaria de la provincia de Buenos Aires ('+ANIO[anio]+').\n'+
+  var prompt='Sos docente de '+(esLit(anio)?'Literatura':'Prácticas del Lenguaje')+' en una escuela secundaria de la provincia de Buenos Aires ('+ANIO[anio]+').\n'+
     'Diseñé esta evaluación auténtica: '+p.n.toLowerCase()+' sobre '+cont+', para '+dest+'. Los alumnos tienen que '+p.hacer+'.\n'+
     'Criterios: '+crits.map(function(c){return c.n}).join('; ')+'.\n'+
     'Ayudame a: 1) proponer dos ejemplos de producciones de distinto nivel para mostrar a los alumnos, 2) sugerir una actividad breve para presentar la tarea, 3) señalar qué partes de la consigna podrían no entenderse. No cambies los criterios.';
@@ -423,7 +434,7 @@ function generar(){
   var html='<div class="doc" id="docEval">'+
    '<div class="encab"><p class="kicker">Evaluación auténtica · '+esc(ANIO[anio])+(agr?' · Incluye un agregado':'')+'</p><h3>'+esc(p.n)+': '+esc(cont)+'</h3><p>Destinatario real: '+esc(dest)+' · Trabajo '+MODO[modo]+' · '+clases+' clases</p></div>'+
    '<div class="cuerpo">'+
-   '<div class="bloq" style="--c:#E3F0DE"><h4><i>✓</i>Anclaje en el diseño curricular</h4><div class="anclaje"><p><b>'+esc(EJE[amb])+'</b> · '+esc(ANIO[anio])+'. Diseño Curricular para la Educación Secundaria, DGCyE.</p>'+(agr?'<span class="ag"><b>Agregado:</b> '+esc(agr)+'</span>':'')+'<p style="margin-top:10px;font-size:14px;color:#7E6F61">La producción, los criterios y la rúbrica son una propuesta didáctica de la cátedra: no están prescriptos por el diseño. Cotejá los contenidos con el diseño del año que vas a dar.</p></div></div>'+
+   anclajeHTML(anio,amb,agr)+
    '<div class="bloq" style="--c:#F8D9D2"><h4><i>1</i>Propósito y evidencia</h4><p>Empezamos por lo que queremos ver. Al terminar, cada estudiante tendría que poder:</p><ul>'+evid.map(function(e){return '<li>'+esc(e)+'.</li>'}).join('')+'</ul></div>'+
    '<div class="bloq" style="--c:#F7E4B8"><h4><i>2</i>La consigna para tus alumnos</h4>'+consigna+'</div>'+
    '<div class="bloq" style="--c:#D9EAD3"><h4><i>3</i>Rúbrica</h4><p>Compartila antes de empezar. Los niveles describen lo que se hace, no cantidades.</p>'+rub+'</div>'+
@@ -445,17 +456,39 @@ function generar(){
   $('#btnOtra').onclick=function(){r.classList.remove('ver');r.innerHTML='';$('#generador').scrollIntoView({behavior:'smooth'})};
 }
 
+function anclajeHTML(anio,amb,agr){
+  var L=esLit(anio),q=function(a){return a.map(function(x){return '«'+esc(x)+'»'}).join('; ')};
+  var h='<div class="bloq" style="--c:#E3F0DE"><h4><i>✓</i>Anclaje en el diseño curricular</h4><div class="anclaje">';
+  h+='<p><b>'+esc(EJE[amb])+'</b> · '+esc(ANIO[anio])+'.</p>';
+  if(!L&&PLDC[anio]&&PLDC[anio][amb]){
+    h+='<p style="margin-top:6px"><b>Prácticas del eje para '+anio+'.º año:</b> '+q(PLDC[anio][amb])+'.</p>';
+    h+='<p style="margin-top:4px"><b>Prácticas que se retoman los tres años:</b> '+q(PLRET[amb])+'.</p>';
+    h+='<p style="margin-top:8px"><b>Para evaluar:</b> según el diseño, la evaluación de Prácticas del Lenguaje se desarrolla por eje y en relación con las situaciones de enseñanza propuestas, y tiene carácter recursivo: hay que volver sobre las prácticas donde los alumnos presenten mayores dificultades.</p>';
+  }
+  if(L){
+    if(LITDC[amb])h+='<p style="margin-top:6px"><b>Prácticas de Literatura:</b> '+q(LITDC[amb])+'.</p>';
+    h+='<p style="margin-top:6px">En '+anio+'.º año el diseño propone que predominen las '+esc(COSMO[anio])+'.</p>';
+    if(amb==='est')h+='<p style="margin-top:6px">En Literatura, los textos de estudio y críticos son <b>sobre literatura</b>: elegí un tema literario para que la tarea quede dentro del diseño.</p>';
+    h+='<p style="margin-top:8px"><b>Para evaluar:</b> el diseño de Literatura indica que «se deben evaluar procesos de apropiación de los textos», mediante productos como reseñas, prólogos de antologías o contratapas, y que «no se deberían evaluar interpretaciones de las obras literarias». Por eso la rúbrica mira cómo se construye y se sostiene una lectura, no si es «la correcta».</p>';
+  }
+  if(agr)h+='<span class="ag"><b>Agregado:</b> '+esc(agr)+'</span>';
+  h+='<p style="margin-top:10px;font-size:14px;color:#7E6F61">La producción, los criterios y la rúbrica son una propuesta didáctica de la cátedra: no están prescriptos por el diseño.<br>Fuentes: DGCyE, Diseño Curricular para la Educación Secundaria. Prácticas del Lenguaje, 3.º año («Progresión de las prácticas del lenguaje en los tres primeros años» y «Orientaciones para la evaluación»); Literatura, 4.º y 5.º año.</p></div></div>';
+  return h;
+}
 function esAgregado(anio,amb){
-  if(amb==='ora') return 'La oralidad no aparece en el diseño como un eje propio: atraviesa los tres ejes (literatura, estudio y formación ciudadana). Esta opción es un agregado de la cátedra para trabajarla de manera específica.';
-  if(anio==='4'&&(amb==='est'||amb==='ciu')) return 'De 4.º a 6.º año la materia es Literatura. Este eje corresponde al diseño de Prácticas del Lenguaje (1.º a 3.º año): para estos años es un agregado, una opción complementaria que podría incluirse, no algo que el diseño de Literatura prescriba.';
+  if(amb==='ora') return 'La oralidad no aparece en el diseño como un eje propio: está dentro de las prácticas de cada eje (por ejemplo, «Exponer oralmente» en el eje de estudio o los debates en formación ciudadana). Esta opción es un agregado de la cátedra para trabajarla de manera específica.';
+  if(esLit(anio)&&amb==='ciu') return 'De 4.º a 6.º año la materia es Literatura. La formación ciudadana es un ámbito del diseño de Prácticas del Lenguaje (1.º a 3.º año): para estos años es un agregado, una opción complementaria que podría incluirse, no algo que el diseño de Literatura prescriba.';
   return '';
 }
 function marcarAgregados(){
-  var anio=val('anio'),amb=val('ambito');
-  ['est','ciu'].forEach(function(k){var b=document.querySelector('[data-b="'+k+'"]');if(!b)return;if(anio==='4'){b.className='badge ag';b.textContent='Agregado para 4.º a 6.º'}else{b.className='badge dc';b.textContent='En el diseño'}});
-  var lit=document.querySelector('input[name="ambito"][value="lit"]+span .badge');if(lit){lit.textContent=anio==='4'?'En el diseño de Literatura':'En el diseño'}
+  var anio=val('anio'),amb=val('ambito'),L=esLit(anio);
+  var be=document.querySelector('[data-b="est"]'),bc=document.querySelector('[data-b="ciu"]');
+  if(be){be.className='badge dc';be.textContent=L?'En el diseño de Literatura':'En el diseño'}
+  if(bc){if(L){bc.className='badge ag';bc.textContent='Agregado para 4.º a 6.º'}else{bc.className='badge dc';bc.textContent='En el diseño'}}
+  var lit=document.querySelector('input[name="ambito"][value="lit"]+span .badge');if(lit){lit.textContent=L?'En el diseño de Literatura':'En el diseño'}
   var av=$('#avisoAg'),msg=esAgregado(anio,amb);
   if(msg){av.innerHTML='<b>Agregado:</b> '+msg;av.classList.add('ver')}else{av.classList.remove('ver');av.innerHTML=''}
+  if(amb)pintarSug();
 }
 $$('input[name="anio"],input[name="ambito"]').forEach(function(i){i.addEventListener('change',marcarAgregados)});
 $('#btnGenerar').addEventListener('click',generar);
