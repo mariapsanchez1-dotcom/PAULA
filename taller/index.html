@@ -273,6 +273,14 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
 #curso .modulo.ver{display:block}
 .cpasos{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 @media (max-width:700px){.cnav button .tx{display:none}}
+.ir-curso{display:flex;align-items:center;gap:18px;margin-top:30px;text-decoration:none;color:#fff;background:linear-gradient(120deg,#6B2C2C,#8E3B3B 45%,#6B55B0);border-radius:20px;padding:24px 26px;box-shadow:0 24px 50px -28px rgba(107,85,176,.8);transition:transform .2s}
+.ir-curso:hover{transform:translateY(-3px)}
+.ir-curso .ic{flex:none;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:26px}
+.ir-curso b{display:block;font-family:"Cormorant Garamond",serif;font-size:clamp(22px,3.4vw,30px);line-height:1.1}
+.ir-curso small{display:block;color:#F1E2DA;font-size:15px;margin-top:6px}
+.ir-curso .fl{margin-left:auto;font-size:30px;animation:baja 1.8s ease-in-out infinite}
+@keyframes baja{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@media (max-width:600px){.ir-curso{flex-wrap:wrap;padding:20px}.ir-curso .fl{display:none}}
 </style>
 </head>
 <body>
@@ -398,6 +406,11 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
   <div class="preguntas" id="preguntas"></div>
   <div class="recordatorio" role="note"><span class="ic">!</span><p><b>El semáforo te orienta, pero no decide.</b> Tu mirada sobre el grupo y lo que enseñaste pesa más que cualquier puntaje.</p></div>
   <div class="veredicto" id="veredicto"><span class="luz" id="luz"></span><div><h3 id="vTit"></h3><p id="vTxt"></p><ul id="vLista"></ul></div></div>
+  <a class="ir-curso" href="#curso">
+    <span class="ic">✦</span>
+    <span><b>Seguí con el curso: Planificar con IA en Lengua y Literatura</b><small>Diez módulos con pedidos listos para copiar, para planificar, escribir consignas y evaluar con IA sin delegar tus decisiones.</small></span>
+    <span class="fl">↓</span>
+  </a>
 </div></section>
 
 <!-- CURSO -->
