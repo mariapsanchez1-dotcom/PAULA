@@ -308,7 +308,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
   </div>
 </section>
 
-<div class="franja-ia"><div class="wrap"><div class="recordatorio" role="note"><span class="ic">!</span><p><b>Antes de usar cualquier herramienta, recordá:</b> lo que te devuelve el generador o una IA es un borrador. Leelo con sentido crítico y con el criterio pedagógico que ya tenés como futuro docente: ¿sirve para tu grupo?, ¿es justo?, ¿evalúa lo que enseñaste? Verificá datos, autores y textos antes de llevarlo al aula.</p></div></div></div>
+<div class="franja-ia"><div class="wrap"><div class="recordatorio" role="note"><span class="ic">!</span><p><b>Antes de usar cualquier herramienta, recordá:</b> lo que te devuelve el generador o una IA es un borrador. Leelo con sentido crítico y con el criterio pedagógico-didáctico que ya tenés como futuro docente: ¿sirve para tu grupo?, ¿es justo?, ¿evalúa lo que enseñaste? Verificá datos, autores y textos antes de llevarlo al aula.</p></div></div></div>
 
 <!-- GENERADOR -->
 <section class="bloque" id="generador"><div class="wrap">
@@ -803,7 +803,7 @@ function generar(){
    '<div class="bloq" style="--c:#E1DAF4"><h4><i>9</i>Pedido para la IA</h4><p>Para seguir mejorándola con ayuda de una IA, sin delegar las decisiones:</p><div class="prompt" id="promptIA">'+esc(prompt)+'</div>'+'<div class="recordatorio" role="note"><span class="ic">!</span><p><b>Cuando la IA te responda, revisá con sentido crítico:</b> ¿lo que propone es correcto?, ¿se ajusta a tu grupo y a lo que enseñaste?, ¿inventó datos, citas o textos?, ¿respeta tus criterios? Lo que no puedas justificar como docente, no lo uses.</p></div></div>'+
    '</div></div>'+
    '<div class="acciones"><button class="btn pri" id="btnCopiar">Copiar todo</button><button class="btn sec" id="btnPrompt">Copiar el pedido para la IA</button><button class="btn sec" id="btnImprimir">Imprimir o guardar en PDF</button><button class="btn sec" id="btnOtra">Armar otra</button></div>'+
-   '<div class="recordatorio" role="note"><span class="ic">!</span><p><b>Es un borrador.</b> Revisalo con tu criterio pedagógico, cambialo y adaptalo a tu grupo antes de usarlo. La última palabra es tuya.</p></div>';
+   '<div class="recordatorio" role="note"><span class="ic">!</span><p><b>Es un borrador.</b> Revisalo con tu criterio pedagógico-didáctico, cambialo y adaptalo a tu grupo antes de usarlo. La última palabra es tuya.</p></div>';
   var r=$('#resultado');r.innerHTML=html;r.classList.add('ver');
   r.scrollIntoView({behavior:'smooth',block:'start'});
   $('#btnCopiar').onclick=function(){copiar($('#docEval').innerText,'Evaluación copiada')};
@@ -905,7 +905,7 @@ cont.addEventListener('change',evaluar);
   btns.forEach(function(b,i){b.onclick=function(){ver(i,false)}});
   document.getElementById('cAnt').onclick=function(){ver(act-1,true)};document.getElementById('cSig').onclick=function(){ver(act+1,true)};
   mods.forEach(function(m){var c=m.querySelector('.marcar input');if(c)c.addEventListener('change',function(){estado[m.dataset.m]=this.checked;try{localStorage.setItem(KEY,JSON.stringify(estado))}catch(e){}pintar()})});
-  var frases=['Revisá lo que te devuelva con sentido crítico: ¿es correcto?, ¿sirve para tu grupo?, ¿inventó algo?','Leé la respuesta con el criterio pedagógico que ya tenés: lo que no puedas justificar, no lo uses.','Verificá autores, citas, textos y datos antes de llevarlo al aula.','La IA no conoce a tus alumnos. Ajustá lo que proponga a tu grupo.'];
+  var frases=['Revisá lo que te devuelva con sentido crítico: ¿es correcto?, ¿sirve para tu grupo?, ¿inventó algo?','Leé la respuesta con el criterio pedagógico-didáctico que ya tenés: lo que no puedas justificar, no lo uses.','Verificá autores, citas, textos y datos antes de llevarlo al aula.','La IA no conoce a tus alumnos. Ajustá lo que proponga a tu grupo.'];
   document.querySelectorAll('#curso .prompt').forEach(function(p,i){var d=document.createElement('div');d.className='recordatorio';d.setAttribute('role','note');d.innerHTML='<span class="ic">!</span><p><b>Recordá:</b> '+frases[i%frases.length]+'</p>';p.parentNode.insertBefore(d,p.nextSibling)});
   document.querySelectorAll('#curso .copiar').forEach(function(b){b.addEventListener('click',function(){var p=b.parentNode.cloneNode(true);p.querySelectorAll('.copiar,.tag').forEach(function(x){x.remove()});var txt=p.textContent.trim();
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){var to=document.getElementById('toast');to.textContent='Pedido copiado · Revisá con sentido crítico lo que te devuelva la IA';to.classList.add('ver');setTimeout(function(){to.classList.remove('ver')},3500)})}})});
