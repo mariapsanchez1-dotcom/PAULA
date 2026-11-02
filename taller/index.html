@@ -157,6 +157,12 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
   .bloq{break-inside:avoid}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+.recordatorio{display:flex;gap:14px;align-items:flex-start;background:#FFF6E3;border:1.5px solid #E9CF95;border-left:6px solid var(--miel-f);border-radius:14px;padding:14px 18px;margin:14px 0;font-size:15px;line-height:1.5}
+.recordatorio .ic{flex:none;width:34px;height:34px;border-radius:50%;background:var(--miel-f);color:#fff;display:grid;place-items:center;font-weight:700;font-family:"Cormorant Garamond",serif;font-size:20px}
+.recordatorio b{color:var(--bordo)}
+.franja-ia{background:linear-gradient(90deg,#FFF6E3,#FDEFE9);border-bottom:1px solid #E9CF95}
+.franja-ia .wrap{padding:14px 22px}
+.franja-ia .recordatorio{margin:0;background:transparent;border:none;padding:0}
 </style>
 </head>
 <body>
@@ -182,6 +188,8 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
     </div>
   </div>
 </section>
+
+<div class="franja-ia"><div class="wrap"><div class="recordatorio" role="note"><span class="ic">!</span><p><b>Antes de usar cualquier herramienta, recordá:</b> lo que te devuelve el generador o una IA es un borrador. Leelo con sentido crítico y con el criterio pedagógico que ya tenés como futuro docente: ¿sirve para tu grupo?, ¿es justo?, ¿evalúa lo que enseñaste? Verificá datos, autores y textos antes de llevarlo al aula.</p></div></div></div>
 
 <!-- GENERADOR -->
 <section class="bloque" id="generador"><div class="wrap">
@@ -232,6 +240,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
       </div>
     </div>
 
+    <div class="recordatorio" role="note"><span class="ic">!</span><p><b>El generador no conoce a tus alumnos.</b> Vos sí. Usá el resultado como punto de partida y ajustalo a tu grupo.</p></div>
     <div class="generar">
       <button class="btn pri" id="btnGenerar">Generar mi evaluación</button>
       <span class="falta" id="falta"></span>
@@ -260,6 +269,7 @@ footer .firma{font-family:"Caveat",cursive;font-size:30px;color:#fff}
   <div class="titulo-sec"><span class="num">3</span><h2>Semáforo: revisá tu evaluación</h2></div>
   <p class="intro">¿Tenés una evaluación armada, propia o de la escuela de prácticas? Respondé estas preguntas con honestidad y mirá qué conviene mejorar.</p>
   <div class="preguntas" id="preguntas"></div>
+  <div class="recordatorio" role="note"><span class="ic">!</span><p><b>El semáforo te orienta, pero no decide.</b> Tu mirada sobre el grupo y lo que enseñaste pesa más que cualquier puntaje.</p></div>
   <div class="veredicto" id="veredicto"><span class="luz" id="luz"></span><div><h3 id="vTit"></h3><p id="vTxt"></p><ul id="vLista"></ul></div></div>
 </div></section>
 
@@ -348,7 +358,7 @@ function $(s,c){return (c||document).querySelector(s)}
 function $$(s,c){return [].slice.call((c||document).querySelectorAll(s))}
 function val(n){var e=$('input[name="'+n+'"]:checked');return e?e.value:null}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-var toast=$('#toast');function aviso(t){toast.textContent=t;toast.classList.add('ver');setTimeout(function(){toast.classList.remove('ver')},1700)}
+var toast=$('#toast');function aviso(t){toast.textContent=t;toast.classList.add('ver');setTimeout(function(){toast.classList.remove('ver')},t.length>40?3500:1700)}
 function copiar(t,msg){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){aviso(msg||'Copiado')},function(){aviso('No se pudo copiar: seleccioná el texto')})}else aviso('Seleccioná el texto y copialo')}
 
 /* ---------- generador ---------- */
@@ -409,14 +419,14 @@ function generar(){
    '<div class="bloq" style="--c:#FADBC4"><h4><i>6</i>Autoevaluación</h4><ol><li>¿En qué nivel de la rúbrica te ubicás en cada criterio? Mostrá dónde se ve.</li><li>¿Qué cambiaste después de la devolución y por qué?</li><li>¿Qué tendrías que hacer para subir un nivel?</li></ol></div>'+
    '<div class="bloq" style="--c:#D9EAD3"><h4><i>7</i>Para que todos puedan (DUA)</h4><ul><li>Ofrecé el texto o las fuentes en más de un formato (papel, audio, digital).</li><li>Permití mostrar lo mismo de otra forma cuando haga falta (oral, escrito, visual), con los mismos criterios.</li><li>Sumá apoyos: un ejemplo, un glosario, una guía por partes.</li></ul></div>'+
    '<div class="bloq" style="--c:#F7E4B8"><h4><i>8</i>Prueba de estrés</h4><p>Antes de llevarla al aula, pedile a una IA que la resuelva como si no hubiera leído ni trabajado el tema. Si lo hace bien, anclá la tarea en lo trabajado en clase, pedí el proceso y sumá una breve explicación oral.</p></div>'+
-   '<div class="bloq" style="--c:#E1DAF4"><h4><i>9</i>Pedido para la IA</h4><p>Para seguir mejorándola con ayuda de una IA, sin delegar las decisiones:</p><div class="prompt" id="promptIA">'+esc(prompt)+'</div></div>'+
+   '<div class="bloq" style="--c:#E1DAF4"><h4><i>9</i>Pedido para la IA</h4><p>Para seguir mejorándola con ayuda de una IA, sin delegar las decisiones:</p><div class="prompt" id="promptIA">'+esc(prompt)+'</div>'+'<div class="recordatorio" role="note"><span class="ic">!</span><p><b>Cuando la IA te responda, revisá con sentido crítico:</b> ¿lo que propone es correcto?, ¿se ajusta a tu grupo y a lo que enseñaste?, ¿inventó datos, citas o textos?, ¿respeta tus criterios? Lo que no puedas justificar como docente, no lo uses.</p></div></div>'+
    '</div></div>'+
    '<div class="acciones"><button class="btn pri" id="btnCopiar">Copiar todo</button><button class="btn sec" id="btnPrompt">Copiar el pedido para la IA</button><button class="btn sec" id="btnImprimir">Imprimir o guardar en PDF</button><button class="btn sec" id="btnOtra">Armar otra</button></div>'+
-   '<p class="ayuda" style="margin-top:10px">Es un borrador: revisalo, cambialo y adaptalo a tu grupo. La última palabra es tuya.</p>';
+   '<div class="recordatorio" role="note"><span class="ic">!</span><p><b>Es un borrador.</b> Revisalo con tu criterio pedagógico, cambialo y adaptalo a tu grupo antes de usarlo. La última palabra es tuya.</p></div>';
   var r=$('#resultado');r.innerHTML=html;r.classList.add('ver');
   r.scrollIntoView({behavior:'smooth',block:'start'});
   $('#btnCopiar').onclick=function(){copiar($('#docEval').innerText,'Evaluación copiada')};
-  $('#btnPrompt').onclick=function(){copiar($('#promptIA').innerText,'Pedido copiado')};
+  $('#btnPrompt').onclick=function(){copiar($('#promptIA').innerText,'Pedido copiado · Recordá revisar con sentido crítico lo que te devuelva la IA')};
   $('#btnImprimir').onclick=function(){window.print()};
   $('#btnOtra').onclick=function(){r.classList.remove('ver');r.innerHTML='';$('#generador').scrollIntoView({behavior:'smooth'})};
 }

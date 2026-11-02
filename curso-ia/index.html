@@ -135,6 +135,11 @@ footer{background:var(--bordo);color:#EBDCCB;border-top:none}footer .firma{color
 
 .modulo>.tabla,.modulo>.comparar{width:calc(100% - 68px)}
 @media (max-width:900px){.modulo>.tabla,.modulo>.comparar{width:calc(100% - 36px)}.modulo .cab{padding:18px 18px 14px}.modulo>*:not(.cab){margin-left:18px;margin-right:18px}}
+.recordatorio{display:flex;gap:12px;align-items:flex-start;background:#FFF6E3;border:1.5px solid #E9CF95;border-left:6px solid var(--miel-f);border-radius:12px;padding:12px 16px;margin:-6px 0 18px;font-size:14.5px;line-height:1.5}
+.recordatorio .ic{flex:none;width:28px;height:28px;border-radius:50%;background:var(--miel-f);color:#fff;display:grid;place-items:center;font-weight:700}
+.recordatorio b{color:var(--bordo)}
+.modulo>.recordatorio{margin-left:34px;margin-right:34px}
+@media (max-width:900px){.modulo>.recordatorio{margin-left:18px;margin-right:18px}}
 </style>
 </head>
 <body>
@@ -437,6 +442,10 @@ Cuando la uses, contalo así: qué herramienta, qué le pediste y qué tomaste d
     bar.style.width=(n/mods.length*100)+'%';txt.textContent=n+' de '+mods.length;}
   mods.forEach(function(m){m.querySelector('.marcar input').addEventListener('change',function(){estado[m.dataset.m]=this.checked;try{localStorage.setItem(KEY,JSON.stringify(estado));}catch(e){}pintar();});});
   pintar();
+
+  // recordatorio después de cada pedido
+  var frases=['Revisá lo que te devuelva con sentido crítico: ¿es correcto?, ¿sirve para tu grupo?, ¿inventó algo?','Leé la respuesta con el criterio pedagógico que ya tenés: lo que no puedas justificar, no lo uses.','Verificá autores, citas, textos y datos antes de llevarlo al aula.','La IA no conoce a tus alumnos. Ajustá lo que proponga a tu grupo.'];
+  document.querySelectorAll('.prompt').forEach(function(p,i){var d=document.createElement('div');d.className='recordatorio';d.setAttribute('role','note');d.innerHTML='<span class="ic">!</span><p><b>Recordá:</b> '+frases[i%frases.length]+'</p>';p.parentNode.insertBefore(d,p.nextSibling);});
   // copiar
   var toast=document.getElementById('toast');
   function aviso(t){toast.textContent=t;toast.classList.add('ver');setTimeout(function(){toast.classList.remove('ver')},1600);}
