@@ -669,49 +669,105 @@ setOpt('g_disp','conflicto');
 var EJEMPLOS = {
   conflicto: {
     etiqueta:'un conflicto territorial',
-    objetivo: function(t){ return 'Que puedan identificar actores, intereses y desigualdad de poder en el conflicto por '+t+', y argumentar con fuentes por qué ese espacio está en disputa.'; },
-    consignaApertura: function(t){ return '"Les voy a repartir una fuente real sobre '+t+' — una noticia, un posteo o un volante. Antes de que yo diga nada, léanla y escriban solas/os: ¿quiénes están en conflicto acá? ¿qué quiere cada uno? ¿quién tiene más poder para conseguir lo que quiere?"'; },
-    queSurge:'Hipótesis sueltas y probablemente incompletas sobre los actores — sirven como punto de partida, no hace falta corregirlas todavía.',
-    consignaProduccion: function(t,modo){ return '"En '+modo+', armen una tabla de dos columnas: actor / qué parte del territorio reclama y por qué. Usen al menos dos fuentes que miren '+t+' desde posiciones distintas — por ejemplo una nota periodística y la voz de alguno de los actores involucrados (un comunicado, una entrevista, un posteo)."'; },
-    productoEsperado:'Una tabla por grupo con al menos dos actores identificados y una frase que explique la relación de poder entre ellos.',
-    preguntaCierre: function(t){ return '¿Cambió lo que pensaban al principio sobre '+t+' después de leer las fuentes? ¿Qué parte del conflicto sigue sin estar clara?'; },
-    queQueda:'La tabla de cada grupo más una conclusión colectiva de dos o tres líneas, escrita en el pizarrón o en un afiche.',
+    objetivos: function(t){ return [
+      'Identificar a los actores sociales involucrados en el conflicto por '+t+' y los intereses de cada uno.',
+      'Explicar la relación de poder entre esos actores a partir de fuentes con posiciones distintas.',
+      'Argumentar por escrito una posición propia sobre el conflicto, fundamentada en lo trabajado en clase.'
+    ]; },
+    propositos: function(t){ return [
+      'Generar un espacio donde el territorio deje de ser un dato neutral y se vuelva objeto de disputa social, visible y analizable.',
+      'Favorecer el contacto con fuentes reales y contemporáneas sobre '+t+', no solo con el relato del manual.',
+      'Acompañar el pasaje de una lectura intuitiva del conflicto a una lectura fundamentada con categorías de la geografía social (actor, interés, poder, territorio).'
+    ]; },
+    actividades: function(t,modo){ return [
+      { nombre:'"¿Quién quiere qué?" — exploración inicial', duracion:'15\'',
+        intencion:'Activar lo que el grupo ya sabe o intuye sobre '+t+', y generar una primera hipótesis exploratoria sin corregirla todavía — para poder compararla después con lo que surja del trabajo con fuentes.',
+        desarrollo:'Se reparte una fuente real sobre '+t+' (una noticia, un posteo o un volante). Consigna textual: "Antes de que yo diga nada, léanla y escriban solas/os: ¿quiénes están en conflicto acá? ¿qué quiere cada uno? ¿quién tiene más poder para conseguir lo que quiere?" Se comparten dos o tres respuestas en voz alta, sin validar ni corregir todavía.' },
+      { nombre:'Mapeo de actores — análisis con fuentes', duracion:'30-40\', en '+modo,
+        intencion:'Pasar de la intuición inicial a un análisis sistemático de actores e intereses, trabajando específicamente la variable "sujetos sociales" de la geografía social: nombrar no alcanza, hay que poder explicar qué quiere cada actor y con qué poder cuenta.',
+        desarrollo:'Consigna: "En '+modo+', armen una tabla de dos columnas: actor / qué parte del territorio reclama y por qué. Usen al menos dos fuentes que miren '+t+' desde posiciones distintas — por ejemplo una nota periodística y la voz de alguno de los actores involucrados (un comunicado, una entrevista, un posteo). Cada fila tiene que tener al menos una cita textual de la fuente que la respalda." Circula el/la docente revisando que cada actor tenga una cita de respaldo, no solo una opinión del grupo.' },
+      { nombre:'"¿Y en otro lado?" — transferencia y cierre', duracion:'15-20\'',
+        intencion:'Evitar que la categoría "conflicto territorial" quede pegada solo a este caso: que el grupo pueda reconocer la misma lógica (actores, intereses, poder desigual) en otra situación, aunque sea de forma breve.',
+        desarrollo:'Puesta en común de las tablas. Pregunta de cierre: "¿Cambió lo que pensaban al principio sobre '+t+' después de leer las fuentes? ¿Conocen o se imaginan otro conflicto territorial donde pase algo parecido?" Queda escrito: la tabla de cada grupo más una conclusión colectiva de dos o tres líneas en el pizarrón o en un afiche.' }
+    ]; },
     materiales:'Dos o tres fuentes con posiciones distintas sobre el conflicto (notas, comunicados, entrevistas); mapa o imagen del lugar si hay disponible.',
     criterios:['Sujetos sociales','Explicación del espacio']
   },
   migracion: {
     etiqueta:'una migración o movimiento de personas',
-    objetivo: function(t){ return 'Que puedan reconstruir las razones y el recorrido de quienes se movieron por '+t+', y relacionar ese caso con procesos migratorios más amplios.'; },
-    consignaApertura: function(t){ return '"Vamos a escuchar/leer un testimonio corto de alguien que se movió por '+t+'. Antes de analizar nada, anoten: ¿qué dejó? ¿qué buscaba? ¿qué encontró?"'; },
-    queSurge:'Una primera lista de motivos y expectativas, todavía sin relacionar con datos generales del fenómeno.',
-    consignaProduccion: function(t,modo){ return '"En '+modo+', reconstruyan el recorrido en un mapa simple (origen → destino) y completen por qué se fue / por qué llegó ahí, cruzando el testimonio con una fuente estadística o periodística sobre '+t+'."'; },
-    productoEsperado:'Un mapa de recorrido con al menos dos razones justificadas (una del testimonio, una de la fuente general).',
-    preguntaCierre: function(t){ return '¿Qué tuvo en común este caso de '+t+' con otras migraciones vistas antes en la materia, y qué fue distinto?'; },
-    queQueda:'El mapa de recorrido de cada grupo y una frase de comparación con otro caso ya visto.',
+    objetivos: function(t){ return [
+      'Reconstruir las razones y el recorrido de quienes se movieron por '+t+'.',
+      'Relacionar ese caso particular con procesos migratorios más amplios ya trabajados en la materia.',
+      'Distinguir, en un relato migratorio, lo que corresponde a la experiencia individual de lo que corresponde al proceso social general.'
+    ]; },
+    propositos: function(t){ return [
+      'Poner en contacto al grupo con una voz en primera persona antes que con una estadística, para que el fenómeno migratorio no se reduzca a un número.',
+      'Favorecer el uso de la escala como herramienta de análisis — ir y volver entre el caso individual y el proceso general.',
+      'Habilitar que aparezcan las propias trayectorias familiares o conocidas del grupo, sin obligar a nadie a exponerlas.'
+    ]; },
+    actividades: function(t,modo){ return [
+      { nombre:'Escuchar antes de explicar', duracion:'15\'',
+        intencion:'Que el fenómeno migratorio entre a la clase primero como experiencia de una persona concreta, antes que como categoría o estadística.',
+        desarrollo:'Se comparte un testimonio corto (escrito, en audio o filmado) de alguien que se movió por '+t+'. Consigna: "Antes de analizar nada, anoten: ¿qué dejó? ¿qué buscaba? ¿qué encontró?" Se comparten algunas respuestas sin corregir.' },
+      { nombre:'Del testimonio al mapa — reconstrucción con fuentes', duracion:'30-40\', en '+modo,
+        intencion:'Pasar de la experiencia individual al proceso general, cruzando el testimonio con datos que permitan ver si ese caso es excepcional o representativo de '+t+'.',
+        desarrollo:'Consigna: "En '+modo+', reconstruyan el recorrido en un mapa simple (origen → destino) y completen por qué se fue / por qué llegó ahí, cruzando el testimonio con una fuente estadística o periodística sobre '+t+'. Marquen con un color lo que viene del testimonio y con otro lo que viene de la fuente general."' },
+      { nombre:'Comparar con otro caso — cierre', duracion:'15-20\'',
+        intencion:'Que la migración trabajada no quede aislada: ubicarla dentro de los procesos migratorios más amplios ya vistos en la materia.',
+        desarrollo:'Puesta en común de los mapas. Pregunta de cierre: "¿Qué tuvo en común este caso de '+t+' con otras migraciones que vieron antes en la materia, y qué fue distinto?" Queda escrito: el mapa de cada grupo y una frase de comparación con otro caso ya visto.' }
+    ]; },
     materiales:'Un testimonio o entrevista (propia o publicada), un mapa de base, alguna fuente estadística sobre el fenómeno migratorio elegido.',
     criterios:['Sujetos sociales','Escalas']
   },
   circuito: {
     etiqueta:'un circuito productivo',
-    objetivo: function(t){ return 'Que puedan reconstruir las etapas del circuito de '+t+' e identificar en cuál de ellas se concentra la desigualdad.'; },
-    consignaApertura: function(t){ return '"Acá tienen '+t+' (una foto, o el objeto si se consigue). Antes de explicar nada: ¿de dónde vino esto antes de llegar acá, y por cuántas manos creen que pasó?"'; },
-    queSurge:'Una cadena intuitiva de pasos, probablemente incompleta o con etapas salteadas.',
-    consignaProduccion: function(t,modo){ return '"En '+modo+', reconstruyan el circuito en etapas (producción → procesamiento → transporte → venta) para '+t+', identificando en cada etapa quién trabaja ahí y qué gana o pierde."'; },
-    productoEsperado:'Un esquema de etapas con al menos un actor y una condición de trabajo o ganancia por etapa.',
-    preguntaCierre: function(t){ return '¿En qué etapa de '+t+' está la parte más desigual del circuito, y por qué les parece que es ahí?'; },
-    queQueda:'El esquema de etapas de cada grupo y la etapa señalada como más desigual, con su justificación.',
+    objetivos: function(t){ return [
+      'Reconstruir las etapas del circuito productivo de '+t+' desde la producción hasta la venta.',
+      'Identificar en cada etapa quién trabaja y qué gana o pierde.',
+      'Señalar y justificar en qué etapa del circuito se concentra la mayor desigualdad.'
+    ]; },
+    propositos: function(t){ return [
+      'Que un objeto o producto cotidiano deje de ser "algo que aparece" en la góndola y se vuelva el resultado visible de un proceso social y espacial con ganadores y perdedores.',
+      'Favorecer el pensamiento por etapas y relaciones, en lugar de la descripción aislada de un solo lugar.',
+      'Habilitar el uso de datos concretos (precios, condiciones de trabajo) como evidencia, no solo de impresiones generales.'
+    ]; },
+    actividades: function(t,modo){ return [
+      { nombre:'"¿De dónde vino esto?" — disparador', duracion:'15\'',
+        intencion:'Activar una primera cadena intuitiva de pasos del circuito, aunque esté incompleta, para poder compararla después con la reconstrucción fundamentada.',
+        desarrollo:'Se muestra '+t+' (una foto, o el objeto si se consigue). Consigna: "Antes de explicar nada: ¿de dónde vino esto antes de llegar acá, y por cuántas manos creen que pasó?" Se anota la cadena intuitiva en el pizarrón, sin corregirla.' },
+      { nombre:'Reconstrucción del circuito por etapas', duracion:'30-40\', en '+modo,
+        intencion:'Pasar de la cadena intuitiva a un análisis por etapas con datos concretos de quién trabaja y qué condiciones tiene en cada una, trabajando específicamente la desigualdad espacial del proceso productivo.',
+        desarrollo:'Consigna: "En '+modo+', reconstruyan el circuito en etapas (producción → procesamiento → transporte → venta) para '+t+', identificando en cada etapa quién trabaja ahí y qué gana o pierde. Usen al menos una fuente con datos concretos (precios, salarios, condiciones) para alguna etapa."' },
+      { nombre:'La etapa más desigual — cierre', duracion:'15-20\'',
+        intencion:'Que el grupo tome posición fundamentada sobre dónde está la desigualdad, en vez de quedarse en la descripción neutral de las etapas.',
+        desarrollo:'Puesta en común de los esquemas. Pregunta de cierre: "¿En qué etapa de '+t+' está la parte más desigual del circuito, y por qué les parece que es ahí?" Queda escrito: el esquema de etapas de cada grupo y la etapa señalada como más desigual, con su justificación.' }
+    ]; },
     materiales:'Imágenes o datos de cada etapa del circuito, mapa para ubicar los lugares, alguna fuente con precios o condiciones de trabajo si está disponible.',
     criterios:['Explicación del espacio','Fuentes y datos']
   },
   mapa: {
     etiqueta:'un mapa o imagen para leer',
-    objetivo: function(t){ return 'Que puedan leer críticamente una fuente cartográfica sobre '+t+', reconociendo qué muestra, qué oculta y con qué escala fue construida.'; },
-    consignaApertura: function(t){ return '"Les muestro un mapa o una imagen satelital de '+t+' sin título ni referencias completas. Antes de que yo explique nada: ¿qué nos puede estar mostrando esto?"'; },
-    queSurge:'Lecturas intuitivas de la imagen, sin vocabulario técnico todavía — está bien que sea así en este momento.',
-    consignaProduccion: function(t,modo){ return '"En '+modo+', completen las referencias que faltan, identifiquen la escala y escriban tres afirmaciones que ese mapa permite sostener sobre '+t+', y una que no permite sostener."'; },
-    productoEsperado:'El mapa con referencias completas y cuatro afirmaciones (tres sostenidas, una no) justificadas con lo que el mapa muestra o no muestra.',
-    preguntaCierre: function(t){ return '¿Qué decisión tomaron para elegir la escala y las referencias de su versión del mapa de '+t+'?'; },
-    queQueda:'El mapa completado de cada grupo y la lista de las cuatro afirmaciones, con su justificación.',
+    objetivos: function(t){ return [
+      'Leer críticamente una fuente cartográfica sobre '+t+', reconociendo qué muestra, qué oculta y con qué escala fue construida.',
+      'Completar y justificar las referencias faltantes de un mapa temático o imagen satelital.',
+      'Distinguir qué afirmaciones permite sostener un mapa y cuáles no, a partir de lo que efectivamente representa.'
+    ]; },
+    propositos: function(t){ return [
+      'Correr al mapa del lugar de "verdad neutral" y mostrarlo como una construcción con decisiones de escala, recorte y referencias.',
+      'Favorecer el lenguaje cartográfico como herramienta de análisis, no solo como ilustración de un contenido ya explicado.',
+      'Generar la costumbre de preguntar, frente a cualquier mapa, quién lo hizo, con qué escala y con qué intención.'
+    ]; },
+    actividades: function(t,modo){ return [
+      { nombre:'"¿Qué nos está mostrando esto?" — lectura inicial', duracion:'15\'',
+        intencion:'Que el grupo arriesgue una primera lectura intuitiva de la imagen, sin vocabulario técnico todavía, antes de analizarla con herramientas cartográficas.',
+        desarrollo:'Se proyecta o reparte un mapa temático o una imagen satelital de '+t+' sin título ni referencias completas. Consigna: "Antes de que yo explique nada: ¿qué nos puede estar mostrando esto?" Se anotan dos o tres lecturas distintas sin corregir.' },
+      { nombre:'Completar y poner a prueba el mapa', duracion:'30-40\', en '+modo,
+        intencion:'Pasar de la lectura intuitiva al análisis con lenguaje cartográfico específico (escala, referencias) y distinguir qué puede y qué no puede afirmarse a partir de esa fuente.',
+        desarrollo:'Consigna: "En '+modo+', completen las referencias que faltan, identifiquen la escala y escriban tres afirmaciones que ese mapa permite sostener sobre '+t+', y una que NO permite sostener (algo que haría falta otra fuente para saber)."' },
+      { nombre:'Defender las decisiones — cierre', duracion:'15-20\'',
+        intencion:'Que el grupo haga explícitas y justifique las decisiones cartográficas que tomó (qué mostrar, con qué escala, con qué referencias), en vez de darlas por obvias.',
+        desarrollo:'Puesta en común de los mapas completados. Pregunta de cierre: "¿Qué decisión tomaron para elegir la escala y las referencias de su versión del mapa de '+t+'?" Queda escrito: el mapa completado de cada grupo y la lista de las cuatro afirmaciones, con su justificación.' }
+    ]; },
     materiales:'Mapa temático o imagen satelital (actual y, si se consigue, una de otra época para comparar), algo para redibujar o anotar referencias.',
     criterios:['Lenguaje cartográfico','Fuentes y datos']
   }
@@ -737,42 +793,30 @@ document.getElementById('g_submit').addEventListener('click', function(){
   document.getElementById('o_titulo').innerHTML =
     '<p>"'+(tema.charAt(0).toUpperCase()+tema.slice(1))+'": una clase desde '+ej.etiqueta+' — '+anio+'.</p>';
 
+  var rupturaTaller = 'Al ser taller, conviene decidir a propósito qué rasgo de la forma escolar de Pineau rompe esta propuesta: ¿el espacio único? ¿el tiempo igual para todas y todos? ¿la tarea idéntica? Nómbrenlo antes de seguir.';
+  var rupturaComun = 'Al ser clase común, la secuencia sigue la forma escolar tradicional — lo que no exime de decidir cada actividad a propósito, con una intención clara detrás de cada una.';
   document.getElementById('o_fund').innerHTML =
-    '<p>Clase para '+anio+', dentro del eje <strong>'+eje+'</strong>, sobre <strong>'+tema+'</strong>. Formato: '+formato+'. '+
-    (formato==='taller' ? 'Al ser taller, conviene decidir a propósito qué rasgo de la forma escolar de Pineau rompe esta propuesta: ¿el espacio único? ¿el tiempo igual para todas y todos? ¿la tarea idéntica? Nómbrenlo antes de seguir.' : 'Al ser clase común, los ocho momentos siguen la forma escolar tradicional — lo que no exime de decidir cada variable a propósito.')+'</p>';
+    '<p>Clase para '+anio+', dentro del eje del Diseño Curricular <em>"'+eje+'"</em>, trabajado a través de '+tema+'. El recorte elegido — '+ej.etiqueta+' — es una forma de volver concreto y analizable ese contenido curricular, más que un agregado aparte: cada actividad de esta secuencia apunta a construir las categorías de la geografía social (actores, escalas, relaciones de poder, construcción del espacio) a partir de un caso que el grupo pueda reconocer. Formato: '+formato+'. '+(formato==='taller' ? rupturaTaller : rupturaComun)+'</p>';
 
-  document.getElementById('o_obj').innerHTML = '<p>'+ej.objetivo(tema)+'</p>';
+  var objHtml = '<p><strong>Objetivos</strong> (lo que se espera que el grupo logre):</p><ul>';
+  ej.objetivos(tema).forEach(function(o){ objHtml += '<li>'+o+'</li>'; });
+  objHtml += '</ul><p><strong>Propósitos</strong> (lo que la pareja pedagógica se propone habilitar con esta clase):</p><ul>';
+  ej.propositos(tema).forEach(function(p){ objHtml += '<li>'+p+'</li>'; });
+  objHtml += '</ul>';
+  document.getElementById('o_obj').innerHTML = objHtml;
 
   document.getElementById('o_cont').innerHTML =
     '<p>Contenido ligado al eje del Diseño Curricular (texto del documento oficial, para '+anio+'): <em>"'+eje+'"</em>. De ahí recorten ustedes el aspecto puntual que van a trabajar en relación con '+tema+' — verificar siempre el núcleo exacto en el documento DGCyE antes de dar la clase.</p>';
 
-  var nombreGrupo = (modo==='Individual' ? 'cada estudiante' : 'cada grupo');
+  var acts = ej.actividades(tema, modoLower);
   var seq = '';
-  if(formato==='taller'){
-    seq = 'MOMENTO 1 — APERTURA (10-15\')\n'+
-          'Consigna para dar a '+nombreGrupo+':\n'+ej.consignaApertura(tema)+'\n'+
-          'Qué se espera que surja: '+ej.queSurge+'\n\n'+
-          'MOMENTO 2 — PRODUCCIÓN (25-35\', distribuido en '+clases+' clase'+(clases==1?'':'s')+')\n'+
-          'Consigna: '+ej.consignaProduccion(tema,modoLower)+'\n'+
-          'Producto esperado: '+ej.productoEsperado+'\n\n'+
-          'MOMENTO 3 — PUESTA EN COMÚN (10-15\')\n'+
-          nombreGrupo.charAt(0).toUpperCase()+nombreGrupo.slice(1)+' muestra lo que produjo; el resto anota una coincidencia y una diferencia con lo propio.\n\n'+
-          'MOMENTO 4 — CIERRE Y REGISTRO (10\')\n'+
-          'Pregunta de cierre: "'+ej.preguntaCierre(tema)+'"\n'+
-          'Qué queda escrito: '+ej.queQueda;
-  } else {
-    seq = 'MOMENTO 1 — APERTURA (10-15\', recuperar saberes previos)\n'+
-          'Consigna para dar a '+nombreGrupo+':\n'+ej.consignaApertura(tema)+'\n'+
-          'Qué se espera que surja: '+ej.queSurge+'\n\n'+
-          'MOMENTO 2 — DESARROLLO (25-35\', en '+modoLower+')\n'+
-          'Consigna: '+ej.consignaProduccion(tema,modoLower)+'\n'+
-          'Producto esperado: '+ej.productoEsperado+'\n\n'+
-          'MOMENTO 3 — SÍNTESIS COLECTIVA (10\')\n'+
-          'Pregunta de cierre: "'+ej.preguntaCierre(tema)+'"\n\n'+
-          'MOMENTO 4 — CIERRE (5-10\')\n'+
-          'Qué queda escrito: '+ej.queQueda+' Puede funcionar también como punto de partida de la próxima clase.';
-  }
-  document.getElementById('o_seq').textContent = seq;
+  acts.forEach(function(a,i){
+    seq += 'ACTIVIDAD '+(i+1)+' — '+a.nombre+' ('+a.duracion+')\n'+
+           'Intención: '+a.intencion+'\n'+
+           'Desarrollo: '+a.desarrollo+'\n\n';
+  });
+  seq += 'Distribución sugerida: estas actividades pueden darse en una sola clase o repartirse en las '+clases+' clase'+(clases==1?'':'s')+' que estimaron — decidan ustedes el corte según el tiempo real de cada módulo en la escuela de prácticas.';
+  document.getElementById('o_seq').textContent = seq.trim();
 
   document.getElementById('o_tar').innerHTML =
     '<p><strong>Materiales de ejemplo para este disparador:</strong> '+ej.materiales+' Sumen siempre el Diseño Curricular del año y espacio físico adecuado para trabajar en '+modoLower+'.</p>';
