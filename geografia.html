@@ -38,6 +38,9 @@ nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:v
 nav.top .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:12px;scrollbar-width:none}
 nav.top a{font-family:var(--font-mono);font-size:.76rem;font-weight:500;white-space:nowrap;color:var(--ink-soft);text-decoration:none;padding:8px 14px;border-radius:99px;transition:background .15s,color .15s}
 nav.top a:hover{background:var(--accent-soft);color:var(--accent)}
+nav.top .navdiv{width:1px;align-self:stretch;background:var(--line);margin:4px 4px}
+nav.top a.navtool{background:var(--teal-soft);color:var(--teal);font-weight:600}
+nav.top a.navtool:hover{background:var(--teal);color:#fff}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 
 section{padding-block:56px;border-bottom:1px solid var(--line)}
@@ -54,6 +57,12 @@ section:last-of-type{border-bottom:none}
 .stat b{display:block;font-family:var(--font-display);font-size:2.1rem;color:var(--accent)}
 .stat span{font-size:.78rem;color:var(--ink-soft)}
 .stat:nth-child(2) b{color:var(--teal)} .stat:nth-child(3) b{color:var(--gold)} .stat:nth-child(4) b{color:var(--coral)}
+
+.toolgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.toolcard{--tc:var(--accent);display:block;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:18px 20px;text-decoration:none;color:var(--ink);transition:border-color .15s,transform .1s;box-shadow:0 2px 0 var(--line)}
+.toolcard:hover{border-color:var(--tc);transform:translateY(-2px)}
+.toolcard b{display:block;font-family:var(--font-display);font-size:1.05rem;margin-bottom:6px;color:var(--tc)}
+.toolcard span{font-size:.84rem;color:var(--ink-soft)}
 
 .tramo{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--teal);border-radius:18px;padding:24px 26px;margin-top:22px;box-shadow:0 2px 0 var(--line)}
 .tramo .num{font-family:var(--font-mono);font-size:.75rem;font-weight:600;color:var(--teal);letter-spacing:.1em;background:var(--teal-soft);border-radius:99px;padding:4px 12px;display:inline-block}
@@ -152,9 +161,9 @@ footer .sig{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 
 <nav class="top"><div class="wrap">
-  <a href="#inicio">Inicio</a><a href="#recorrido">El recorrido</a><a href="#autores">Los autores</a>
-  <a href="#planificar">Para planificar</a><a href="#generador">Generador</a><a href="#banco">Banco de actividades</a>
-  <a href="#semaforo">Semáforo</a><a href="#rubricas">Generador de rúbricas</a><a href="#ia">Taller de IA</a>
+  <a href="#inicio">Inicio</a><a href="#recorrido">El recorrido</a><a href="#autores">Los autores</a><a href="#planificar">Para planificar</a>
+  <span class="navdiv"></span>
+  <a href="#generador" class="navtool">Generador</a><a href="#banco" class="navtool">Banco</a><a href="#rubricas" class="navtool">Rúbricas</a><a href="#semaforo" class="navtool">Semáforo</a><a href="#ia" class="navtool">Taller de IA</a>
 </div></nav>
 
 <header class="hero" id="inicio"><div class="wrap">
@@ -170,6 +179,13 @@ footer .sig{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
   <div class="meta">
     <span>DC Educación Secundaria, DGCyE (2006) — marco prescriptivo</span>
     <span>Espacio de la Práctica Docente III — residencia en 1°, 2° o 3° año</span>
+  </div>
+  <p class="eyebrow" style="display:block;margin-top:32px;margin-bottom:12px">Ir directo a una herramienta</p>
+  <div class="toolgrid">
+    <a class="toolcard" href="#generador"><b>Generador de planificaciones</b><span>Arma un borrador con actividades de ejemplo ya escritas, listas para editar.</span></a>
+    <a class="toolcard" href="#banco" style="--tc:var(--sky)"><b>Banco de actividades</b><span>Ideas ya armadas, filtrables por eje del Diseño Curricular.</span></a>
+    <a class="toolcard" href="#rubricas" style="--tc:var(--gold)"><b>Generador de rúbricas</b><span>Arma una rúbrica de cuatro niveles con los criterios que elijan.</span></a>
+    <a class="toolcard" href="#ia" style="--tc:var(--coral)"><b>Taller de IA</b><span>Cómo planificar y evaluar con IA sin perder la última palabra.</span></a>
   </div>
 </div></header>
 
@@ -259,7 +275,7 @@ footer .sig{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
 <section id="generador"><div class="wrap">
   <span class="eyebrow">Herramienta</span>
   <h2>Generador de planificaciones</h2>
-  <p class="lede">Arma un primer borrador a partir de las ocho variables. No conoce a su grupo real: es un punto de partida para que ustedes decidan, no un reemplazo de esa decisión.</p>
+  <p class="lede">Arma un borrador con actividades de ejemplo ya escritas — no solo los títulos de las variables — a partir de lo que van eligiendo. No conoce a su grupo real: es un punto de partida concreto para editar, cambiar o descartar, no un reemplazo de esa decisión.</p>
 
   <div class="gen">
     <div class="step">
@@ -283,16 +299,17 @@ footer .sig{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
     <div class="step">
       <label>3 · ¿Sobre qué contenido o problemática específica?</label>
       <input type="text" id="g_tema" placeholder="Ej: la cuenca del río que atraviesa la ciudad">
-      <div class="chips" id="g_sugerencias" style="margin-top:10px">
-        <button class="chip" type="button">un conflicto territorial local</button>
-        <button class="chip" type="button">una migración reciente en la zona</button>
-        <button class="chip" type="button">un circuito productivo cercano</button>
-        <button class="chip" type="button">un mapa temático propio</button>
+      <p class="note" style="margin-top:10px">4 · ¿Con qué tipo de disparador arrancaría la clase? Esto decide qué actividad de ejemplo arma el borrador.</p>
+      <div class="optrow" id="g_disp">
+        <button class="optbtn" data-v="conflicto">Conflicto territorial<small>Dos o más actores en disputa por el mismo espacio</small></button>
+        <button class="optbtn" data-v="migracion">Migración / movimiento de personas<small>Quién se mueve, por qué, y qué deja o encuentra</small></button>
+        <button class="optbtn" data-v="circuito">Circuito productivo<small>De dónde sale algo, quién lo trabaja, a dónde va</small></button>
+        <button class="optbtn" data-v="mapa">Mapa o imagen para leer<small>Una fuente cartográfica o satelital como punto de partida</small></button>
       </div>
     </div>
 
     <div class="step">
-      <label>4 · ¿Formato de la clase?</label>
+      <label>5 · ¿Formato de la clase?</label>
       <div class="optrow" id="g_formato">
         <button class="optbtn" data-v="clase común">Clase común<small>Forma escolar tradicional, un espacio y un tiempo para todo el grupo</small></button>
         <button class="optbtn" data-v="taller">Taller<small>Rompe a propósito uno o más rasgos de la forma escolar</small></button>
@@ -301,7 +318,7 @@ footer .sig{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
 
     <div class="step twocol">
       <div>
-        <label>5 · Agrupamiento</label>
+        <label>6 · Agrupamiento</label>
         <select id="g_modo">
           <option>Individual</option><option selected>En parejas</option><option>En grupos</option>
         </select>
@@ -313,7 +330,7 @@ footer .sig{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
     </div>
 
     <div class="step">
-      <label>6 · ¿Qué modo de uso tiene la IA en esta tarea?</label>
+      <label>7 · ¿Qué modo de uso tiene la IA en esta tarea?</label>
       <div class="optrow" id="g_ia">
         <button class="optbtn" data-v="Excluido por diseño: la actividad se resuelve sin IA y la consigna la vuelve innecesaria (trabajo de campo, entrevistas, recorridos, mapas mentales).">Excluido por diseño<small>La consigna se resuelve sin IA y la vuelve innecesaria</small></button>
         <button class="optbtn" data-v="Restringido: se permite para una tarea acotada y se declara (por ejemplo, pedir ideas de preguntas de investigación y elegir dos para justificar).">Restringido<small>Se permite para una tarea acotada y se declara</small></button>
@@ -361,9 +378,9 @@ footer .sig{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
 </div></section>
 
 <section id="ia"><div class="wrap">
-  <span class="eyebrow">IV · Taller de planificación y evaluación con IA</span>
-  <h2>Un instrumento más, nunca el que decide</h2>
-  <p class="lede">La IA puede ayudar a armar un primer borrador de clase o de rúbrica. No puede conocer a su grupo, no puede pisar la escuela, y no tiene permitido tener la última palabra: esa sigue siendo siempre de ustedes.</p>
+  <span class="eyebrow">IV · Herramienta</span>
+  <h2>Taller de planificación y evaluación con IA</h2>
+  <p class="lede"><em>Un instrumento más, nunca el que decide.</em> La IA puede ayudar a armar un primer borrador de clase o de rúbrica. No puede conocer a su grupo, no puede pisar la escuela, y no tiene permitido tener la última palabra: esa sigue siendo siempre de ustedes.</p>
 
   <div class="halluc-box">
     <h4>Las alucinaciones no son un detalle menor</h4>
@@ -650,7 +667,38 @@ document.getElementById('g_anio').addEventListener('change', function(){ renderE
 wireOpt('g_eje');
 renderEjes(document.getElementById('g_anio').value);
 
-['g_formato','g_ia'].forEach(wireOpt);
+['g_formato','g_ia','g_disp'].forEach(wireOpt);
+setOpt('g_disp','conflicto');
+var EJEMPLOS = {
+  conflicto: {
+    apertura: function(t){ return 'Buscan (o llevan ya elegida) una noticia, un posteo o un volante real sobre '+t+'. Sin explicar nada todavía, reparten la fuente y piden: escriban solas/os quiénes están en conflicto ahí y qué quiere cada uno. Recién después se comparte en voz alta.'; },
+    actividad: function(t,modo){ return 'En '+modo+', arman una tabla de dos columnas — "actor" / "qué parte del territorio reclama y por qué" — con al menos dos fuentes que miren '+t+' desde posiciones distintas (por ejemplo una nota periodística y la voz de alguno de los actores involucrados).'; },
+    materiales:'Dos o tres fuentes con posiciones distintas sobre el conflicto (notas, comunicados, entrevistas); mapa o imagen del lugar si hay disponible.',
+    cierre: function(t){ return '¿Cambió lo que pensaban al principio sobre '+t+' después de leer las fuentes? ¿Qué parte del conflicto sigue sin estar clara?'; },
+    criterios:['Sujetos sociales','Explicación del espacio']
+  },
+  migracion: {
+    apertura: function(t){ return 'Comparten un testimonio corto (escrito, en audio o filmado) de alguien que se movió por '+t+'. Antes de analizar nada, preguntan: ¿qué dejó? ¿qué buscaba? ¿qué encontró?'; },
+    actividad: function(t,modo){ return 'En '+modo+', reconstruyen el recorrido en un mapa simple (origen → destino) y completan por qué se fue / por qué llegó ahí, cruzando el testimonio con una fuente estadística o periodística sobre '+t+'.'; },
+    materiales:'Un testimonio o entrevista (propia o publicada), un mapa de base, alguna fuente estadística sobre el fenómeno migratorio elegido.',
+    cierre: function(t){ return '¿Qué tuvo en común este caso de '+t+' con otras migraciones vistas antes en la materia, y qué fue distinto?'; },
+    criterios:['Sujetos sociales','Escalas']
+  },
+  circuito: {
+    apertura: function(t){ return 'Muestran un producto concreto ligado a '+t+' (una foto, o el objeto mismo si se puede conseguir) y preguntan: ¿de dónde vino esto antes de llegar acá, y por cuántas manos pasó?'; },
+    actividad: function(t,modo){ return 'En '+modo+', reconstruyen el circuito en etapas (producción → procesamiento → transporte → venta) para '+t+', identificando en cada etapa quién trabaja ahí y qué gana o pierde.'; },
+    materiales:'Imágenes o datos de cada etapa del circuito, mapa para ubicar los lugares, alguna fuente con precios o condiciones de trabajo si está disponible.',
+    cierre: function(t){ return '¿En qué etapa de '+t+' está la parte más desigual del circuito, y por qué les parece que es ahí?'; },
+    criterios:['Explicación del espacio','Fuentes y datos']
+  },
+  mapa: {
+    apertura: function(t){ return 'Proyectan o reparten un mapa temático o una imagen satelital de '+t+' sin título ni referencias completas, y preguntan: ¿qué nos puede estar mostrando esto?'; },
+    actividad: function(t,modo){ return 'En '+modo+', completan las referencias que faltan, identifican la escala y escriben tres afirmaciones que ese mapa permite sostener sobre '+t+' y una que no permite sostener.'; },
+    materiales:'Mapa temático o imagen satelital (actual y, si se consigue, una de otra época para comparar), algo para redibujar o anotar referencias.',
+    cierre: function(t){ return '¿Qué decisión tomaron para elegir la escala y las referencias de su versión del mapa de '+t+'?'; },
+    criterios:['Lenguaje cartográfico','Fuentes y datos']
+  }
+};
 setOpt('g_formato','clase común');
 setOpt('g_ia','Restringido: se permite para una tarea acotada y se declara (por ejemplo, pedir ideas de preguntas de investigación y elegir dos para justificar).');
 
@@ -659,41 +707,50 @@ function getOpt(id){ var el = document.getElementById(id).querySelector('[aria-p
 document.getElementById('g_submit').addEventListener('click', function(){
   var anio = document.getElementById('g_anio').value;
   var eje = getOpt('g_eje');
-  var tema = document.getElementById('g_tema').value.trim() || '(sin tema específico todavía — complétenlo)';
+  var temaRaw = document.getElementById('g_tema').value.trim();
+  var tema = temaRaw || 'el tema que elijan (todavía no lo escribieron arriba — complétenlo y volvé a generar)';
   var formato = getOpt('g_formato');
   var modo = document.getElementById('g_modo').value;
+  var modoLower = modo.toLowerCase();
   var clases = document.getElementById('g_clases').value;
   var ia = getOpt('g_ia');
+  var dispKey = getOpt('g_disp') || 'conflicto';
+  var ej = EJEMPLOS[dispKey] || EJEMPLOS.conflicto;
 
   document.getElementById('o_fund').innerHTML =
     '<p>Clase para '+anio+', dentro del eje <strong>'+eje+'</strong>, sobre <strong>'+tema+'</strong>. Formato: '+formato+'. '+
     (formato==='taller' ? 'Al ser taller, conviene decidir a propósito qué rasgo de la forma escolar de Pineau rompe esta propuesta: ¿el espacio único? ¿el tiempo igual para todas y todos? ¿la tarea idéntica? Nómbrenlo antes de seguir.' : 'Al ser clase común, los ocho momentos siguen la forma escolar tradicional — lo que no exime de decidir cada variable a propósito.')+'</p>';
 
   document.getElementById('o_cont').innerHTML =
-    '<p>Contenido ligado al eje <strong>'+eje+'</strong> del Diseño Curricular de Geografía — verificar el núcleo exacto para '+anio+' en el documento oficial DGCyE antes de dar la clase.</p>';
+    '<p>Contenido ligado al eje del Diseño Curricular (texto del documento oficial, para '+anio+'): <em>"'+eje+'"</em>. De ahí recorten ustedes el aspecto puntual que van a trabajar en relación con '+tema+' — verificar siempre el núcleo exacto en el documento DGCyE antes de dar la clase.</p>';
 
   var seq = '';
   if(formato==='taller'){
-    seq = '1. Apertura (10\') — disparador ligado a '+tema+', sin anticipar la conclusión.\n'+
-          '2. Producción en '+modo.toLowerCase()+' (según cantidad de clases: '+clases+') — construcción propia, no transmisión.\n'+
-          '3. Puesta en común — circulación de lo producido entre grupos.\n'+
-          '4. Cierre y registro — qué queda escrito, quién lo valida.';
+    seq = '1. APERTURA (10\')\n'+ej.apertura(tema)+'\n\n'+
+          '2. PRODUCCIÓN — en '+modoLower+' (distribuido en '+clases+' clase'+(clases==1?'':'s')+')\n'+ej.actividad(tema,modoLower)+'\n\n'+
+          '3. PUESTA EN COMÚN\nCada '+(modo==='Individual'?'estudiante':'grupo')+' muestra lo que produjo; el resto anota una coincidencia y una diferencia con lo propio.\n\n'+
+          '4. CIERRE Y REGISTRO\n'+ej.cierre(tema)+' ¿Qué queda escrito de esta clase, y quién lo valida?';
   } else {
-    seq = '1. Apertura (10\') — recuperar saberes previos sobre '+tema+'.\n'+
-          '2. Desarrollo — presentación de contenido + actividad en '+modo.toLowerCase()+'.\n'+
-          '3. Síntesis colectiva.\n'+
-          '4. Cierre — consigna de seguimiento o evaluación breve.';
+    seq = '1. APERTURA (10\') — recuperar saberes previos\n'+ej.apertura(tema)+'\n\n'+
+          '2. DESARROLLO — en '+modoLower+'\n'+ej.actividad(tema,modoLower)+'\n\n'+
+          '3. SÍNTESIS COLECTIVA\n'+ej.cierre(tema)+'\n\n'+
+          '4. CIERRE\nConsigna de seguimiento o evaluación breve a partir de lo trabajado sobre '+tema+'.';
   }
   document.getElementById('o_seq').textContent = seq;
 
   document.getElementById('o_tar').innerHTML =
-    '<p>Tarea a definir según el disparador elegido (mapa, texto, entrevista, imagen satelital). Materiales mínimos: Diseño Curricular del año, soporte cartográfico o fuente de datos sobre '+tema+', espacio para el agrupamiento en '+modo.toLowerCase()+'.</p>';
+    '<p><strong>Materiales de ejemplo para este disparador:</strong> '+ej.materiales+' Sumen siempre el Diseño Curricular del año y espacio físico adecuado para trabajar en '+modoLower+'.</p>';
 
   document.getElementById('o_org').innerHTML =
     '<p>Agrupamiento: <strong>'+modo+'</strong>. Cantidad de clases estimada: <strong>'+clases+'</strong>. Revisar si el espacio disponible en la escuela de prácticas permite el formato elegido ('+formato+').</p>';
 
-  document.getElementById('o_eval').innerHTML =
-    '<p>Definir con la pareja pedagógica qué nivel (Inicial / En proceso / Logrado / Logrado con profundización) corresponde a cada producción, y qué queda como registro de la clase.</p>'+
+  var evalHtml = '<p>Dos criterios de ejemplo para este tipo de disparador, con un indicador de referencia en el nivel "En proceso" — ustedes deciden si esa producción está antes, en ese nivel, o más allá:</p><ul>';
+  ej.criterios.forEach(function(c){
+    var ind = (RUBRICA_DC[c] && RUBRICA_DC[c]['En proceso']) || '';
+    evalHtml += '<li><strong>'+c+'</strong> — en proceso: "'+ind+'"</li>';
+  });
+  evalHtml += '</ul><p>Completen con el resto de las variables de la Rúbrica general de Geografía (sección "Generador de rúbricas" más abajo) según lo que decidan evaluar.</p>';
+  document.getElementById('o_eval').innerHTML = evalHtml +
     '<div class="warn-box">Rol de la IA en esta tarea: '+ia+'</div>';
 
   document.getElementById('g_output').classList.add('show');
