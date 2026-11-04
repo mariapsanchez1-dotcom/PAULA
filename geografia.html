@@ -588,11 +588,6 @@ document.getElementById('filterBanco').addEventListener('click', function(e){
   renderBanco(b.dataset.f);
 });
 
-document.getElementById('g_sugerencias').addEventListener('click', function(e){
-  var b = e.target.closest('button'); if(!b) return;
-  document.getElementById('g_tema').value = b.textContent;
-});
-
 function wireOpt(id){
   var box = document.getElementById(id);
   box.addEventListener('click', function(e){
