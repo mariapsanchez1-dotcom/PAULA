@@ -1,0 +1,861 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Brújula para la Práctica 3</title>
+<style>
+/* Mapa topográfico: capas de contenido como curvas de nivel; navegación como líneas de ruta */
+:root{
+  --bg:#FDF7ED; --surface:#FFFFFF; --ink:#2A2117; --ink-soft:#6E6253;
+  --accent:#E2672E; --accent-soft:#FAD9C2; --teal:#1E8C79; --teal-soft:#CFEEE5;
+  --gold:#D9A520; --gold-soft:#F7E8B8; --coral:#E2486B; --coral-soft:#FAD6DE; --sky:#2E8FD6; --sky-soft:#D4EAFA;
+  --line:#EFE1C8; --warn:#D9A520; --ok:#1E8C79; --bad:#E2486B;
+  --font-display:'Fraunces',Georgia,serif; --font-body:'Public Sans',system-ui,sans-serif; --font-mono:'IBM Plex Mono',monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1C1712; --surface:#272017; --ink:#F6EFE2; --ink-soft:#C5B9A6;
+    --accent:#F2966C; --accent-soft:#4A2A18; --teal:#5FD3BD; --teal-soft:#1C3B34;
+    --gold:#F0CB52; --gold-soft:#473615; --coral:#F28FA3; --coral-soft:#471F28; --sky:#81C5F4; --sky-soft:#17324A;
+    --line:#3C2F20; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1C1712; --surface:#272017; --ink:#F6EFE2; --ink-soft:#C5B9A6;
+  --accent:#F2966C; --accent-soft:#4A2A18; --teal:#5FD3BD; --teal-soft:#1C3B34;
+  --gold:#F0CB52; --gold-soft:#473615; --coral:#F28FA3; --coral-soft:#471F28; --sky:#81C5F4; --sky-soft:#17324A;
+  --line:#3C2F20; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);margin:0;line-height:1.55}
+.wrap{max-width:900px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.08}
+h2{font-size:clamp(1.5rem,3.4vw,2rem);letter-spacing:-.01em}
+h3{font-size:1.15rem}
+p{margin:0 0 .9em}
+a{color:var(--teal)}
+.eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:2px solid var(--line)}
+nav.top .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:12px;scrollbar-width:none}
+nav.top a{font-family:var(--font-mono);font-size:.76rem;font-weight:500;white-space:nowrap;color:var(--ink-soft);text-decoration:none;padding:8px 14px;border-radius:99px;transition:background .15s,color .15s}
+nav.top a:hover{background:var(--accent-soft);color:var(--accent)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+
+section{padding-block:56px;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+.lede{font-size:1.1rem;color:var(--ink-soft);max-width:60ch}
+
+.hero{padding-top:52px;padding-bottom:12px;background:
+  radial-gradient(circle at 12% 18%, var(--accent-soft) 0%, transparent 42%),
+  radial-gradient(circle at 92% 0%, var(--teal-soft) 0%, transparent 38%),
+  radial-gradient(circle at 78% 85%, var(--gold-soft) 0%, transparent 40%)}
+.hero .meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:18px;margin-top:28px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 14px}
+.stat b{display:block;font-family:var(--font-display);font-size:2.1rem;color:var(--accent)}
+.stat span{font-size:.78rem;color:var(--ink-soft)}
+.stat:nth-child(2) b{color:var(--teal)} .stat:nth-child(3) b{color:var(--gold)} .stat:nth-child(4) b{color:var(--coral)}
+
+.tramo{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--teal);border-radius:18px;padding:24px 26px;margin-top:22px;box-shadow:0 2px 0 var(--line)}
+.tramo .num{font-family:var(--font-mono);font-size:.75rem;font-weight:600;color:var(--teal);letter-spacing:.1em;background:var(--teal-soft);border-radius:99px;padding:4px 12px;display:inline-block}
+.tramo .pregunta{font-weight:600;margin-top:12px;border-left:3px solid var(--accent);padding-left:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-family:var(--font-mono);font-size:.74rem;font-weight:500;background:var(--teal-soft);color:var(--teal);border-radius:99px;padding:6px 13px;border:none;cursor:pointer}
+.chip.accent{background:var(--accent-soft);color:var(--accent)}
+.chip[aria-pressed="true"]{outline:2px solid var(--teal)}
+
+.filterbar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 24px}
+.filterbar button{font-family:var(--font-mono);font-size:.76rem;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;padding:8px 15px;cursor:pointer;transition:background .15s}
+.filterbar button[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;min-width:0;box-shadow:0 2px 0 var(--line)}
+.card h3{margin-bottom:8px}
+.card .take{font-style:italic;color:var(--teal);border-top:1px solid var(--line);margin-top:12px;padding-top:10px;font-size:.92rem}
+.card .ref{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-soft);margin-top:8px}
+.card ul{margin:8px 0;padding-left:1.1em}
+
+.momentos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+.momento{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 2px 0 var(--line)}
+.momento .eyebrow{display:block;margin-bottom:10px}
+.momento ol{margin:0;padding-left:1.2em}
+.momento li{margin-bottom:8px}
+.momento .by{font-family:var(--font-mono);font-size:.7rem;color:var(--ink-soft)}
+
+.checklist{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin-top:22px;box-shadow:0 2px 0 var(--line)}
+.checklist .progress{font-family:var(--font-mono);font-size:.82rem;font-weight:600;color:var(--teal);margin-bottom:10px}
+.checklist label{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
+.checklist label:first-of-type{border-top:none}
+.checklist input{margin-top:4px;accent-color:var(--teal)}
+
+.gen{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;margin-top:22px;box-shadow:0 2px 0 var(--line)}
+.gen .step{margin-bottom:22px}
+.gen .step label{display:block;font-family:var(--font-mono);font-size:.78rem;font-weight:600;color:var(--ink-soft);margin-bottom:8px}
+.gen select,.gen input[type=text],.gen input[type=number],.gen textarea{width:100%;font-family:var(--font-body);font-size:.95rem;padding:11px 13px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+.gen textarea{min-height:60px;resize:vertical}
+.optrow{display:flex;flex-wrap:wrap;gap:8px}
+.optbtn{font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 14px;cursor:pointer;text-align:left;flex:1 1 180px;transition:border-color .15s}
+.optbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.optbtn small{display:block;color:var(--ink-soft);font-weight:400;margin-top:2px}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:480px){.twocol{grid-template-columns:1fr}}
+.genbtn{font-family:var(--font-mono);font-size:.85rem;font-weight:600;letter-spacing:.04em;background:var(--accent);color:#fff;border:none;border-radius:99px;padding:14px 26px;cursor:pointer;margin-top:6px;box-shadow:0 3px 0 var(--coral)}
+.genbtn:hover{filter:brightness(1.08)}
+.output{margin-top:22px;border-top:2px dashed var(--line);padding-top:18px;display:none}
+.output.show{display:block}
+.output pre{white-space:pre-wrap;font-family:var(--font-body);font-size:.94rem;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.output h4{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.06em;color:var(--teal);text-transform:uppercase;margin:16px 0 6px}
+.copybtn{font-family:var(--font-mono);font-size:.78rem;font-weight:500;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:9px 16px;cursor:pointer}
+.warn-box{background:var(--teal-soft);border-left:3px solid var(--teal);border-radius:12px;padding:14px 16px;font-size:.88rem;margin-top:16px}
+
+.semaforo .q{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line);padding:12px 0}
+.semaforo .q:first-of-type{border-top:none}
+.semaforo .q span{flex:1;min-width:0}
+.dot3{display:flex;gap:7px}
+.dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);background:var(--bg);cursor:pointer;font-size:0;transition:transform .1s}
+.dot:hover{transform:scale(1.1)}
+.dot[aria-pressed="true"].r{background:var(--bad);border-color:var(--bad)}
+.dot[aria-pressed="true"].y{background:var(--warn);border-color:var(--warn)}
+.dot[aria-pressed="true"].g{background:var(--ok);border-color:var(--ok)}
+.semresult{margin-top:18px;font-family:var(--font-mono);font-size:.85rem;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+
+.ia-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px}
+.ia-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 2px 0 var(--line)}
+.ia-card .eyebrow{display:block;margin-bottom:8px}
+
+.halluc-box{background:var(--coral-soft);border-left:5px solid var(--bad);border-radius:14px;padding:18px 20px;margin-top:18px}
+.halluc-box h4{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--bad);margin:0 0 10px}
+.halluc-box ul{margin:0;padding-left:1.2em}
+.halluc-box li{margin-bottom:6px}
+
+.modulos{display:grid;gap:12px;margin-top:20px}
+.modulo{display:flex;gap:16px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 20px;box-shadow:0 2px 0 var(--line)}
+.modulo .mnum{font-family:var(--font-mono);font-size:.85rem;font-weight:600;color:var(--teal);flex:0 0 auto;width:28px}
+.modulo .mbody{flex:1;min-width:0}
+.modulo .mdur{font-family:var(--font-mono);font-size:.7rem;color:var(--ink-soft)}
+.modulo input[type=checkbox]{margin-top:5px;flex:0 0 auto;accent-color:var(--teal)}
+
+.rubtable{width:100%;border-collapse:collapse;margin-top:16px;font-size:.88rem;border-radius:14px;overflow:hidden}
+.rubtable th,.rubtable td{border:1px solid var(--line);padding:11px 13px;text-align:left;vertical-align:top}
+.rubtable th{background:var(--teal-soft);color:var(--teal);font-family:var(--font-mono);font-size:.74rem;text-transform:uppercase;letter-spacing:.04em}
+.rubtable td:first-child{font-weight:600;background:var(--bg)}
+.tablewrap{overflow-x:auto;border-radius:14px}
+.critrow{display:flex;gap:10px;margin-bottom:10px}
+.critrow input{flex:1}
+.critrow button{flex:0 0 auto;border:1px solid var(--line);background:var(--bg);color:var(--bad);border-radius:99px;padding:0 14px;cursor:pointer}
+.addcrit{font-family:var(--font-mono);font-size:.78rem;border:1px dashed var(--line);background:none;color:var(--ink-soft);border-radius:99px;padding:9px 16px;cursor:pointer}
+
+footer{padding-block:44px;text-align:center;background:linear-gradient(180deg,transparent,var(--accent-soft) 250%)}
+footer .cita{font-family:var(--font-display);font-style:italic;max-width:50ch;margin:0 auto 18px}
+footer .sig{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
+.note{font-size:.82rem;color:var(--ink-soft)}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<nav class="top"><div class="wrap">
+  <a href="#inicio">Inicio</a><a href="#recorrido">El recorrido</a><a href="#autores">Los autores</a>
+  <a href="#planificar">Para planificar</a><a href="#generador">Generador</a><a href="#banco">Banco de actividades</a>
+  <a href="#semaforo">Semáforo</a><a href="#rubricas">Generador de rúbricas</a><a href="#ia">Taller de IA</a>
+</div></nav>
+
+<header class="hero" id="inicio"><div class="wrap">
+  <span class="eyebrow">Práctica Docente II · Profesorado de Geografía · 2026 → 2027</span>
+  <h1>Una brújula para la Práctica 3</h1>
+  <p class="lede">Lo que recorrieron este año como observadoras no se agota acá. El año que viene llegan la residencia en la escuela secundaria básica, el proyecto áulico, la secuencia didáctica propia. Esta página junta lo que ya construyeron con una herramienta para seguir construyendo: un generador de planificaciones y un banco de actividades, siempre con ustedes tomando la última decisión.</p>
+  <div class="stats">
+    <div class="stat"><b>3</b><span>bloques recorridos</span></div>
+    <div class="stat"><b>11</b><span>autores de referencia</span></div>
+    <div class="stat"><b>8</b><span>variables para planificar</span></div>
+    <div class="stat"><b>1</b><span>pregunta que sigue</span></div>
+  </div>
+  <div class="meta">
+    <span>DC Educación Secundaria, DGCyE (2006) — marco prescriptivo</span>
+    <span>Espacio de la Práctica Docente III — residencia en 1°, 2° o 3° año</span>
+  </div>
+</div></header>
+
+<section id="recorrido"><div class="wrap">
+  <span class="eyebrow">I · El recorrido</span>
+  <h2>De observadoras a planificadoras</h2>
+  <p class="lede">Tres movimientos, uno detrás del otro. Cada uno dejó un instrumento que ya es suyo.</p>
+
+  <div class="tramo" style="border-left-color:var(--teal)">
+    <span class="num" style="color:var(--teal);background:var(--teal-soft)">BLOQUE 1</span>
+    <h3>El oficio antes del aula</h3>
+    <p>Entraron a la escuela con una biografía escolar propia, y la primera tarea fue notarla: qué esperaban ver, qué de eso se sostuvo. Enseñar es un oficio que se aprende haciendo, no una vocación que se activa sola.</p>
+    <p class="pregunta">¿En qué momento dejaron de ver "un profesor que lo hace bien o mal" y empezaron a ver a alguien que toma decisiones condicionadas?</p>
+    <div class="chips"><span class="chip">Alliaud</span><span class="chip">Birgin</span><span class="chip">Mazzitelli y Ezpeleta</span><span class="chip">Dirié y Pascual</span></div>
+  </div>
+
+  <div class="tramo" style="border-left-color:var(--sky)">
+    <span class="num" style="color:var(--sky);background:var(--sky-soft)">BLOQUE 2</span>
+    <h3>El trabajo docente no termina en el aula</h3>
+    <p>Biblioteca, patio, salidas, articulación entre colegas, lectura crítica del diseño curricular: el trabajo docente se amplía mucho más allá de dar clase. Entrevistaron a un docente real de su escuela de prácticas para encontrar esto en carne propia.</p>
+    <p class="pregunta">De su propia ayudantía, ¿qué decisión docente ocurrió fuera del momento de dar clase?</p>
+    <div class="chips"><span class="chip">Rockwell</span><span class="chip">Frigerio, Poggi y Tiramonti</span><span class="chip">Terigi</span><span class="chip">Guijarrubia</span></div>
+  </div>
+
+  <div class="tramo" style="border-left-color:var(--accent)">
+    <span class="num" style="color:var(--accent);background:var(--accent-soft)">BLOQUE 3</span>
+    <h3>Planificar es decidir</h3>
+    <p>El Ateneo de cruce abrió este bloque: ahí nació la categoría candidata que cada una llevó a su ayudantía. Con las ocho variables y los condicionantes de Gvirtz y Palamidessi analizaron primero un taller ajeno (la Jornada Interdisciplinar) y después el propio, el que ustedes mismas armaron y dieron para cerrar la ayudantía — con la forma escolar de Pineau como instrumento para decidir qué de la clase común rompían y por qué.</p>
+    <p class="pregunta">De las ocho variables, ¿cuál les costó más decidir en su propio taller, y qué condicionante de la escuela real la explica?</p>
+    <div class="chips"><span class="chip">Sanjurjo</span><span class="chip">Gvirtz y Palamidessi</span><span class="chip">Pineau</span><span class="chip accent">Edelstein</span></div>
+  </div>
+
+  <div class="tramo" style="border-left-color:var(--coral)">
+    <span class="num" style="color:var(--coral);background:var(--coral-soft)">CIERRE</span>
+    <h3>Del taller al proyecto áulico</h3>
+    <p>Lo que hicieron una vez —decidir un foco, fundamentarlo con las ocho variables, sostenerlo frente a un grupo real que no conocían de antes— es exactamente la estructura de un proyecto áulico. La Práctica 3 no les pide algo nuevo: les pide hacer esto de nuevo, más largo y con más peso.</p>
+  </div>
+</div></section>
+
+<section id="autores"><div class="wrap">
+  <span class="eyebrow">II · Los autores</span>
+  <h2>Fichas para volver</h2>
+  <p class="lede">Síntesis para orientarse rápido. Para citar textual, siempre hay que volver al texto original y verificar la página.</p>
+  <div class="filterbar" id="filterAutores">
+    <button aria-pressed="true" data-f="todos">Todos</button>
+    <button data-f="oficio">Bloque 1 · Oficio</button>
+    <button data-f="institucion">Bloque 2 · Institución</button>
+    <button data-f="planificacion">Bloque 3 · Planificación</button>
+  </div>
+  <div class="cards" id="cardsAutores"></div>
+</div></section>
+
+<section id="planificar"><div class="wrap">
+  <span class="eyebrow">III · Para planificar</span>
+  <h2>Antes, durante y después</h2>
+  <p class="lede">No hay una planificación correcta en abstracto — hay decisiones, cada una con un condicionante que la explica.</p>
+  <div class="momentos">
+    <div class="momento">
+      <span class="eyebrow">Antes · diseño</span>
+      <ol>
+        <li>Lean el Diseño Curricular del año que les toca, no como un trámite sino como condicionante real de lo que pueden decidir. <span class="by">— Sanjurjo</span></li>
+        <li>Definan primero el condicionante más fuerte de esa escuela (tiempo, espacio, público, materiales) antes de elegir contenido. <span class="by">— Gvirtz y Palamidessi</span></li>
+        <li>Decidan a propósito qué rasgo de la forma escolar van a romper y cuál van a conservar. <span class="by">— Pineau</span></li>
+      </ol>
+    </div>
+    <div class="momento">
+      <span class="eyebrow">Durante · acompañamiento</span>
+      <ol>
+        <li>El grupo real nunca es el grupo imaginado. Prevean qué hacen si sobra o falta tiempo. <span class="by">— Rockwell</span></li>
+        <li>No deleguen la última palabra, tampoco en una herramienta de IA: intervengan cuando la decisión pedagógica lo pida. <span class="by">— principio propio de la cátedra</span></li>
+      </ol>
+    </div>
+    <div class="momento">
+      <span class="eyebrow">Después · registro</span>
+      <ol>
+        <li>Vuelvan sobre lo que decidieron y nombren por qué, no solo qué pasó. <span class="by">— Edelstein</span></li>
+        <li>El cierre y el registro son parte del diseño, no un trámite final: decidan antes cómo van a saber si funcionó. <span class="by">— Gvirtz y Palamidessi</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="checklist" id="checklist8">
+    <div class="progress" id="chkProgress">0 de 8 variables decididas</div>
+  </div>
+</div></section>
+
+<section id="generador"><div class="wrap">
+  <span class="eyebrow">Herramienta</span>
+  <h2>Generador de planificaciones</h2>
+  <p class="lede">Arma un primer borrador a partir de las ocho variables. No conoce a su grupo real: es un punto de partida para que ustedes decidan, no un reemplazo de esa decisión.</p>
+
+  <div class="gen">
+    <div class="step">
+      <label>1 · ¿Para qué año de la secundaria?</label>
+      <select id="g_anio">
+        <option value="1° año">1° año</option>
+        <option value="2° año">2° año</option>
+        <option value="3° año" selected>3° año (año típico de residencia, Práctica 3)</option>
+        <option value="4° año">4° año</option>
+        <option value="5° año">5° año</option>
+        <option value="6° año">6° año (solo orientaciones Cs. Sociales y Arte)</option>
+      </select>
+    </div>
+
+    <div class="step">
+      <label>2 · ¿Qué unidad o eje del Diseño Curricular trabajan?</label>
+      <div class="optrow" id="g_eje"></div>
+      <p class="note" style="margin-top:8px" id="g_ejenote"></p>
+    </div>
+
+    <div class="step">
+      <label>3 · ¿Sobre qué contenido o problemática específica?</label>
+      <input type="text" id="g_tema" placeholder="Ej: la cuenca del río que atraviesa la ciudad">
+      <div class="chips" id="g_sugerencias" style="margin-top:10px">
+        <button class="chip" type="button">un conflicto territorial local</button>
+        <button class="chip" type="button">una migración reciente en la zona</button>
+        <button class="chip" type="button">un circuito productivo cercano</button>
+        <button class="chip" type="button">un mapa temático propio</button>
+      </div>
+    </div>
+
+    <div class="step">
+      <label>4 · ¿Formato de la clase?</label>
+      <div class="optrow" id="g_formato">
+        <button class="optbtn" data-v="clase común">Clase común<small>Forma escolar tradicional, un espacio y un tiempo para todo el grupo</small></button>
+        <button class="optbtn" data-v="taller">Taller<small>Rompe a propósito uno o más rasgos de la forma escolar</small></button>
+      </div>
+    </div>
+
+    <div class="step twocol">
+      <div>
+        <label>5 · Agrupamiento</label>
+        <select id="g_modo">
+          <option>Individual</option><option selected>En parejas</option><option>En grupos</option>
+        </select>
+      </div>
+      <div>
+        <label>Cantidad de clases</label>
+        <input type="number" id="g_clases" value="2" min="1" max="12">
+      </div>
+    </div>
+
+    <div class="step">
+      <label>6 · ¿Qué modo de uso tiene la IA en esta tarea?</label>
+      <div class="optrow" id="g_ia">
+        <button class="optbtn" data-v="Excluido por diseño: la actividad se resuelve sin IA y la consigna la vuelve innecesaria (trabajo de campo, entrevistas, recorridos, mapas mentales).">Excluido por diseño<small>La consigna se resuelve sin IA y la vuelve innecesaria</small></button>
+        <button class="optbtn" data-v="Restringido: se permite para una tarea acotada y se declara (por ejemplo, pedir ideas de preguntas de investigación y elegir dos para justificar).">Restringido<small>Se permite para una tarea acotada y se declara</small></button>
+        <button class="optbtn" data-v="Explícito: la IA es parte de la consigna y su intervención se analiza (por ejemplo, pedirle una explicación y contrastarla con datos y con el dossier).">Explícito<small>Es parte de la consigna y su intervención se analiza</small></button>
+      </div>
+      <p class="note" style="margin-top:8px">Tres modos de uso — Kit IA para Docentes, Geografía.</p>
+    </div>
+
+    <button class="genbtn" id="g_submit">Generar mi borrador</button>
+
+    <div class="output" id="g_output">
+      <h4>Fundamentación</h4><div id="o_fund"></div>
+      <h4>Contenidos</h4><div id="o_cont"></div>
+      <h4>Secuencia de momentos</h4><pre id="o_seq"></pre>
+      <h4>Tareas y materiales</h4><div id="o_tar"></div>
+      <h4>Agrupamiento y organización espacio-temporal</h4><div id="o_org"></div>
+      <h4>Evaluación y cierre</h4><div id="o_eval"></div>
+      <div class="warn-box">Este borrador no conoce a su grupo real ni a su escuela de prácticas. Es un punto de partida: la decisión final — qué conservar, qué cambiar, qué sacar — es de ustedes como pareja pedagógica, no del generador.</div>
+      <button class="copybtn" id="g_copy" style="margin-top:14px">Copiar borrador completo</button>
+    </div>
+  </div>
+</div></section>
+
+<section id="banco"><div class="wrap">
+  <span class="eyebrow">Banco de actividades</span>
+  <h2>Ideas por eje</h2>
+  <p class="lede">Puntos de partida, no recetas. "Usar en el generador" carga el eje y el tema en el formulario de arriba.</p>
+  <div class="filterbar" id="filterBanco">
+    <button aria-pressed="true" data-f="todas">Todas</button>
+    <button data-f="Ambiente y recursos naturales">Ambiente</button>
+    <button data-f="Territorio, Estado y organización política">Territorio</button>
+    <button data-f="Población, migraciones y desigualdades">Población</button>
+    <button data-f="Economía, producción y trabajo">Economía</button>
+    <button data-f="Cartografía y TIG">Cartografía</button>
+  </div>
+  <div class="cards" id="cardsBanco"></div>
+</div></section>
+
+<section id="semaforo"><div class="wrap">
+  <span class="eyebrow">Revisión</span>
+  <h2>Semáforo: revisá tu planificación</h2>
+  <p class="lede">Antes de dar la clase, respondan con honestidad. El semáforo orienta — no decide. La mirada de la pareja pedagógica pesa más que cualquier puntaje.</p>
+  <div class="semaforo" id="semaforoList"></div>
+  <div class="semresult" id="semResult">Marquen las ocho variables para ver el resultado.</div>
+</div></section>
+
+<section id="ia"><div class="wrap">
+  <span class="eyebrow">IV · Taller de planificación y evaluación con IA</span>
+  <h2>Un instrumento más, nunca el que decide</h2>
+  <p class="lede">La IA puede ayudar a armar un primer borrador de clase o de rúbrica. No puede conocer a su grupo, no puede pisar la escuela, y no tiene permitido tener la última palabra: esa sigue siendo siempre de ustedes.</p>
+
+  <div class="halluc-box">
+    <h4>Las alucinaciones no son un detalle menor</h4>
+    <p>Una IA puede inventar con total seguridad un dato geográfico falso. No es un error raro: es una característica de cómo funciona. Ejemplos reales de lo que puede pasar en Geografía:</p>
+    <ul>
+      <li>Inventar el nombre de un afluente de un río que no existe, con total naturalidad.</li>
+      <li>Dar una cifra de población o de superficie que suena precisa pero está mal.</li>
+      <li>Confundir o inventar un límite provincial o departamental.</li>
+      <li>Atribuir una cita o un dato a un autor que nunca lo dijo.</li>
+    </ul>
+    <p style="margin-top:10px;margin-bottom:0">Por eso: todo dato geográfico que genere una IA —nombre, cifra, límite, cita— se verifica en una fuente confiable antes de entrar al aula. Igual que con una cita bibliográfica.</p>
+  </div>
+
+  <div class="ia-grid" style="margin-top:22px">
+    <div class="ia-card"><span class="eyebrow">Principio 1</span><h3>Usarla para empezar, no para cerrar</h3><p>Un borrador generado ahorra la hoja en blanco. No ahorra la decisión sobre si ese borrador sirve para esta escuela, este grupo, este condicionante.</p></div>
+    <div class="ia-card"><span class="eyebrow">Principio 2</span><h3>Verificar cada dato geográfico</h3><p>Nombres de lugares, cifras de población, límites jurisdiccionales: lo que la IA genera sobre geografía puede estar mal. Se verifica antes de llevarlo al aula.</p></div>
+    <div class="ia-card"><span class="eyebrow">Principio 3</span><h3>Nombrarla cuando se usó</h3><p>Si una parte de la planificación o de la rúbrica se armó con ayuda de IA, decirlo en el proyecto áulico. Es una decisión metodológica más, no algo para esconder.</p></div>
+    <div class="ia-card"><span class="eyebrow">Principio 4</span><h3>La decisión final es siempre docente</h3><p>Ni en la planificación ni en la rúbrica ni en la devolución a un estudiante la IA tiene la última palabra. Puede proponer; ustedes deciden, corrigen y se hacen responsables.</p></div>
+  </div>
+
+  <h3 style="margin-top:36px">Tres modos de uso</h3>
+  <div class="tablewrap"><table class="rubtable">
+    <tr><th>Modo</th><th>Qué significa</th><th>Ejemplo en geografía</th></tr>
+    <tr><td>Explícito</td><td>La IA es parte de la consigna y su intervención se analiza</td><td>Pedirle una explicación del aumento del precio de la soja y contrastarla con datos y con el dossier</td></tr>
+    <tr><td>Restringido</td><td>Se permite para una tarea acotada y se declara</td><td>Pedir ideas de preguntas de investigación y elegir dos para justificar</td></tr>
+    <tr><td>Excluido por diseño</td><td>La actividad se resuelve sin IA y la consigna la vuelve innecesaria</td><td>Trabajo de campo, entrevistas, recorridos, mapas mentales</td></tr>
+  </table></div>
+
+  <h3 style="margin-top:32px">Seis roles para la IA en la clase de geografía</h3>
+  <div class="tablewrap"><table class="rubtable">
+    <tr><th>Rol</th><th>Qué hace la IA</th><th>Qué hace el grupo</th></tr>
+    <tr><td>Generadora de hipótesis</td><td>Propone causas posibles de un fenómeno</td><td>Las ordena, descarta y verifica con fuentes</td></tr>
+    <tr><td>Voces de sujetos sociales</td><td>Simula la posición de un productor, una empresa, un funcionario o una organización</td><td>Contrasta con declaraciones reales y detecta estereotipos</td></tr>
+    <tr><td>Asistente de datos</td><td>Ordena una tabla, calcula porcentajes, sugiere un gráfico</td><td>Controla las cuentas y decide cómo representar</td></tr>
+    <tr><td>Lectora de imágenes</td><td>Describe cambios entre dos imágenes satelitales</td><td>Verifica sobre la imagen y explica el proceso social</td></tr>
+    <tr><td>Compañera de escritura</td><td>Señala debilidades en un informe</td><td>Revisa, decide y reescribe con su voz</td></tr>
+    <tr><td>Objeto de estudio</td><td>Es ella misma un fenómeno territorial</td><td>Aplica recurso, desigualdad y escala a la propia IA</td></tr>
+  </table></div>
+
+  <h3 style="margin-top:32px">Las cinco preguntas geográficas</h3>
+  <p class="lede">Sirven para recorrer los grupos, para la puesta en común y para revisar una consigna o una respuesta de IA.</p>
+  <div class="tablewrap"><table class="rubtable">
+    <tr><th>Pregunta</th><th>Qué operación promueve</th></tr>
+    <tr><td>¿Qué pasa y dónde?</td><td>Localizar y describir</td></tr>
+    <tr><td>¿Por qué pasa ahí y ahora?</td><td>Explicar con causas sociales, económicas, políticas y naturales</td></tr>
+    <tr><td>¿Quiénes intervienen y qué quieren?</td><td>Identificar sujetos e intereses</td></tr>
+    <tr><td>¿Qué relación tiene con otras escalas?</td><td>Relacionar lo local, lo nacional y lo mundial</td></tr>
+    <tr><td>¿Qué cambió y qué sigue igual?</td><td>Pensar procesos en el tiempo</td></tr>
+  </table></div>
+
+  <h3 style="margin-top:32px">Guía de verificación de datos y mapas</h3>
+  <p class="lede">Antes de usar cualquier dato producido por una IA, el grupo responde estas cinco preguntas.</p>
+  <ol>
+    <li><strong>¿Qué fuente original tiene este dato?</strong> Si no se encuentra, se descarta.</li>
+    <li><strong>¿De qué año o período es?</strong> Comparar con el dato más reciente.</li>
+    <li><strong>¿A qué escala se refiere?</strong> País, provincia, partido, ciudad, aglomerado.</li>
+    <li><strong>¿Qué unidad usa?</strong> Porcentaje, toneladas, habitantes, dólares corrientes o constantes.</li>
+    <li><strong>¿Quién produce la fuente y con qué interés?</strong> Organismo público, empresa, organización social, medio.</li>
+  </ol>
+  <div class="halluc-box">
+    <h4>Regla sobre mapas</h4>
+    <p style="margin-bottom:0">Los mapas generados por IA de imágenes no son fuentes. Suelen tener fronteras, nombres y ubicaciones incorrectas. Se usan solo como objeto de análisis ("encontrá los errores"), nunca como insumo. Los mapas se toman del Instituto Geográfico Nacional, de organismos oficiales o de atlas reconocidos.</p>
+  </div>
+
+  <h3 style="margin-top:36px">Recorrido del taller</h3>
+  <p class="lede">Siete módulos breves para aprender a usar la IA en la planificación y la evaluación sin delegarle la decisión docente.</p>
+  <div class="modulos" id="modulos"></div>
+</div></section>
+
+<section id="rubricas"><div class="wrap">
+  <span class="eyebrow">Herramienta</span>
+  <h2>Generador de rúbricas</h2>
+  <p class="lede">Arma una rúbrica de cuatro niveles a partir de los criterios que ustedes definan. Les ahorra la tabla en blanco — no les ahorra decidir si esos criterios son los que de verdad importan para esta tarea.</p>
+
+  <div class="gen">
+    <div class="step">
+      <label>1 · ¿Qué van a evaluar?</label>
+      <div class="optrow" id="r_tipo">
+        <button class="optbtn" data-v="un mapa temático">Mapa temático<small>Elaboración cartográfica propia</small></button>
+        <button class="optbtn" data-v="una exposición oral">Exposición oral<small>Presentación frente al grupo</small></button>
+        <button class="optbtn" data-v="un informe escrito">Informe escrito<small>Producción textual individual o grupal</small></button>
+        <button class="optbtn" data-v="el proyecto áulico de la residencia">Proyecto áulico<small>Producción de la Práctica 3</small></button>
+      </div>
+    </div>
+
+    <div class="step">
+      <label>2 · Año</label>
+      <select id="r_anio">
+        <option value="1° año">1° año</option><option value="2° año">2° año</option>
+        <option value="3° año" selected>3° año</option><option value="4° año">4° año</option><option value="5° año">5° año</option>
+      </select>
+    </div>
+
+    <div class="step">
+      <label>3 · Criterios a evaluar (agreguen, saquen o reescriban)</label>
+      <p class="note" style="margin-top:-4px;margin-bottom:10px">Los criterios por defecto son los de la Rúbrica general de Geografía (DC, Ciclo Superior) — explicación del espacio, sujetos sociales, escalas, fuentes y datos, lenguaje cartográfico y uso crítico de IA. Si cambian el nombre de un criterio, el descriptor se genera de forma genérica.</p>
+      <div id="r_criterios"></div>
+      <button class="addcrit" id="r_addcrit" type="button">+ Agregar criterio</button>
+    </div>
+
+    <button class="genbtn" id="r_submit">Generar rúbrica</button>
+
+    <div class="output" id="r_output">
+      <h4>Rúbrica — <span id="r_titulo"></span></h4>
+      <div class="tablewrap"><table class="rubtable" id="r_tabla"></table></div>
+      <div class="halluc-box" style="margin-top:18px">
+        <h4>Antes de usarla</h4>
+        <p style="margin-bottom:0">Estos descriptores son un punto de partida genérico, generado automáticamente. No conocen a este grupo ni a esta tarea en concreto. Léanlos con la pareja pedagógica, reescriban lo que no represente lo que de verdad esperan, y recién ahí compártanla con los estudiantes.</p>
+      </div>
+      <button class="copybtn" id="r_copy" style="margin-top:14px">Copiar rúbrica completa</button>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <p class="cita">"Planificar es decidir — y decidir, siempre, con un condicionante que lo explica."</p>
+  <p class="sig">Práctica Docente II · Profesorado de Geografía · ISFD N° 129 · Prof. María Paula Sánchez · Pareja pedagógica: Prof. Manuel Oubel</p>
+  <p class="note">Las fichas de autores son síntesis de cátedra. Para citar, volver siempre al texto original y verificar la página.</p>
+  <p class="note">El taller de IA, el generador de rúbricas y los ejes del Ciclo Superior se basan en: Dirección General de Cultura y Educación de la Provincia de Buenos Aires (2010). <em>Diseño Curricular para la Educación Secundaria Ciclo Superior ES4: Geografía.</em> Coord. Claudia Bracchi. La Plata: DGCyE; (2011), su equivalente para ES5; y DGCyE, <em>Diseño Curricular para la Educación Secundaria — Orientación Ciencias Sociales, Geografía 6° año (ES).</em> La Plata: DGCyE — y en el Kit IA para Docentes · Geografía 4° y 5° año, de la misma cátedra. Leer siempre las orientaciones didácticas completas de cada unidad o núcleo en el portal abc.gob.ar antes de planificar.</p>
+</div></footer>
+
+<script>
+(function(){
+'use strict';
+
+var AUTORES = [
+  {t:'oficio', nombre:'Alliaud', idea:'La docencia es un oficio que se aprende en la práctica, con una biografía escolar previa que condiciona cómo se imagina ser docente.', claves:['oficio','biografía escolar','aprender haciendo'], take:'¿Qué de tu propia biografía escolar seguís repitiendo sin decidirlo?', ref:'Alliaud, A. — Los artesanos de la enseñanza.'},
+  {t:'oficio', nombre:'Birgin', idea:'El trabajo docente está regulado por condiciones reales de ejercicio que exceden la vocación individual.', claves:['regulación','condiciones de trabajo'], take:'¿Qué condición de tu escuela de prácticas no depende de la voluntad de nadie?', ref:'Birgin, A. — El trabajo de enseñar.'},
+  {t:'oficio', nombre:'Mazzitelli y Ezpeleta', idea:'El trabajo docente cotidiano incluye tareas invisibles que no aparecen en la planificación escrita.', claves:['tareas invisibles','cotidianeidad'], take:'¿Qué hizo el profesor que observaste que nunca estuvo en su plan de clase?', ref:'Ezpeleta, J. — Algunos desafíos para la gestión de las escuelas multigrado.'},
+  {t:'oficio', nombre:'Dirié y Pascual', idea:'La formación inicial dialoga con representaciones previas sobre la docencia que conviene hacer explícitas.', claves:['representaciones previas','formación inicial'], take:'¿Qué representación tenías de "dar clase" antes de pisar la escuela?', ref:'Dirié, C. y Pascual, L.'},
+  {t:'institucion', nombre:'Rockwell', idea:'La escuela es un lugar de trabajo con una cara oficial y una trastienda no siempre visible.', claves:['escuela como trabajo','cara oficial / trastienda'], take:'¿Qué viste en la trastienda de tu escuela de prácticas que no está en ningún documento?', ref:'Rockwell, E. — La escuela cotidiana.'},
+  {t:'institucion', nombre:'Frigerio, Poggi y Tiramonti', idea:'La institución escolar se organiza en dimensiones —organizacional, administrativa, pedagógico-didáctica, comunitaria— que conviene distinguir para leerla.', claves:['dimensiones institucionales'], take:'Elegí una escena de tu ayudantía: ¿en qué dimensión institucional la ubicás?', ref:'Frigerio, G., Poggi, M. y Tiramonti, G. — Las instituciones educativas, cara y ceca.'},
+  {t:'institucion', nombre:'Terigi', idea:'Las trayectorias escolares no son uniformes: cada estudiante recorre la escuela a su manera y a su ritmo.', claves:['trayectorias','heterogeneidad'], take:'¿Qué trayectoria distinta notaste dentro de un mismo grupo?', ref:'Terigi, F. — Las trayectorias escolares.'},
+  {t:'institucion', nombre:'Guijarrubia', idea:'Un paseo pedagógico tiene una estructura —antes, durante, después— y un equipamiento tangible e intangible que hay que planificar.', claves:['paseo pedagógico','antes-durante-después'], take:'Si armaras una salida de campo, ¿qué necesitarías prever del "antes"?', ref:'Guijarrubia, P. (2018).'},
+  {t:'planificacion', nombre:'Sanjurjo', idea:'Planificar es una sucesión de decisiones, no llenar un formulario con la respuesta correcta.', claves:['planificar como decisión'], take:'¿Qué decisión de tu último plan de clase tomaste sin darte cuenta de que era una decisión?', ref:'Sanjurjo, L. — cap. III.'},
+  {t:'planificacion', nombre:'Gvirtz y Palamidessi', idea:'Toda planificación tiene tres condicionantes (social-histórico, complejo, niveles de decisión del sistema) y se resuelve en ocho variables: metas, contenidos, secuencia, tareas, materiales, participación, organización espacio-temporal, evaluación.', claves:['condicionantes','8 variables'], take:'De las ocho variables, ¿cuál resolvés siempre igual sin pensarla de nuevo?', ref:'Gvirtz, S. y Palamidessi, M. — El ABC de la tarea docente, cap. 6.'},
+  {t:'planificacion', nombre:'Pineau', idea:'La forma escolar es el conjunto de rasgos que hacen reconocible una "clase" — espacio único, docente al frente, tiempo y tarea iguales para todo el grupo.', claves:['forma escolar'], take:'En tu taller, ¿qué rasgo de la forma escolar rompiste a propósito?', ref:'Pineau, P.'},
+  {t:'planificacion', nombre:'Edelstein', idea:'La reflexividad docente exige volver sobre la propia acción y poder nombrar por qué se decidió así, no solo actuar.', claves:['reflexividad'], take:'De una decisión que tomaste en tu taller, ¿podés nombrar el condicionante que la explica?', ref:'Edelstein, G.'}
+];
+
+var cardsAutores = document.getElementById('cardsAutores');
+function renderAutores(filter){
+  cardsAutores.innerHTML = '';
+  AUTORES.filter(function(a){return filter==='todos'||a.t===filter}).forEach(function(a){
+    var el = document.createElement('div'); el.className='card';
+    el.innerHTML = '<h3>'+a.nombre+'</h3><p>'+a.idea+'</p>'+
+      '<ul>'+a.claves.map(function(c){return '<li>'+c+'</li>'}).join('')+'</ul>'+
+      '<p class="take">'+a.take+'</p><p class="ref">'+a.ref+'</p>';
+    cardsAutores.appendChild(el);
+  });
+}
+renderAutores('todos');
+document.getElementById('filterAutores').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return;
+  this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false')});
+  b.setAttribute('aria-pressed','true');
+  renderAutores(b.dataset.f);
+});
+
+var VARIABLES = ['Objetivos y propósitos','Contenidos','Secuencia de actividades','Tareas de quien aprende','Materiales','Participación / agrupamiento','Organización espacio-temporal','Evaluación'];
+var chk = document.getElementById('checklist8');
+VARIABLES.forEach(function(v,i){
+  var lab = document.createElement('label');
+  lab.innerHTML = '<input type="checkbox" data-i="'+i+'"><span>'+v+' — ¿la decidieron a propósito, o quedó por defecto?</span>';
+  chk.appendChild(lab);
+});
+var chkProgress = document.getElementById('chkProgress');
+chk.addEventListener('change', function(){
+  var n = chk.querySelectorAll('input:checked').length;
+  chkProgress.textContent = n+' de 8 variables decididas';
+});
+
+var BANCO = [
+  {eje:'Ambiente y recursos naturales', nombre:'El mapa de riesgo del barrio escolar', desc:'En grupos, relevan un riesgo ambiental cercano a la escuela (inundación, basural, erosión) y lo vuelcan en un mapa propio con referencias.', anio:'2° o 3°'},
+  {eje:'Ambiente y recursos naturales', nombre:'Debate: ¿recurso o problema?', desc:'A partir de una noticia local, discuten si un recurso natural de la zona está siendo usado o sobreexplotado.', anio:'4°'},
+  {eje:'Territorio, Estado y organización política', nombre:'Límites que no se ven', desc:'Comparan un límite político en el mapa con un límite que la gente del lugar reconoce en la práctica (un barrio, una cuenca).', anio:'1°'},
+  {eje:'Territorio, Estado y organización política', nombre:'Un conflicto territorial cercano', desc:'Investigan un conflicto territorial real de la región y lo presentan identificando actores y escalas involucradas.', anio:'3°'},
+  {eje:'Población, migraciones y desigualdades', nombre:'La historia migratoria del curso', desc:'Cada estudiante reconstruye una migración familiar y la ubica en un mapa colectivo del aula.', anio:'2°'},
+  {eje:'Población, migraciones y desigualdades', nombre:'Leer una pirámide poblacional', desc:'Comparan la pirámide de población de la localidad con la de otra región y discuten qué explica la diferencia.', anio:'4°'},
+  {eje:'Economía, producción y trabajo', nombre:'De dónde viene lo que comemos', desc:'Reconstruyen el circuito productivo de un alimento típico de la zona, desde la producción hasta la mesa.', anio:'3°'},
+  {eje:'Economía, producción y trabajo', nombre:'Entrevista a un trabajador rural o urbano', desc:'Entrevistan a alguien que trabaja en un circuito productivo local y lo relacionan con lo visto en clase.', anio:'5°'},
+  {eje:'Cartografía y TIG', nombre:'Mi mapa mental vs. el mapa real', desc:'Dibujan de memoria el barrio o la ciudad y lo comparan con una imagen satelital, discutiendo qué quedó afuera.', anio:'1°'},
+  {eje:'Cartografía y TIG', nombre:'Capas de un mismo territorio', desc:'Usando una herramienta de información geográfica simple, superponen dos capas (relieve y población, por ejemplo) sobre la misma zona.', anio:'5°'}
+];
+var cardsBanco = document.getElementById('cardsBanco');
+function renderBanco(filter){
+  cardsBanco.innerHTML = '';
+  BANCO.filter(function(a){return filter==='todas'||a.eje===filter}).forEach(function(a){
+    var el = document.createElement('div'); el.className='card';
+    el.innerHTML = '<h3>'+a.nombre+'</h3><p class="ref">'+a.eje+' · '+a.anio+'</p><p>'+a.desc+'</p>';
+    var btn = document.createElement('button'); btn.className='chip accent'; btn.textContent='Usar en el generador';
+    btn.addEventListener('click', function(){
+      document.getElementById('g_tema').value = a.nombre;
+      document.getElementById('generador').scrollIntoView({behavior:'smooth'});
+    });
+    el.appendChild(btn);
+    cardsBanco.appendChild(el);
+  });
+}
+renderBanco('todas');
+document.getElementById('filterBanco').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return;
+  this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false')});
+  b.setAttribute('aria-pressed','true');
+  renderBanco(b.dataset.f);
+});
+
+document.getElementById('g_sugerencias').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return;
+  document.getElementById('g_tema').value = b.textContent;
+});
+
+function wireOpt(id){
+  var box = document.getElementById(id);
+  box.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    box.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false')});
+    b.setAttribute('aria-pressed','true');
+  });
+}
+function setOpt(id, value){
+  var box = document.getElementById(id);
+  box.querySelectorAll('button').forEach(function(x){
+    x.setAttribute('aria-pressed', x.dataset.v===value ? 'true':'false');
+  });
+}
+var EJES_POR_ANIO = {
+  '1° año': [
+    {v:'Geografía integrada en Ciencias Sociales: primeras nociones de espacio, lugar y territorio', label:'Geografía integrada en Cs. Sociales', small:'1° año — no es materia separada'}
+  ],
+  '2° año': [
+    {v:'Las representaciones y las imágenes de América Latina', label:'Representaciones de América Latina', small:'2° año · Unidad 1'},
+    {v:'Ambiente y recursos en América Latina', label:'Ambiente y recursos en América Latina', small:'2° año · Unidad 2'},
+    {v:'La inserción de América Latina en la economía-mundo contemporánea', label:'América Latina en la economía-mundo', small:'2° año · Unidad 3'},
+    {v:'Bloques regionales, geopolítica de los recursos estratégicos y movimientos sociales de base territorial', label:'Bloques regionales y geopolítica', small:'2° año · Unidad 4'}
+  ],
+  '3° año': [
+    {v:'Espacio y organización del territorio: la constitución de un territorio nacional y estatal de carácter asimétrico y desigual', label:'Espacio y organización del territorio', small:'3° año · Unidad 1'},
+    {v:'Espacio, sociedad y naturaleza: la construcción social de los ambientes, asimetrías intra e interregionales', label:'Espacio, sociedad y naturaleza', small:'3° año · Unidad 2'},
+    {v:'Espacio y economía: hegemonía neoliberal y transformaciones geográficas en la Argentina', label:'Espacio y economía', small:'3° año · Unidad 3'},
+    {v:'Espacio, política y poder: los bienes comunes de la Tierra y la privatización de los recursos en la Argentina', label:'Espacio, política y poder', small:'3° año · Unidad 4'}
+  ],
+  '4° año': [
+    {v:'Las condiciones económico-políticas del desarrollo desigual mundial', label:'Desarrollo desigual mundial', small:'4° año · Unidad 1'},
+    {v:'La desigual distribución mundial de los recursos', label:'Distribución mundial de recursos', small:'4° año · Unidad 2'},
+    {v:'La población mundial y sus transformaciones', label:'Población mundial', small:'4° año · Unidad 3'},
+    {v:'Transformaciones urbanas y rurales', label:'Transformaciones urbanas y rurales', small:'4° año · Unidad 4'}
+  ],
+  '5° año': [
+    {v:'Procesos productivos, economías regionales y asimetrías territoriales', label:'Economías regionales', small:'5° año · Unidad 1'},
+    {v:'Los bienes comunes y los problemas ambientales', label:'Bienes comunes y ambiente', small:'5° año · Unidad 2'},
+    {v:'Población y condiciones de vida en la Argentina actual', label:'Población y condiciones de vida', small:'5° año · Unidad 3'},
+    {v:'El sistema urbano argentino y la experiencia de vivir en la ciudad', label:'Sistema urbano argentino', small:'5° año · Unidad 4'}
+  ],
+  '6° año': [
+    {v:'Núcleo de índole urbano y rural (Geografía urbana y rural): condiciones de vida, mercado de trabajo y segregación urbana; transformaciones recientes del espacio público; desarrollo local, actividades económicas y nuevos emprendimientos urbanos; cultivos industriales y cambios en el tamaño de las explotaciones rurales de los partidos de la provincia de Buenos Aires; cambios recientes en las condiciones de vida en el ámbito rural; poblamiento/despoblamiento rural.', label:'Problemas urbano-rurales', small:'6° año · Núcleo de problemas 1 de 6'},
+    {v:'Núcleo de carácter ambiental (Geografía ambiental): la instalación de nuevas actividades agroindustriales y diferentes formas de contaminación vinculadas; el cambio climático y la responsabilidad de los Estados y organizaciones internacionales; los agrocombustibles, la generación de problemas ambientales y el incremento de los precios internacionales de las materias primas; análisis de problemas ambientales locales.', label:'Problemas ambientales', small:'6° año · Núcleo de problemas 2 de 6'},
+    {v:'Núcleo ligado a la economía y los sistemas productivos (Geografía económica): los países agroexportadores y el incremento actual de los precios de las materias primas; la relocalización de las empresas líderes de la producción mundial; la inserción de la propia localidad en el intercambio productivo y comercial con el Mercosur; modos de explotación minera y problemas ambientales de localidades y regiones; sectores de la economía nacional y modelos de desarrollo en discusión.', label:'Problemas económico-productivos', small:'6° año · Núcleo de problemas 3 de 6'},
+    {v:'Núcleo de carácter cultural (Geografía cultural): los jóvenes, los consumos culturales y sus espacios de identidad; arraigo y desarraigo de los migrantes en ciudades grandes, medianas y pequeñas; cine, medios de comunicación y Geografía; análisis cultural de mapas y otras representaciones cartográficas; aeropuertos, estaciones de servicio y locales de comida rápida y sus connotaciones culturales; territorialidad de los movimientos sociales; modelos de desarrollo y estilos arquitectónicos.', label:'Problemas culturales', small:'6° año · Núcleo de problemas 4 de 6'},
+    {v:'Núcleo del poder y la política (Geografía política): la emergencia de nuevos sujetos sociales en América Latina y Argentina que proponen una territorialidad alternativa (movimientos de desocupados, pueblos originarios); la coparticipación federal en la Argentina; la geografía electoral y el comportamiento de las preferencias electorales en diferentes localidades.', label:'Problemas de poder y política', small:'6° año · Núcleo de problemas 5 de 6'},
+    {v:'Núcleo vinculado al turismo (Geografía del turismo): las ciudades balnearias de la costa atlántica y su relación con el turismo social; los espacios turísticos de la Argentina y los nuevos consumos culturales; la construcción social de los lugares y su relación con el turismo urbano, rural y otros; relaciones entre municipios de pequeñas y medianas localidades y el fomento del turismo local/regional; patrimonio histórico, social y natural; desarrollo sustentable y áreas protegidas.', label:'Problemas de turismo', small:'6° año · Núcleo de problemas 6 de 6'}
+  ]
+};
+var EJE_NOTAS = {
+  '1° año': 'En 1° año el Diseño no prevé Geografía como materia separada: se integra en Ciencias Sociales. No encontré el desglose oficial por unidad para este año — verifiquen el Diseño Curricular de 1° con su co-formadora antes de planificar.',
+  '2° año': 'Unidades textuales del Diseño Curricular para la Educación Secundaria — Ciencias Sociales, 2° año (DGCyE).',
+  '3° año': 'Unidades textuales del Diseño Curricular para la Educación Secundaria — Ciencias Sociales, 3° año (DGCyE).',
+  '4° año': 'Unidades del Diseño Curricular ES4 de Geografía (DGCyE, 2010, coord. Claudia Bracchi).',
+  '5° año': 'Unidades del Diseño Curricular ES5 de Geografía (DGCyE, 2011, coord. Claudia Bracchi).',
+  '6° año': 'En 6° año Geografía solo existe en la orientación Ciencias Sociales (72 hs. totales, 2 hs. semanales). El Diseño Curricular ES.6 no organiza el año en unidades sino en 6 núcleos de problemas geográficos contemporáneos, que son el punto de partida para investigaciones escolares. El docente elige con los estudiantes cuáles y cuántos núcleos trabajar — no hace falta agotarlos todos. Fuente: DGCyE, Diseño Curricular para la Educación Secundaria — Orientación Ciencias Sociales, Geografía 6° año (ES).'
+};
+function renderEjes(anio){
+  var box = document.getElementById('g_eje');
+  box.innerHTML = '';
+  (EJES_POR_ANIO[anio]||[]).forEach(function(e){
+    var b = document.createElement('button'); b.className='optbtn'; b.dataset.v = e.v;
+    b.innerHTML = e.label+'<small>'+e.small+'</small>';
+    box.appendChild(b);
+  });
+  document.getElementById('g_ejenote').textContent = EJE_NOTAS[anio]||'';
+  setOpt('g_eje', (EJES_POR_ANIO[anio]||[{v:''}])[0].v);
+}
+document.getElementById('g_anio').addEventListener('change', function(){ renderEjes(this.value); });
+wireOpt('g_eje');
+renderEjes(document.getElementById('g_anio').value);
+
+['g_formato','g_ia'].forEach(wireOpt);
+setOpt('g_formato','clase común');
+setOpt('g_ia','Restringido: se permite para una tarea acotada y se declara (por ejemplo, pedir ideas de preguntas de investigación y elegir dos para justificar).');
+
+function getOpt(id){ var el = document.getElementById(id).querySelector('[aria-pressed="true"]'); return el? el.dataset.v : ''; }
+
+document.getElementById('g_submit').addEventListener('click', function(){
+  var anio = document.getElementById('g_anio').value;
+  var eje = getOpt('g_eje');
+  var tema = document.getElementById('g_tema').value.trim() || '(sin tema específico todavía — complétenlo)';
+  var formato = getOpt('g_formato');
+  var modo = document.getElementById('g_modo').value;
+  var clases = document.getElementById('g_clases').value;
+  var ia = getOpt('g_ia');
+
+  document.getElementById('o_fund').innerHTML =
+    '<p>Clase para '+anio+', dentro del eje <strong>'+eje+'</strong>, sobre <strong>'+tema+'</strong>. Formato: '+formato+'. '+
+    (formato==='taller' ? 'Al ser taller, conviene decidir a propósito qué rasgo de la forma escolar de Pineau rompe esta propuesta: ¿el espacio único? ¿el tiempo igual para todas y todos? ¿la tarea idéntica? Nómbrenlo antes de seguir.' : 'Al ser clase común, los ocho momentos siguen la forma escolar tradicional — lo que no exime de decidir cada variable a propósito.')+'</p>';
+
+  document.getElementById('o_cont').innerHTML =
+    '<p>Contenido ligado al eje <strong>'+eje+'</strong> del Diseño Curricular de Geografía — verificar el núcleo exacto para '+anio+' en el documento oficial DGCyE antes de dar la clase.</p>';
+
+  var seq = '';
+  if(formato==='taller'){
+    seq = '1. Apertura (10\') — disparador ligado a '+tema+', sin anticipar la conclusión.\n'+
+          '2. Producción en '+modo.toLowerCase()+' (según cantidad de clases: '+clases+') — construcción propia, no transmisión.\n'+
+          '3. Puesta en común — circulación de lo producido entre grupos.\n'+
+          '4. Cierre y registro — qué queda escrito, quién lo valida.';
+  } else {
+    seq = '1. Apertura (10\') — recuperar saberes previos sobre '+tema+'.\n'+
+          '2. Desarrollo — presentación de contenido + actividad en '+modo.toLowerCase()+'.\n'+
+          '3. Síntesis colectiva.\n'+
+          '4. Cierre — consigna de seguimiento o evaluación breve.';
+  }
+  document.getElementById('o_seq').textContent = seq;
+
+  document.getElementById('o_tar').innerHTML =
+    '<p>Tarea a definir según el disparador elegido (mapa, texto, entrevista, imagen satelital). Materiales mínimos: Diseño Curricular del año, soporte cartográfico o fuente de datos sobre '+tema+', espacio para el agrupamiento en '+modo.toLowerCase()+'.</p>';
+
+  document.getElementById('o_org').innerHTML =
+    '<p>Agrupamiento: <strong>'+modo+'</strong>. Cantidad de clases estimada: <strong>'+clases+'</strong>. Revisar si el espacio disponible en la escuela de prácticas permite el formato elegido ('+formato+').</p>';
+
+  document.getElementById('o_eval').innerHTML =
+    '<p>Definir con la pareja pedagógica qué nivel (Inicial / En proceso / Logrado / Logrado con profundización) corresponde a cada producción, y qué queda como registro de la clase.</p>'+
+    '<div class="warn-box">Rol de la IA en esta tarea: '+ia+'</div>';
+
+  document.getElementById('g_output').classList.add('show');
+  document.getElementById('g_output').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+document.getElementById('g_copy').addEventListener('click', function(){
+  var txt = ['FUNDAMENTACIÓN', document.getElementById('o_fund').textContent,
+             '', 'CONTENIDOS', document.getElementById('o_cont').textContent,
+             '', 'SECUENCIA', document.getElementById('o_seq').textContent,
+             '', 'TAREAS Y MATERIALES', document.getElementById('o_tar').textContent,
+             '', 'AGRUPAMIENTO', document.getElementById('o_org').textContent,
+             '', 'EVALUACIÓN', document.getElementById('o_eval').textContent].join('\n');
+  var btn = this;
+  function fallback(){
+    var ta = document.createElement('textarea'); ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); btn.textContent='Copiado'; }catch(e){ btn.textContent='No se pudo copiar'; }
+    document.body.removeChild(ta); setTimeout(function(){btn.textContent='Copiar borrador completo';},1800);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){
+      btn.textContent='Copiado'; setTimeout(function(){btn.textContent='Copiar borrador completo';},1800);
+    }, fallback);
+  } else { fallback(); }
+});
+
+var semList = document.getElementById('semaforoList');
+var semVals = {};
+VARIABLES.forEach(function(v,i){
+  var row = document.createElement('div'); row.className='q';
+  row.innerHTML = '<span>'+v+'</span><div class="dot3">'+
+    '<button class="dot r" data-i="'+i+'" data-c="r" title="Sin decidir"></button>'+
+    '<button class="dot y" data-i="'+i+'" data-c="y" title="A medias"></button>'+
+    '<button class="dot g" data-i="'+i+'" data-c="g" title="Decidida a propósito"></button></div>';
+  semList.appendChild(row);
+});
+function updateSem(){
+  var n = Object.keys(semVals).length;
+  var out = document.getElementById('semResult');
+  if(n < 8){ out.textContent = 'Faltan '+(8-n)+' variables por marcar.'; return; }
+  var g = Object.values(semVals).filter(function(c){return c==='g'}).length;
+  var r = Object.values(semVals).filter(function(c){return c==='r'}).length;
+  if(r>0) out.textContent = 'Hay '+r+' variable(s) sin decidir todavía. Conviene volver a ellas antes de dar la clase — no las dejen por defecto.';
+  else if(g===8) out.textContent = 'Las ocho variables están decididas a propósito. Listo para la pareja pedagógica dar el visto bueno final.';
+  else out.textContent = 'Van bien, pero revisen las que quedaron "a medias": ¿qué les falta para decidirlas del todo?';
+}
+semList.addEventListener('click', function(e){
+  var b = e.target.closest('.dot'); if(!b) return;
+  var i = b.dataset.i;
+  semList.querySelectorAll('.dot[data-i="'+i+'"]').forEach(function(x){x.setAttribute('aria-pressed','false')});
+  b.setAttribute('aria-pressed','true');
+  semVals[i] = b.dataset.c;
+  updateSem();
+});
+
+var MODULOS = [
+  {dur:'20 min', t:'Antes de empezar', d:'Qué es una alucinación de IA y por qué en Geografía es especialmente fácil que pase (nombres propios, cifras, límites).'},
+  {dur:'30 min', t:'Pedir bien', d:'Cómo armar un pedido a una IA que incluya el año, el eje del DC, el grupo y el condicionante real — un pedido vago da un borrador vago.'},
+  {dur:'40 min', t:'Planificar una secuencia con IA', d:'Usar el generador de esta página como punto de partida y reescribir lo que no sirve para la escuela real.'},
+  {dur:'30 min', t:'Detectar alucinaciones en geografía', d:'Ejercicio práctico: revisar un texto generado por IA sobre un tema geográfico y marcar qué dato hay que verificar antes de creerlo.'},
+  {dur:'40 min', t:'Rúbricas con IA', d:'Usar el generador de rúbricas de esta página y corregir los descriptores para que respondan a la tarea real, no a una tarea genérica.'},
+  {dur:'25 min', t:'Ética, autoría y datos', d:'Qué datos de estudiantes nunca se suben a una IA, y cómo nombrar el uso de IA en el proyecto áulico.'},
+  {dur:'60 min', t:'Proyecto final', d:'Armar la planificación y la rúbrica de una clase real de la Práctica 3 usando ambos generadores, y defender ante la pareja pedagógica qué cambiaron del borrador y por qué.'}
+];
+var modsBox = document.getElementById('modulos');
+MODULOS.forEach(function(m,i){
+  var el = document.createElement('div'); el.className='modulo';
+  el.innerHTML = '<input type="checkbox" id="mod'+i+'"><span class="mnum">0'+(i+1)+'</span>'+
+    '<div class="mbody"><h3>'+m.t+'</h3><p style="margin-bottom:4px">'+m.d+'</p><span class="mdur">'+m.dur+'</span></div>';
+  modsBox.appendChild(el);
+});
+
+var CRIT_DEFAULT = {
+  'un mapa temático': ['Lenguaje cartográfico','Explicación del espacio','Fuentes y datos'],
+  'una exposición oral': ['Explicación del espacio','Sujetos sociales','Escalas'],
+  'un informe escrito': ['Explicación del espacio','Fuentes y datos','Sujetos sociales'],
+  'el proyecto áulico de la residencia': ['Explicación del espacio','Sujetos sociales','Escalas','Fuentes y datos','Lenguaje cartográfico','Uso crítico de IA']
+};
+var RUBRICA_DC = {
+  'Explicación del espacio': {'Inicial':'Describe o enumera elementos.','En proceso':'Relaciona dos dimensiones.','Logrado':'Explica un espacio relacionando economía, política, cultura y naturaleza.','Logrado con profundización':'Agrega la dimensión histórica y compara con otro caso.'},
+  'Sujetos sociales': {'Inicial':'No identifica actores.','En proceso':'Nombra actores sin sus intereses.','Logrado':'Identifica actores, intereses y poder de cada uno.','Logrado con profundización':'Analiza conflictos, alianzas y alternativas.'},
+  'Escalas': {'Inicial':'Trabaja una sola escala.','En proceso':'Menciona otra escala sin relacionarla.','Logrado':'Relaciona lo local, nacional y mundial en un caso.','Logrado con profundización':'Explica cómo un proceso cambia de sentido según la escala.'},
+  'Fuentes y datos': {'Inicial':'Copia datos sin fuente.','En proceso':'Cita fuentes sin evaluarlas.','Logrado':'Selecciona y pondera fuentes, con fecha y procedencia.','Logrado con profundización':'Contrasta fuentes contradictorias y explica la diferencia.'},
+  'Lenguaje cartográfico': {'Inicial':'Mapa sin referencias.','En proceso':'Mapa con referencias incompletas.','Logrado':'Mapa temático con título, escala y fuente.','Logrado con profundización':'Cartografía crítica que representa conflictos y sujetos.'},
+  'Uso crítico de IA': {'Inicial':'Usa IA sin declararlo o copia datos sin verificar.','En proceso':'Declara el uso pero no verifica.','Logrado':'Verifica datos y acepta o rechaza con razones.','Logrado con profundización':'Usa la IA para tensionar sus hipótesis y documenta el proceso.'}
+};
+var critBox = document.getElementById('r_criterios');
+function addCritRow(value){
+  var row = document.createElement('div'); row.className='critrow';
+  var inp = document.createElement('input'); inp.type='text'; inp.value = value||'';
+  var del = document.createElement('button'); del.type='button'; del.textContent='×'; del.title='Quitar';
+  del.addEventListener('click', function(){ row.remove(); });
+  row.appendChild(inp); row.appendChild(del);
+  critBox.appendChild(row);
+}
+function loadDefaultCrit(tipo){
+  critBox.innerHTML='';
+  (CRIT_DEFAULT[tipo]||['Criterio 1']).forEach(addCritRow);
+}
+document.getElementById('r_addcrit').addEventListener('click', function(){ addCritRow(''); });
+
+wireOpt('r_tipo');
+document.getElementById('r_tipo').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return;
+  loadDefaultCrit(b.dataset.v);
+});
+setOpt('r_tipo','el proyecto áulico de la residencia');
+loadDefaultCrit('el proyecto áulico de la residencia');
+
+var NIVELES = ['Inicial','En proceso','Logrado','Logrado con profundización'];
+function descriptor(criterio, nivel){
+  if(RUBRICA_DC[criterio] && RUBRICA_DC[criterio][nivel]) return RUBRICA_DC[criterio][nivel];
+  var c = criterio.charAt(0).toLowerCase()+criterio.slice(1);
+  switch(nivel){
+    case 'Inicial': return 'Todavía no logra '+c+'; necesita acompañamiento directo y sostenido.';
+    case 'En proceso': return 'Logra '+c+' de manera parcial, o solo con ayuda puntual.';
+    case 'Logrado': return 'Logra '+c+' de manera autónoma y pertinente para la tarea.';
+    case 'Logrado con profundización': return 'Logra '+c+' de manera autónoma, fundamentada, y establece relaciones con otros contenidos del eje.';
+  }
+}
+document.getElementById('r_submit').addEventListener('click', function(){
+  var tipo = getOpt('r_tipo') || 'la tarea elegida';
+  var anio = document.getElementById('r_anio').value;
+  var criterios = Array.prototype.map.call(critBox.querySelectorAll('input'), function(i){return i.value.trim()}).filter(Boolean);
+  if(criterios.length===0){ addCritRow('Criterio 1'); criterios=['Criterio 1']; }
+
+  document.getElementById('r_titulo').textContent = tipo.charAt(0).toUpperCase()+tipo.slice(1)+' · '+anio;
+
+  var table = document.getElementById('r_tabla');
+  var thead = '<tr><th>Criterio</th>'+NIVELES.map(function(n){return '<th>'+n+'</th>'}).join('')+'</tr>';
+  var rows = criterios.map(function(c){
+    return '<tr><td>'+c+'</td>'+NIVELES.map(function(n){return '<td>'+descriptor(c,n)+'</td>'}).join('')+'</tr>';
+  }).join('');
+  table.innerHTML = thead+rows;
+
+  document.getElementById('r_output').classList.add('show');
+  document.getElementById('r_output').scrollIntoView({behavior:'smooth', block:'start'});
+});
+document.getElementById('r_copy').addEventListener('click', function(){
+  var tipo = getOpt('r_tipo') || 'la tarea elegida';
+  var anio = document.getElementById('r_anio').value;
+  var criterios = Array.prototype.map.call(critBox.querySelectorAll('input'), function(i){return i.value.trim()}).filter(Boolean);
+  var lines = ['RÚBRICA — '+tipo.toUpperCase()+' · '+anio, ''];
+  criterios.forEach(function(c){
+    lines.push(c.toUpperCase());
+    NIVELES.forEach(function(n){ lines.push('  '+n+': '+descriptor(c,n)); });
+    lines.push('');
+  });
+  var txt = lines.join('\n');
+  var btn = this;
+  function fallback(){
+    var ta = document.createElement('textarea'); ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); btn.textContent='Copiado'; }catch(e){ btn.textContent='No se pudo copiar'; }
+    document.body.removeChild(ta); setTimeout(function(){btn.textContent='Copiar rúbrica completa';},1800);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){
+      btn.textContent='Copiado'; setTimeout(function(){btn.textContent='Copiar rúbrica completa';},1800);
+    }, fallback);
+  } else { fallback(); }
+});
+})();
+</script>
