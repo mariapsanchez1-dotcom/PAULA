@@ -342,13 +342,15 @@ footer .sig{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
     <button class="genbtn" id="g_submit">Generar mi borrador</button>
 
     <div class="output" id="g_output">
+      <h4>Título sugerido</h4><div id="o_titulo"></div>
       <h4>Fundamentación</h4><div id="o_fund"></div>
+      <h4>Objetivo de la clase</h4><div id="o_obj"></div>
       <h4>Contenidos</h4><div id="o_cont"></div>
-      <h4>Secuencia de momentos</h4><pre id="o_seq"></pre>
-      <h4>Tareas y materiales</h4><div id="o_tar"></div>
+      <h4>Clase completa, momento por momento</h4><pre id="o_seq"></pre>
+      <h4>Materiales</h4><div id="o_tar"></div>
       <h4>Agrupamiento y organización espacio-temporal</h4><div id="o_org"></div>
       <h4>Evaluación y cierre</h4><div id="o_eval"></div>
-      <div class="warn-box">Este borrador no conoce a su grupo real ni a su escuela de prácticas. Es un punto de partida: la decisión final — qué conservar, qué cambiar, qué sacar — es de ustedes como pareja pedagógica, no del generador.</div>
+      <div class="warn-box">Esta clase es un ejemplo completo, no un modelo único. No conoce a su grupo real ni a su escuela de prácticas: la decisión final — qué conservar, qué cambiar, qué sacar — es de ustedes como pareja pedagógica, no del generador.</div>
       <button class="copybtn" id="g_copy" style="margin-top:14px">Copiar borrador completo</button>
     </div>
   </div>
@@ -666,31 +668,51 @@ renderEjes(document.getElementById('g_anio').value);
 setOpt('g_disp','conflicto');
 var EJEMPLOS = {
   conflicto: {
-    apertura: function(t){ return 'Buscan (o llevan ya elegida) una noticia, un posteo o un volante real sobre '+t+'. Sin explicar nada todavía, reparten la fuente y piden: escriban solas/os quiénes están en conflicto ahí y qué quiere cada uno. Recién después se comparte en voz alta.'; },
-    actividad: function(t,modo){ return 'En '+modo+', arman una tabla de dos columnas — "actor" / "qué parte del territorio reclama y por qué" — con al menos dos fuentes que miren '+t+' desde posiciones distintas (por ejemplo una nota periodística y la voz de alguno de los actores involucrados).'; },
+    etiqueta:'un conflicto territorial',
+    objetivo: function(t){ return 'Que puedan identificar actores, intereses y desigualdad de poder en el conflicto por '+t+', y argumentar con fuentes por qué ese espacio está en disputa.'; },
+    consignaApertura: function(t){ return '"Les voy a repartir una fuente real sobre '+t+' — una noticia, un posteo o un volante. Antes de que yo diga nada, léanla y escriban solas/os: ¿quiénes están en conflicto acá? ¿qué quiere cada uno? ¿quién tiene más poder para conseguir lo que quiere?"'; },
+    queSurge:'Hipótesis sueltas y probablemente incompletas sobre los actores — sirven como punto de partida, no hace falta corregirlas todavía.',
+    consignaProduccion: function(t,modo){ return '"En '+modo+', armen una tabla de dos columnas: actor / qué parte del territorio reclama y por qué. Usen al menos dos fuentes que miren '+t+' desde posiciones distintas — por ejemplo una nota periodística y la voz de alguno de los actores involucrados (un comunicado, una entrevista, un posteo)."'; },
+    productoEsperado:'Una tabla por grupo con al menos dos actores identificados y una frase que explique la relación de poder entre ellos.',
+    preguntaCierre: function(t){ return '¿Cambió lo que pensaban al principio sobre '+t+' después de leer las fuentes? ¿Qué parte del conflicto sigue sin estar clara?'; },
+    queQueda:'La tabla de cada grupo más una conclusión colectiva de dos o tres líneas, escrita en el pizarrón o en un afiche.',
     materiales:'Dos o tres fuentes con posiciones distintas sobre el conflicto (notas, comunicados, entrevistas); mapa o imagen del lugar si hay disponible.',
-    cierre: function(t){ return '¿Cambió lo que pensaban al principio sobre '+t+' después de leer las fuentes? ¿Qué parte del conflicto sigue sin estar clara?'; },
     criterios:['Sujetos sociales','Explicación del espacio']
   },
   migracion: {
-    apertura: function(t){ return 'Comparten un testimonio corto (escrito, en audio o filmado) de alguien que se movió por '+t+'. Antes de analizar nada, preguntan: ¿qué dejó? ¿qué buscaba? ¿qué encontró?'; },
-    actividad: function(t,modo){ return 'En '+modo+', reconstruyen el recorrido en un mapa simple (origen → destino) y completan por qué se fue / por qué llegó ahí, cruzando el testimonio con una fuente estadística o periodística sobre '+t+'.'; },
+    etiqueta:'una migración o movimiento de personas',
+    objetivo: function(t){ return 'Que puedan reconstruir las razones y el recorrido de quienes se movieron por '+t+', y relacionar ese caso con procesos migratorios más amplios.'; },
+    consignaApertura: function(t){ return '"Vamos a escuchar/leer un testimonio corto de alguien que se movió por '+t+'. Antes de analizar nada, anoten: ¿qué dejó? ¿qué buscaba? ¿qué encontró?"'; },
+    queSurge:'Una primera lista de motivos y expectativas, todavía sin relacionar con datos generales del fenómeno.',
+    consignaProduccion: function(t,modo){ return '"En '+modo+', reconstruyan el recorrido en un mapa simple (origen → destino) y completen por qué se fue / por qué llegó ahí, cruzando el testimonio con una fuente estadística o periodística sobre '+t+'."'; },
+    productoEsperado:'Un mapa de recorrido con al menos dos razones justificadas (una del testimonio, una de la fuente general).',
+    preguntaCierre: function(t){ return '¿Qué tuvo en común este caso de '+t+' con otras migraciones vistas antes en la materia, y qué fue distinto?'; },
+    queQueda:'El mapa de recorrido de cada grupo y una frase de comparación con otro caso ya visto.',
     materiales:'Un testimonio o entrevista (propia o publicada), un mapa de base, alguna fuente estadística sobre el fenómeno migratorio elegido.',
-    cierre: function(t){ return '¿Qué tuvo en común este caso de '+t+' con otras migraciones vistas antes en la materia, y qué fue distinto?'; },
     criterios:['Sujetos sociales','Escalas']
   },
   circuito: {
-    apertura: function(t){ return 'Muestran un producto concreto ligado a '+t+' (una foto, o el objeto mismo si se puede conseguir) y preguntan: ¿de dónde vino esto antes de llegar acá, y por cuántas manos pasó?'; },
-    actividad: function(t,modo){ return 'En '+modo+', reconstruyen el circuito en etapas (producción → procesamiento → transporte → venta) para '+t+', identificando en cada etapa quién trabaja ahí y qué gana o pierde.'; },
+    etiqueta:'un circuito productivo',
+    objetivo: function(t){ return 'Que puedan reconstruir las etapas del circuito de '+t+' e identificar en cuál de ellas se concentra la desigualdad.'; },
+    consignaApertura: function(t){ return '"Acá tienen '+t+' (una foto, o el objeto si se consigue). Antes de explicar nada: ¿de dónde vino esto antes de llegar acá, y por cuántas manos creen que pasó?"'; },
+    queSurge:'Una cadena intuitiva de pasos, probablemente incompleta o con etapas salteadas.',
+    consignaProduccion: function(t,modo){ return '"En '+modo+', reconstruyan el circuito en etapas (producción → procesamiento → transporte → venta) para '+t+', identificando en cada etapa quién trabaja ahí y qué gana o pierde."'; },
+    productoEsperado:'Un esquema de etapas con al menos un actor y una condición de trabajo o ganancia por etapa.',
+    preguntaCierre: function(t){ return '¿En qué etapa de '+t+' está la parte más desigual del circuito, y por qué les parece que es ahí?'; },
+    queQueda:'El esquema de etapas de cada grupo y la etapa señalada como más desigual, con su justificación.',
     materiales:'Imágenes o datos de cada etapa del circuito, mapa para ubicar los lugares, alguna fuente con precios o condiciones de trabajo si está disponible.',
-    cierre: function(t){ return '¿En qué etapa de '+t+' está la parte más desigual del circuito, y por qué les parece que es ahí?'; },
     criterios:['Explicación del espacio','Fuentes y datos']
   },
   mapa: {
-    apertura: function(t){ return 'Proyectan o reparten un mapa temático o una imagen satelital de '+t+' sin título ni referencias completas, y preguntan: ¿qué nos puede estar mostrando esto?'; },
-    actividad: function(t,modo){ return 'En '+modo+', completan las referencias que faltan, identifican la escala y escriben tres afirmaciones que ese mapa permite sostener sobre '+t+' y una que no permite sostener.'; },
+    etiqueta:'un mapa o imagen para leer',
+    objetivo: function(t){ return 'Que puedan leer críticamente una fuente cartográfica sobre '+t+', reconociendo qué muestra, qué oculta y con qué escala fue construida.'; },
+    consignaApertura: function(t){ return '"Les muestro un mapa o una imagen satelital de '+t+' sin título ni referencias completas. Antes de que yo explique nada: ¿qué nos puede estar mostrando esto?"'; },
+    queSurge:'Lecturas intuitivas de la imagen, sin vocabulario técnico todavía — está bien que sea así en este momento.',
+    consignaProduccion: function(t,modo){ return '"En '+modo+', completen las referencias que faltan, identifiquen la escala y escriban tres afirmaciones que ese mapa permite sostener sobre '+t+', y una que no permite sostener."'; },
+    productoEsperado:'El mapa con referencias completas y cuatro afirmaciones (tres sostenidas, una no) justificadas con lo que el mapa muestra o no muestra.',
+    preguntaCierre: function(t){ return '¿Qué decisión tomaron para elegir la escala y las referencias de su versión del mapa de '+t+'?'; },
+    queQueda:'El mapa completado de cada grupo y la lista de las cuatro afirmaciones, con su justificación.',
     materiales:'Mapa temático o imagen satelital (actual y, si se consigue, una de otra época para comparar), algo para redibujar o anotar referencias.',
-    cierre: function(t){ return '¿Qué decisión tomaron para elegir la escala y las referencias de su versión del mapa de '+t+'?'; },
     criterios:['Lenguaje cartográfico','Fuentes y datos']
   }
 };
@@ -712,24 +734,43 @@ document.getElementById('g_submit').addEventListener('click', function(){
   var dispKey = getOpt('g_disp') || 'conflicto';
   var ej = EJEMPLOS[dispKey] || EJEMPLOS.conflicto;
 
+  document.getElementById('o_titulo').innerHTML =
+    '<p>"'+(tema.charAt(0).toUpperCase()+tema.slice(1))+'": una clase desde '+ej.etiqueta+' — '+anio+'.</p>';
+
   document.getElementById('o_fund').innerHTML =
     '<p>Clase para '+anio+', dentro del eje <strong>'+eje+'</strong>, sobre <strong>'+tema+'</strong>. Formato: '+formato+'. '+
     (formato==='taller' ? 'Al ser taller, conviene decidir a propósito qué rasgo de la forma escolar de Pineau rompe esta propuesta: ¿el espacio único? ¿el tiempo igual para todas y todos? ¿la tarea idéntica? Nómbrenlo antes de seguir.' : 'Al ser clase común, los ocho momentos siguen la forma escolar tradicional — lo que no exime de decidir cada variable a propósito.')+'</p>';
 
+  document.getElementById('o_obj').innerHTML = '<p>'+ej.objetivo(tema)+'</p>';
+
   document.getElementById('o_cont').innerHTML =
     '<p>Contenido ligado al eje del Diseño Curricular (texto del documento oficial, para '+anio+'): <em>"'+eje+'"</em>. De ahí recorten ustedes el aspecto puntual que van a trabajar en relación con '+tema+' — verificar siempre el núcleo exacto en el documento DGCyE antes de dar la clase.</p>';
 
+  var nombreGrupo = (modo==='Individual' ? 'cada estudiante' : 'cada grupo');
   var seq = '';
   if(formato==='taller'){
-    seq = '1. APERTURA (10\')\n'+ej.apertura(tema)+'\n\n'+
-          '2. PRODUCCIÓN — en '+modoLower+' (distribuido en '+clases+' clase'+(clases==1?'':'s')+')\n'+ej.actividad(tema,modoLower)+'\n\n'+
-          '3. PUESTA EN COMÚN\nCada '+(modo==='Individual'?'estudiante':'grupo')+' muestra lo que produjo; el resto anota una coincidencia y una diferencia con lo propio.\n\n'+
-          '4. CIERRE Y REGISTRO\n'+ej.cierre(tema)+' ¿Qué queda escrito de esta clase, y quién lo valida?';
+    seq = 'MOMENTO 1 — APERTURA (10-15\')\n'+
+          'Consigna para dar a '+nombreGrupo+':\n'+ej.consignaApertura(tema)+'\n'+
+          'Qué se espera que surja: '+ej.queSurge+'\n\n'+
+          'MOMENTO 2 — PRODUCCIÓN (25-35\', distribuido en '+clases+' clase'+(clases==1?'':'s')+')\n'+
+          'Consigna: '+ej.consignaProduccion(tema,modoLower)+'\n'+
+          'Producto esperado: '+ej.productoEsperado+'\n\n'+
+          'MOMENTO 3 — PUESTA EN COMÚN (10-15\')\n'+
+          nombreGrupo.charAt(0).toUpperCase()+nombreGrupo.slice(1)+' muestra lo que produjo; el resto anota una coincidencia y una diferencia con lo propio.\n\n'+
+          'MOMENTO 4 — CIERRE Y REGISTRO (10\')\n'+
+          'Pregunta de cierre: "'+ej.preguntaCierre(tema)+'"\n'+
+          'Qué queda escrito: '+ej.queQueda;
   } else {
-    seq = '1. APERTURA (10\') — recuperar saberes previos\n'+ej.apertura(tema)+'\n\n'+
-          '2. DESARROLLO — en '+modoLower+'\n'+ej.actividad(tema,modoLower)+'\n\n'+
-          '3. SÍNTESIS COLECTIVA\n'+ej.cierre(tema)+'\n\n'+
-          '4. CIERRE\nConsigna de seguimiento o evaluación breve a partir de lo trabajado sobre '+tema+'.';
+    seq = 'MOMENTO 1 — APERTURA (10-15\', recuperar saberes previos)\n'+
+          'Consigna para dar a '+nombreGrupo+':\n'+ej.consignaApertura(tema)+'\n'+
+          'Qué se espera que surja: '+ej.queSurge+'\n\n'+
+          'MOMENTO 2 — DESARROLLO (25-35\', en '+modoLower+')\n'+
+          'Consigna: '+ej.consignaProduccion(tema,modoLower)+'\n'+
+          'Producto esperado: '+ej.productoEsperado+'\n\n'+
+          'MOMENTO 3 — SÍNTESIS COLECTIVA (10\')\n'+
+          'Pregunta de cierre: "'+ej.preguntaCierre(tema)+'"\n\n'+
+          'MOMENTO 4 — CIERRE (5-10\')\n'+
+          'Qué queda escrito: '+ej.queQueda+' Puede funcionar también como punto de partida de la próxima clase.';
   }
   document.getElementById('o_seq').textContent = seq;
 
@@ -753,10 +794,12 @@ document.getElementById('g_submit').addEventListener('click', function(){
 });
 
 document.getElementById('g_copy').addEventListener('click', function(){
-  var txt = ['FUNDAMENTACIÓN', document.getElementById('o_fund').textContent,
+  var txt = ['TÍTULO', document.getElementById('o_titulo').textContent,
+             '', 'FUNDAMENTACIÓN', document.getElementById('o_fund').textContent,
+             '', 'OBJETIVO', document.getElementById('o_obj').textContent,
              '', 'CONTENIDOS', document.getElementById('o_cont').textContent,
-             '', 'SECUENCIA', document.getElementById('o_seq').textContent,
-             '', 'TAREAS Y MATERIALES', document.getElementById('o_tar').textContent,
+             '', 'CLASE COMPLETA, MOMENTO POR MOMENTO', document.getElementById('o_seq').textContent,
+             '', 'MATERIALES', document.getElementById('o_tar').textContent,
              '', 'AGRUPAMIENTO', document.getElementById('o_org').textContent,
              '', 'EVALUACIÓN', document.getElementById('o_eval').textContent].join('\n');
   var btn = this;
