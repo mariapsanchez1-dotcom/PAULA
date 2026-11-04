@@ -678,6 +678,20 @@ var CRIT={
   oral:{n:"Comunicación oral",v:["Lee de corrido o se pierde; cuesta seguirlo.","Se lo entiende, pero depende mucho del papel.","Habla con claridad, en un registro adecuado y mirando al público.","Además usa la voz, las pausas y el soporte para sostener el interés."]},
   escucha:{n:"Escucha y respuesta",v:["No responde a lo que dicen los demás.","Responde, pero sin retomar lo que dijo el otro.","Retoma lo que dice el otro y responde con pertinencia.","Retoma, responde y reformula su posición si hace falta."]}
 };
+var PROP={
+  interp:"Ofrecer lecturas guiadas en clase, donde se pueda probar una interpretación propia y discutirla con otras",
+  evid:"Modelar cómo se vuelve al texto para sostener una afirmación, eligiendo fragmentos pertinentes",
+  adec:"Presentar un destinatario real y analizar con el grupo qué necesita saber y cómo le hablaría",
+  gen:"Analizar con el grupo los rasgos del género y mostrar cuándo se usan con propósito",
+  org:"Enseñar a planificar y ordenar las ideas (esquemas, borradores) antes de escribir la versión final",
+  proc:"Organizar instancias de devolución y reescritura antes de la entrega final",
+  decis:"Crear oportunidades para explicar decisiones (registros de decisiones, defensas breves)",
+  fuentes:"Enseñar criterios para evaluar la confiabilidad de una fuente y cómo citarla",
+  arg:"Trabajar con modelos de argumentación y con contraargumentos explícitos",
+  oral:"Proponer modelos de exposición oral y retroalimentación sobre voz, pausas y soporte",
+  escucha:"Organizar intercambios con pautas explícitas de escucha y de turnos",
+  ia:"Dar un espacio para analizar la IA como objeto y para declarar cómo se usó en la tarea"
+};
 var EVID={interp:"construir una lectura propia del texto",evid:"sostenerla con fragmentos del texto",adec:"adecuar su producción a un destinatario real",gen:"usar los recursos del género con propósito",org:"organizar sus ideas con claridad",proc:"revisar su producción a partir de una devolución",decis:"explicar y fundamentar sus decisiones",fuentes:"buscar, seleccionar y citar fuentes confiables",arg:"sostener una postura con argumentos",oral:"comunicar oralmente con claridad",escucha:"escuchar y responder a otros"};
 var BANCO=[
   {a:"lit",t:"La biblioteca recomienda",p:"Reseñas de las obras leídas para un fichero o una cartelera de la biblioteca escolar.",d:"Lectores de toda la escuela.",e:"Interpretar y fundamentar una opinión con el texto.",prod:"resena"},
@@ -756,6 +770,7 @@ function generar(){
   var p=buscar(pid);dest=dest||p.d;var agr=esAgregado(anio,amb);var ia=val('ia')||'sin',IA=IAMODO[ia];
   var crits=p.crit.map(function(c){return CRIT[c]});if(ia!=='sin')crits.push(CRIT.ia);
   var evid=p.crit.map(function(c){return EVID[c]});
+  var props=p.crit.map(function(c){return PROP[c]});if(ia!=='sin')props.push(PROP.ia);
   var vos=modo==='ind'?'Vas a':'Van a';
   var tu=modo==='ind'?'tu':'su';
   var plan=[];
@@ -784,7 +799,8 @@ function generar(){
    '<div class="encab"><p class="kicker">Evaluación auténtica · '+esc(ANIO[anio])+(agr?' · Incluye un agregado':'')+'</p><h3>'+esc(p.n)+': '+esc(cont)+'</h3><p>Destinatario real: '+esc(dest)+' · Trabajo '+MODO[modo]+' · '+clases+' clases</p></div>'+
    '<div class="cuerpo">'+
    anclajeHTML(anio,amb,agr)+
-   '<div class="bloq" style="--c:#F8D9D2"><h4><i>1</i>Propósito y evidencia</h4><p>Empezamos por lo que queremos ver. Al terminar, cada estudiante tendría que poder:</p><ul>'+evid.map(function(e){return '<li>'+esc(e)+'.</li>'}).join('')+'</ul></div>'+
+   '<div class="bloq" style="--c:#F8D9D2"><h4><i>1</i>Objetivos: lo que cada estudiante va a lograr</h4><p>Empezamos por lo que queremos ver. Al terminar, cada estudiante tendría que poder:</p><ul>'+evid.map(function(e){return '<li>'+esc(e)+'.</li>'}).join('')+'</ul></div>'+
+   '<div class="bloq" style="--c:#F8D9D2"><h4><i>1</i>Propósitos: lo que la docente ofrece para que lo logren</h4><p>Son las decisiones de enseñanza que sostienen los objetivos. No describen lo que hace el alumno, sino lo que la docente pone a disposición:</p><ul>'+props.map(function(x){return '<li>'+esc(x)+'.</li>'}).join('')+'</ul></div>'+
    '<div class="bloq" style="--c:#F7E4B8"><h4><i>2</i>La consigna para tus alumnos</h4>'+consigna+'</div>'+
    '<div class="bloq" style="--c:#D9EAD3"><h4><i>3</i>Rúbrica</h4><p>Compartila antes de empezar. Los niveles describen lo que se hace, no cantidades.</p>'+rub+'</div>'+
    '<div class="bloq" style="--c:#D4E6F3"><h4><i>4</i>El proceso, clase por clase</h4><ol>'+plan.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol>'+
